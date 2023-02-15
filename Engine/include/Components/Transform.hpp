@@ -12,12 +12,15 @@ namespace engine {
     public:
         Transform() = default;
 
-        float x;
-        float y;
-        float z;
-        float rx;
-        float ry;
-        float rz;
+        float x = 0;
+        float y = 0;
+        float z = 0;
+        float rx = 0;
+        float ry = 0;
+        float rz = 0;
+        float sx = 1;
+        float sy = 1;
+        float sz = 1;
     };
 } // engine
 

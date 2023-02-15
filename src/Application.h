@@ -13,7 +13,7 @@
 #include <Scene.hpp>
 #include "Components/Text.hpp"
 #include "Components/Background.hpp"
-#include "Components/SimpleImage.hpp"
+#include "Components/Sprite.hpp"
 #include "Components/Transform.hpp"
 
 using engine::Window;
@@ -26,11 +26,14 @@ public:
 
         engine::Scene scene;
 
-        scene.root.AddComponent(new engine::Transform());
+        auto* transform = new engine::Transform();
+        transform->rz = 30;
+
+        scene.root.AddComponent(transform);
         scene.root.AddComponent(new engine::Background(WHITE));
         scene.root.AddComponent(new engine::Text("Build And Program",
                                              20, GRAY));
-        scene.root.AddComponent(new engine::SimpleImage("src/img.png"));
+        scene.root.AddComponent(new engine::Sprite("src/img.png"));
 
         while (!WindowShouldClose()){
             scene.Apply();
