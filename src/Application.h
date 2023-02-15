@@ -17,8 +17,8 @@ public:
 
         engine::Scene scene;
 
-        scene.root.AddEntity(engine::EntityFactory().Background(WHITE).Get());
-        scene.root.AddEntity(engine::EntityFactory().Transform(10, 10).Text("wabit demo.", 40, BLACK).Get());
+        scene.root.AddEntity(engine::EntityFactory("Background").Background(WHITE).Get());
+        scene.root.AddEntity(engine::EntityFactory("Demo text").Transform(10, 10).Text("wabit demo.", 40, BLACK).Get());
 
         scene.Run();
     }

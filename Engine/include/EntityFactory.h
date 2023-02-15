@@ -20,6 +20,10 @@ namespace engine {
             entity = new Entity();
         };
 
+        explicit EntityFactory(const std::string& name){
+            entity = new Entity(name);
+        };
+
         EntityFactory(Entity* entity) : entity(entity) {};
 
         EntityFactory Transform(){

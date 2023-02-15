@@ -6,6 +6,7 @@
 #define BUILDANDPROGRAMM_ENTITY_HPP
 
 #include <vector>
+#include <string>
 
 #include "Components/Component.hpp"
 #include "Components/Transform.hpp"
@@ -14,6 +15,8 @@ namespace engine {
     class Entity {
     public:
         Entity() = default;
+
+        Entity(const std::string& name): name(name) {}
 
         void AddComponent(Component* component);;
 
@@ -39,6 +42,8 @@ namespace engine {
         }
 
         ~Entity();
+
+        std::string name = "default";
     private:
         std::vector<Component*> components;
         std::vector<Entity*> entities;
