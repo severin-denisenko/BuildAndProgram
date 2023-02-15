@@ -2,8 +2,8 @@
 // Created by Severin on 15.02.2023.
 //
 
-#ifndef BUILDANDPROGRAMM_SCENE_H
-#define BUILDANDPROGRAMM_SCENE_H
+#ifndef BUILDANDPROGRAMM_SCENE_HPP
+#define BUILDANDPROGRAMM_SCENE_HPP
 
 #include "Entity.hpp"
 
@@ -34,4 +34,4 @@ namespace engine {
 
 } // engine
 
-#endif //BUILDANDPROGRAMM_SCENE_H
+#endif //BUILDANDPROGRAMM_SCENE_HPP

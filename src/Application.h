@@ -12,7 +12,7 @@
 #include <Entity.hpp>
 #include <Text.hpp>
 #include <Background.hpp>
-#include <Scene.h>
+#include <Scene.hpp>
 
 using engine::Window;
 using namespace std::chrono_literals;

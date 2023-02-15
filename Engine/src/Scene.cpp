@@ -2,7 +2,7 @@
 // Created by Severin on 15.02.2023.
 //
 
-#include "Scene.h"
+#include "Scene.hpp"
 
 namespace engine {
     void Scene::Render() {
