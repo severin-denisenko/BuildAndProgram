@@ -13,15 +13,17 @@
 namespace engine {
     class Text : public Component {
     public:
-        Text(const char* text, int font_size, Color color) : text(text),
-        font_size(font_size), color(color) {}
+        Text(const char* text, int position_x, int position_y, int font_size, Color color) : text(text),
+        position_x(position_x), position_y(position_y), font_size(font_size), color(color) {}
 
         void Render2D(Entity *entity) override{
-            DrawText(text, 0, 0,
+            DrawText(text, position_x, position_y,
                      font_size, color);
         }
 
         const char* text;
+        int position_x;
+        int position_y;
         int font_size;
         Color color;
     };

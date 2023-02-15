@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "Component.hpp"
+#include "Components/Component.hpp"
 
 namespace engine {
     class Entity {
