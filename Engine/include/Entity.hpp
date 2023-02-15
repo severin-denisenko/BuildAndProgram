@@ -19,11 +19,11 @@ namespace engine {
 
         void AddEntity(Entity* entity);
 
-        virtual void Apply();
+        void Apply();
 
-        virtual void Render2D();
+        void Render2D();
 
-        virtual void Render3D();
+        void Render3D();
 
         template<typename T>
         T* GetComponent(){
