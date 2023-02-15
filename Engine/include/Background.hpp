@@ -14,7 +14,7 @@ namespace engine {
     public:
         explicit Background(Color color) : color(color) {}
 
-        void Render2D() override {
+        void Render2D(Entity* entity) override{
             ClearBackground(color);
         }
 

@@ -17,7 +17,7 @@ namespace engine{
 
     void Entity::Render3D() {
         for (auto component: components) {
-            component->Render3D();
+            component->Render3D(this);
         }
 
         for (auto entity: entities) {
@@ -27,7 +27,7 @@ namespace engine{
 
     void Entity::Render2D() {
         for (auto component: components) {
-            component->Render2D();
+            component->Render2D(this);
         }
 
         for (auto entity: entities) {
@@ -37,12 +37,20 @@ namespace engine{
 
     void Entity::Apply() {
         for (auto component: components) {
-            component->Apply();
+            component->Apply(this);
         }
 
         for (auto entity: entities) {
             entity->Apply();
         }
+    }
+
+    void Entity::AddEntity(Entity *entity) {
+        entities.emplace_back(entity);
+    }
+
+    void Entity::AddComponent(Component *component) {
+        components.emplace_back(component);
     }
 }
 

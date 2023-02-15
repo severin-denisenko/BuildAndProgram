@@ -5,6 +5,7 @@
 #ifndef BUILDANDPROGRAMM_TEXT_H
 #define BUILDANDPROGRAMM_TEXT_H
 
+#include "Entity.hpp"
 #include "Component.hpp"
 
 #include "raylib.h"
@@ -12,17 +13,15 @@
 namespace engine {
     class Text : public Component {
     public:
-        Text(const char* text, int x_position, int y_position, int font_size, Color color) : text(text) ,
-        x_position(x_position), y_position(y_position), font_size(font_size), color(color) {}
+        Text(const char* text, int font_size, Color color) : text(text),
+        font_size(font_size), color(color) {}
 
-        void Render2D() override{
-            DrawText(text, x_position, y_position,
+        void Render2D(Entity *entity) override{
+            DrawText(text, 0, 0,
                      font_size, color);
         }
 
         const char* text;
-        int x_position;
-        int y_position;
         int font_size;
         Color color;
     };

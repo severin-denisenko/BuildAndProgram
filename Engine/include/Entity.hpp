@@ -14,13 +14,9 @@ namespace engine {
     public:
         Entity() = default;
 
-        void AddComponent(Component* component){
-            components.emplace_back(component);
-        };
+        void AddComponent(Component* component);;
 
-        void AddEntity(Entity* entity){
-            entities.emplace_back(entity);
-        }
+        void AddEntity(Entity* entity);
 
         void Apply();
 

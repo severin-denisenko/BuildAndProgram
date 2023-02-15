@@ -27,7 +27,6 @@ public:
         scene.root.AddComponent(new engine::Background(WHITE));
 
         scene.root.AddComponent(new engine::Text("Build And Program",
-                                             GetScreenWidth()/ 2, GetScreenHeight() / 2,
                                              20, GRAY));
 
 
