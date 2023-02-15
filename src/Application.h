@@ -10,10 +10,11 @@
 
 #include <Window.hpp>
 #include <Entity.hpp>
+#include <Scene.hpp>
 #include "Components/Text.hpp"
 #include "Components/Background.hpp"
-#include <Scene.hpp>
 #include "Components/SimpleImage.hpp"
+#include "Components/Transform.hpp"
 
 using engine::Window;
 using namespace std::chrono_literals;
@@ -25,15 +26,11 @@ public:
 
         engine::Scene scene;
 
+        scene.root.AddComponent(new engine::Transform());
         scene.root.AddComponent(new engine::Background(WHITE));
-
-        scene.root.AddComponent(new engine::Text("Build And Program", 0, 0,
+        scene.root.AddComponent(new engine::Text("Build And Program",
                                              20, GRAY));
-
-        auto *sm = new engine::Entity();
-        sm->AddComponent(new engine::SimpleImage("src/img.png"));
-        scene.root.AddEntity(sm);
-
+        scene.root.AddComponent(new engine::SimpleImage("src/img.png"));
 
         while (!WindowShouldClose()){
             scene.Apply();

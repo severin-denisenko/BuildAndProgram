@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "Components/Component.hpp"
+#include "Components/Transform.hpp"
 
 namespace engine {
     class Entity {
@@ -18,11 +19,23 @@ namespace engine {
 
         void AddEntity(Entity* entity);
 
-        void Apply();
+        virtual void Apply();
 
-        void Render2D();
+        virtual void Render2D();
 
-        void Render3D();
+        virtual void Render3D();
+
+        template<typename T>
+        T* GetComponent(){
+            for(auto component: components){
+                T* val = dynamic_cast<T*>(component);
+
+                if(val)
+                    return val;
+            }
+
+            return nullptr;
+        }
 
         ~Entity();
     private:

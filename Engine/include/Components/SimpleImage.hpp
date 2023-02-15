@@ -18,7 +18,8 @@ namespace engine {
         }
 
         void Render2D(Entity *entity) override{
-            DrawTexture(texture, 0, 0, WHITE);
+            DrawTexture(texture, (int) entity->GetComponent<Transform>()->x,
+                        (int) entity->GetComponent<Transform>()->y, WHITE);
         }
 
         const char * filename;

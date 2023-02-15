@@ -8,7 +8,10 @@
 #include "Component.hpp"
 
 namespace engine {
-    class Transform : Component {
+    class Transform : public Component {
+    public:
+        Transform() = default;
+
         float x;
         float y;
         float z;
