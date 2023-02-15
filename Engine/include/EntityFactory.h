@@ -20,9 +20,7 @@ namespace engine {
             entity = new Entity();
         };
 
-        EntityFactory(Entity* entity) : entity(entity){
-            entity = new Entity();
-        };
+        EntityFactory(Entity* entity) : entity(entity) {};
 
         EntityFactory Transform(){
             auto transform = new engine::Transform();
