@@ -1,3 +1,6 @@
 [submodule "Engine/deps/raylib"]
 	path = Engine/deps/raylib
 	url = https://github.com/raysan5/raylib.git
+[submodule "Engine/deps/SLib"]
+	path = Engine/deps/SLib
+	url = https://github.com/severin-denisenko/SLib.git

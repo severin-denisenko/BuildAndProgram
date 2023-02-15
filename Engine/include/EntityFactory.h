@@ -28,6 +28,24 @@ namespace engine {
             return {entity};
         }
 
+        EntityFactory Transform(float x, float y){
+            auto transform = new engine::Transform(x, y);
+            entity->AddComponent(transform);
+            return {entity};
+        }
+
+        EntityFactory Transform(float x, float y, float rx, float ry){
+            auto transform = new engine::Transform(x, y, rx, ry);
+            entity->AddComponent(transform);
+            return {entity};
+        }
+
+        EntityFactory Transform(float x, float y, float rx, float ry, float sx, float sy){
+            auto transform = new engine::Transform(x, y, rx, ry, sx, sy);
+            entity->AddComponent(transform);
+            return {entity};
+        }
+
         EntityFactory Text(const char* msg, int size, Color color){
             auto text = new engine::Text(msg, size, color);
             entity->AddComponent(text);

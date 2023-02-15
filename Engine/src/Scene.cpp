@@ -27,4 +27,11 @@ namespace engine {
         root.Render2D();
         EndDrawing();
     }
+
+    void Scene::Run() {
+        while (!WindowShouldClose()){
+            Apply();
+            Render();
+        }
+    }
 } // engine

@@ -12,6 +12,11 @@ namespace engine {
     public:
         Transform() = default;
 
+        Transform(float x, float y) : x(x), y(y) {}
+        Transform(float x, float y, float rx, float ry) : x(x), y(y), rx(rx), ry(ry) {}
+        Transform(float x, float y, float rx, float ry, float sx, float sy) : x(x), y(y),
+        rx(rx), ry(ry), sx(sx), sy(sy) {}
+
         float x = 0;
         float y = 0;
         float z = 0;

@@ -12,7 +12,7 @@
 namespace engine {
     class Sprite : public Component {
     public:
-        explicit Sprite(const char * filename) : filename(filename){
+        explicit Sprite(const char * filename, Color color = WHITE) : filename(filename), color(color){
             image = LoadImage(filename);
 
             source_rectangle = { 0.0f, 0.0f, (float)image.width, (float)image.height};
@@ -30,7 +30,7 @@ namespace engine {
                                       transform->y + (float)image.height * transform->sy};
 
             DrawTexturePro(texture, source_rectangle, destination_rectangle, origin,
-                           (float)transform->rz, WHITE);
+                           (float)transform->rz, color);
         }
 
         const char * filename;
@@ -40,6 +40,7 @@ namespace engine {
         Vector2 origin;
         Texture2D texture;
         engine::Transform* transform;
+        Color color;
     };
 } // engine
 

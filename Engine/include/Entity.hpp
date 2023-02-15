@@ -34,6 +34,7 @@ namespace engine {
                     return val;
             }
 
+            throw std::runtime_error("Can't find requested component.");
             return nullptr;
         }
 
