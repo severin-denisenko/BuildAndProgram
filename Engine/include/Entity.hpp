@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 
+#include "../deps/SLib/include/SLib/SLog.hpp"
+
 #include "Components/Component.hpp"
 #include "Components/Transform.hpp"
 
@@ -37,7 +39,7 @@ namespace engine {
                     return val;
             }
 
-            throw std::runtime_error("Can't find requested component.");
+            S_ERROR("Can't find requested component.");
             return nullptr;
         }
 
