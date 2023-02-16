@@ -13,17 +13,16 @@
 class MyComponent : public engine::Component{
 public:
     MyComponent(){
-        speed_x = GetRandomValue(1, 100);
-        speed_y = GetRandomValue(1, 100);
+        speed_x = GetRandomValue(-100, 100);
+        speed_y = GetRandomValue(-100, 100);
+    }
+
+    void Create(engine::Entity* entity) override{
+        transform = entity->GetComponent<engine::Transform>();
+        sprite = entity->GetComponent<engine::Sprite>();
     }
 
     void Update(engine::Entity* entity) override{
-        if(!transform)
-            transform = entity->GetComponent<engine::Transform>();
-
-        if(!sprite)
-            sprite = entity->GetComponent<engine::Sprite>();
-
         transform->x += speed_x * GetFrameTime();
         transform->y += speed_y * GetFrameTime();
 
@@ -36,8 +35,8 @@ public:
     float speed_x;
     float speed_y;
 
-    engine::Transform* transform = nullptr;
-    engine::Sprite* sprite = nullptr;
+    engine::Transform* transform;
+    engine::Sprite* sprite;
 };
 
 class Application {
@@ -49,13 +48,13 @@ public:
 
         scene.root.AddEntity(engine::EntityFactory("Background").Background(WHITE).Get());
 
-        for (int i = 0; i < 6000; ++i) {
+        for (int i = 0; i < 100; ++i) {
             scene.root.AddEntity(engine::EntityFactory("wolic")
-                                         .Transform(0, 0, 0, 0, 2, 2).Sprite("src/img.png", WHITE)
+                                         .Transform(GetScreenWidth()/2, GetScreenHeight()/2, 0, 0, 2, 2).Sprite("src/img.png", WHITE)
                                          .Add(new MyComponent()).Get());
         }
 
-        scene.root.AddEntity(engine::EntityFactory("Demo text").Transform(10, 10)
+        scene.root.AddEntity(engine::EntityFactory("FPS Counter").Transform(10, 10)
                                      .FPSLabel().Get());
 
         scene.Run();

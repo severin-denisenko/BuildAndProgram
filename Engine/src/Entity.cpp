@@ -41,7 +41,12 @@ namespace engine{
                 component->Create(this);
             }
 
+            for (auto entity: entities) {
+                entity->Update();
+            }
+
             created = true;
+            return;
         }
 
         for (auto component: components) {
@@ -64,7 +69,18 @@ namespace engine{
     Entity *Entity::GetChildByIndex(size_t index) {
         if(index < entities.size())
             return entities[index];
-        S_ERROR("Entity by this index does not exist.");
+        S_ERROR("Entity by this index does not exist: " + std::to_string(index));
+        return nullptr;
+    }
+
+    Entity *Entity::GetChildByName(const std::string& find) {
+
+        for (auto entity: entities) {
+            if (entity->name == find)
+                return entity;
+        }
+
+        S_ERROR("Entity with this name does not exist: " + find);
         return nullptr;
     }
 }

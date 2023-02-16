@@ -45,6 +45,8 @@ namespace engine {
 
         Entity* GetChildByIndex(size_t index);
 
+        Entity* GetChildByName(const std::string& name);
+
         ~Entity();
 
         std::string name = "default";
