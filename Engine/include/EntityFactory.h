@@ -11,6 +11,7 @@
 #include "Components/Text.hpp"
 #include "Components/Background.hpp"
 #include "Components/Sprite.hpp"
+#include "Components/FPSLabel.hpp"
 
 namespace engine {
 
@@ -71,6 +72,12 @@ namespace engine {
         EntityFactory Sprite(const char* filename, Color color){
             auto sprite = new engine::Sprite(filename, color);
             entity->AddComponent(sprite);
+            return {entity};
+        }
+
+        EntityFactory FPSLabel(){
+            auto label = new engine::FPSLabel();
+            entity->AddComponent(label);
             return {entity};
         }
 

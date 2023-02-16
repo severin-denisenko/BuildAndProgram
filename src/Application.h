@@ -11,16 +11,33 @@
 #include <EntityFactory.h>
 
 class MyComponent : public engine::Component{
-    void Apply(engine::Entity * entity) override{
+public:
+    MyComponent(){
+        speed_x = GetRandomValue(1, 100);
+        speed_y = GetRandomValue(1, 100);
+    }
+
+    void Apply(engine::Entity* entity) override{
         if(!transform)
             transform = entity->GetComponent<engine::Transform>();
 
-        transform->x++;
-        transform->y++;
-        transform->rz++;
+        if(!sprite)
+            sprite = entity->GetComponent<engine::Sprite>();
+
+        transform->x += speed_x * GetFrameTime();
+        transform->y += speed_y * GetFrameTime();
+
+        if (transform->x > GetScreenWidth() - sprite->source_rectangle.width * 2 || transform->x < 0)
+            speed_x *= -1;
+        if (transform->y > GetScreenHeight() - sprite->source_rectangle.height * 2 || transform->y < 0)
+            speed_y *= -1;
     }
 
+    float speed_x;
+    float speed_y;
+
     engine::Transform* transform = nullptr;
+    engine::Sprite* sprite = nullptr;
 };
 
 class Application {
@@ -31,8 +48,15 @@ public:
         engine::Scene scene;
 
         scene.root.AddEntity(engine::EntityFactory("Background").Background(WHITE).Get());
-        scene.root.AddEntity(engine::EntityFactory("Demo text").Transform(10, 10).Text("wabit demo.", 40, BLACK).Get());
-        scene.root.AddEntity(engine::EntityFactory("wolic").Transform(0, 0, 0, 0, 10, 10).Sprite("src/img.png", RED).Add(new MyComponent()).Get());
+
+        for (int i = 0; i < 6000; ++i) {
+            scene.root.AddEntity(engine::EntityFactory("wolic")
+                                         .Transform(0, 0, 0, 0, 2, 2).Sprite("src/img.png", WHITE)
+                                         .Add(new MyComponent()).Get());
+        }
+
+        scene.root.AddEntity(engine::EntityFactory("Demo text").Transform(10, 10)
+                                     .FPSLabel().Get());
 
         scene.Run();
     }
