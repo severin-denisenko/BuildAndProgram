@@ -13,6 +13,7 @@ namespace engine {
     class Component {
     public:
         virtual void Update(Entity* entity) {};
+        virtual void Create(Entity* entity) {};
         virtual void Render2D(Entity* entity) {};
         virtual void Render3D(Entity* entity) {};
 

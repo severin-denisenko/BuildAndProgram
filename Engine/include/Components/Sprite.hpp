@@ -21,9 +21,11 @@ namespace engine {
             texture = LoadTextureFromImage(image);
         }
 
-        void Render2D(Entity *entity) override{
+        void Create(Entity* entity) override{
             transform = entity->GetComponent<Transform>();
+        }
 
+        void Render2D(Entity *entity) override{
             destination_rectangle = { transform->x,
                                       transform->y,
                                       (float)image.width * transform->sx,

@@ -16,15 +16,20 @@ namespace engine {
         Text(const char* text, int font_size, Color color) : text(text),
         font_size(font_size), color(color) {}
 
+        void Create(Entity *entity) override{
+            transform = entity->GetComponent<Transform>();
+        }
+
         void Render2D(Entity *entity) override{
-            DrawText(text, (int) entity->GetComponent<Transform>()->x,
-                     (int) entity->GetComponent<Transform>()->y,
+            DrawText(text, (int) transform->x,
+                     (int) transform->y,
                      font_size, color);
         }
 
         const char* text;
         int font_size;
         Color color;
+        engine::Transform* transform;
     };
 } // engine
 

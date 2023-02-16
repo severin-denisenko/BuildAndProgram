@@ -15,11 +15,12 @@ namespace engine {
     public:
         FPSLabel() = default;
 
-        void Render2D(Entity * entity) override{
-            if(!transform)
-                transform = entity->GetComponent<Transform>();
+        void Create(Entity * entity) override{
+            transform = entity->GetComponent<Transform>();
+        }
 
-            DrawFPS(transform->x, transform->y);
+        void Render2D(Entity * entity) override{
+            DrawFPS((int)transform->x, (int)transform->y);
         }
 
         Transform* transform = nullptr;

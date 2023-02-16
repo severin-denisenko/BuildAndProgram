@@ -36,6 +36,14 @@ namespace engine{
     }
 
     void Entity::Update() {
+        if(!created){
+            for (auto component: components) {
+                component->Create(this);
+            }
+
+            created = true;
+        }
+
         for (auto component: components) {
             component->Update(this);
         }

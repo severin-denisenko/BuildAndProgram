@@ -49,6 +49,7 @@ namespace engine {
 
         std::string name = "default";
     private:
+        bool created  = false;
         std::vector<Component*> components;
         std::vector<Entity*> entities;
     };
