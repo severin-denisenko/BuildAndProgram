@@ -26,11 +26,15 @@ namespace engine {
 
             destination_rectangle = { transform->x,
                                       transform->y,
-                                      transform->x + (float)image.width * transform->sx,
-                                      transform->y + (float)image.height * transform->sy};
+                                      (float)image.width * transform->sx,
+                                      (float)image.height * transform->sy};
 
             DrawTexturePro(texture, source_rectangle, destination_rectangle, origin,
                            (float)transform->rz, color);
+        }
+
+        ~Sprite() override{
+            UnloadTexture(texture);
         }
 
         const char * filename;

@@ -68,6 +68,17 @@ namespace engine {
             return {entity};
         }
 
+        EntityFactory Sprite(const char* filename, Color color){
+            auto sprite = new engine::Sprite(filename, color);
+            entity->AddComponent(sprite);
+            return {entity};
+        }
+
+        EntityFactory Add(Component* component){
+            entity->AddComponent(component);
+            return {entity};
+        }
+
         Entity* Get(){
             return entity;
         }

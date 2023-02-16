@@ -43,6 +43,8 @@ namespace engine {
             return nullptr;
         }
 
+        Entity* GetChildByIndex(size_t index);
+
         ~Entity();
 
         std::string name = "default";

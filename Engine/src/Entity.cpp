@@ -52,5 +52,12 @@ namespace engine{
     void Entity::AddComponent(Component *component) {
         components.emplace_back(component);
     }
+
+    Entity *Entity::GetChildByIndex(size_t index) {
+        if(index < entities.size())
+            return entities[index];
+        S_ERROR("Entity by this index does not exist.");
+        return nullptr;
+    }
 }
 
