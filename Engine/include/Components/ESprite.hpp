@@ -2,17 +2,17 @@
 // Created by Severin on 15.02.2023.
 //
 
-#ifndef BUILDANDPROGRAMM_SPRITE_HPP
-#define BUILDANDPROGRAMM_SPRITE_HPP
+#ifndef BUILDANDPROGRAMM_ESPRITE_HPP
+#define BUILDANDPROGRAMM_ESPRITE_HPP
 
-#include "Component.hpp"
+#include "EComponent.hpp"
 
 #include "raylib.h"
 
 namespace engine {
-    class Sprite : public Component {
+    class ESprite : public EComponent {
     public:
-        explicit Sprite(const char * filename, Color color = WHITE) : filename(filename), color(color){
+        explicit ESprite(const char * filename, Color color = WHITE) : filename(filename), color(color){
             image = LoadImage(filename);
 
             source_rectangle = { 0.0f, 0.0f, (float)image.width, (float)image.height};
@@ -21,11 +21,11 @@ namespace engine {
             texture = LoadTextureFromImage(image);
         }
 
-        void Create(Entity* entity) override{
-            transform = entity->GetComponent<Transform>();
+        void Create(EEntity* entity) override{
+            transform = entity->GetComponent<ETransform>();
         }
 
-        void Render2D(Entity *entity) override{
+        void Render2D(EEntity *entity) override{
             destination_rectangle = { transform->x,
                                       transform->y,
                                       (float)image.width * transform->sx,
@@ -35,7 +35,7 @@ namespace engine {
                            (float)transform->rz, color);
         }
 
-        ~Sprite() override{
+        ~ESprite() override{
             UnloadTexture(texture);
         }
 
@@ -45,9 +45,9 @@ namespace engine {
         Rectangle destination_rectangle;
         Vector2 origin;
         Texture2D texture;
-        engine::Transform* transform;
+        engine::ETransform* transform;
         Color color;
     };
 } // engine
 
-#endif //BUILDANDPROGRAMM_SPRITE_HPP
+#endif //BUILDANDPROGRAMM_ESPRITE_HPP

@@ -2,7 +2,7 @@
 // Created by Severin on 15.02.2023.
 //
 
-#include "EntityFactory.h"
+#include "EEntityFactory.h"
 
 namespace engine {
 } // engine

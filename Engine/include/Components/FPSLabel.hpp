@@ -5,25 +5,25 @@
 #ifndef BUILDANDPROGRAMM_FPSLABEL_HPP
 #define BUILDANDPROGRAMM_FPSLABEL_HPP
 
-#include "Component.hpp"
+#include "EComponent.hpp"
 
 #include <raylib.h>
 
 namespace engine {
 
-    class FPSLabel : public Component{
+    class FPSLabel : public EComponent{
     public:
         FPSLabel() = default;
 
-        void Create(Entity * entity) override{
-            transform = entity->GetComponent<Transform>();
+        void Create(EEntity * entity) override{
+            transform = entity->GetComponent<ETransform>();
         }
 
-        void Render2D(Entity * entity) override{
+        void Render2D(EEntity * entity) override{
             DrawFPS((int)transform->x, (int)transform->y);
         }
 
-        Transform* transform = nullptr;
+        ETransform* transform = nullptr;
     };
 
 } // engine

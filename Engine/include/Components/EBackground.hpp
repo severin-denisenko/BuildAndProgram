@@ -5,16 +5,16 @@
 #ifndef BUILDANDPROGRAMM_BACKGROUND_H
 #define BUILDANDPROGRAMM_BACKGROUND_H
 
-#include "Component.hpp"
+#include "EComponent.hpp"
 
 #include <raylib.h>
 
 namespace engine {
-    class Background : public Component {
+    class EBackground : public EComponent {
     public:
-        explicit Background(Color color) : color(color) {}
+        explicit EBackground(Color color) : color(color) {}
 
-        void Render2D(Entity* entity) override{
+        void Render2D(EEntity* entity) override{
             ClearBackground(color);
         }
 

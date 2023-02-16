@@ -2,27 +2,27 @@
 // Created by Severin on 15.02.2023.
 //
 
-#ifndef BUILDANDPROGRAMM_ENTITY_HPP
-#define BUILDANDPROGRAMM_ENTITY_HPP
+#ifndef BUILDANDPROGRAMM_EENTITY_HPP
+#define BUILDANDPROGRAMM_EENTITY_HPP
 
 #include <vector>
 #include <string>
 
 #include "../deps/SLib/include/SLib/SLog.hpp"
 
-#include "Components/Component.hpp"
-#include "Components/Transform.hpp"
+#include "Components/EComponent.hpp"
+#include "Components/ETransform.hpp"
 
 namespace engine {
-    class Entity {
+    class EEntity {
     public:
-        Entity() = default;
+        EEntity() = default;
 
-        Entity(const std::string& name): name(name) {}
+        EEntity(const std::string& name): name(name) {}
 
-        void AddComponent(Component* component);;
+        void AddComponent(EComponent* component);;
 
-        void AddEntity(Entity* entity);
+        void AddEntity(EEntity* entity);
 
         void Update();
 
@@ -43,18 +43,18 @@ namespace engine {
             return nullptr;
         }
 
-        Entity* GetChildByIndex(size_t index);
+        EEntity* GetChildByIndex(size_t index);
 
-        Entity* GetChildByName(const std::string& name);
+        EEntity* GetChildByName(const std::string& name);
 
-        ~Entity();
+        ~EEntity();
 
         std::string name = "default";
     private:
         bool created  = false;
-        std::vector<Component*> components;
-        std::vector<Entity*> entities;
+        std::vector<EComponent*> components;
+        std::vector<EEntity*> entities;
     };
 } // engine
 
-#endif //BUILDANDPROGRAMM_ENTITY_HPP
+#endif //BUILDANDPROGRAMM_EENTITY_HPP

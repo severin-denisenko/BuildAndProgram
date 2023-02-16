@@ -2,18 +2,18 @@
 // Created by Severin on 15.02.2023.
 //
 
-#ifndef BUILDANDPROGRAMM_SCENE_HPP
-#define BUILDANDPROGRAMM_SCENE_HPP
+#ifndef BUILDANDPROGRAMM_ESCENE_HPP
+#define BUILDANDPROGRAMM_ESCENE_HPP
 
-#include "Entity.hpp"
+#include "EEntity.hpp"
 
 #include <raylib.h>
 
 namespace engine {
 
-    class Scene {
+    class EScene {
     public:
-        Scene() = default;
+        EScene() = default;
 
         void Update(){
             root.Update();
@@ -31,9 +31,9 @@ namespace engine {
                           { 0.0f, 0.0f, 0.0f },
                           { 0.0f, 1.0f, 0.0f },
                           45.0f, 0 };;
-        Entity root;
+        EEntity root;
     };
 
 } // engine
 
-#endif //BUILDANDPROGRAMM_SCENE_HPP
+#endif //BUILDANDPROGRAMM_ESCENE_HPP

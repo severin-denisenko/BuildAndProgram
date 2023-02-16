@@ -2,12 +2,12 @@
 // Created by Severin on 15.02.2023.
 //
 
-#include "Window.hpp"
+#include "EWindow.hpp"
 
 #include "raylib.h"
 
 namespace engine{
-    Window::Window(const char* name) {
+    EWindow::EWindow(const char* name) {
         const int screenWidth = GetScreenWidth();
         const int screenHeight = GetScreenHeight();
 
@@ -18,7 +18,7 @@ namespace engine{
         ToggleFullscreen();
     }
 
-    Window::~Window() {
+    EWindow::~EWindow() {
         CloseWindow();
     }
 }

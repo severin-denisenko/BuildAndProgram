@@ -2,10 +2,10 @@
 // Created by Severin on 15.02.2023.
 //
 
-#include "Scene.hpp"
+#include "EScene.hpp"
 
 namespace engine {
-    void Scene::Render() {
+    void EScene::Render() {
         BeginDrawing();
         BeginMode3D(camera);
         root.Render3D();
@@ -14,7 +14,7 @@ namespace engine {
         EndDrawing();
     }
 
-    void Scene::Render3D() {
+    void EScene::Render3D() {
         BeginDrawing();
         BeginMode3D(camera);
         root.Render3D();
@@ -22,13 +22,13 @@ namespace engine {
         EndDrawing();
     }
 
-    void Scene::Render2D() {
+    void EScene::Render2D() {
         BeginDrawing();
         root.Render2D();
         EndDrawing();
     }
 
-    void Scene::Run() {
+    void EScene::Run() {
         while (!WindowShouldClose()){
             Update();
             Render();

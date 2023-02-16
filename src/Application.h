@@ -5,24 +5,24 @@
 #ifndef BUILDANDPROGRAMM_APPLICATION_H
 #define BUILDANDPROGRAMM_APPLICATION_H
 
-#include <Window.hpp>
-#include <Scene.hpp>
+#include <EWindow.hpp>
+#include <EScene.hpp>
 
-#include <EntityFactory.h>
+#include <EEntityFactory.h>
 
-class MyComponent : public engine::Component{
+class MyComponent : public engine::EComponent{
 public:
     MyComponent(){
         speed_x = GetRandomValue(-100, 100);
         speed_y = GetRandomValue(-100, 100);
     }
 
-    void Create(engine::Entity* entity) override{
-        transform = entity->GetComponent<engine::Transform>();
-        sprite = entity->GetComponent<engine::Sprite>();
+    void Create(engine::EEntity* entity) override{
+        transform = entity->GetComponent<engine::ETransform>();
+        sprite = entity->GetComponent<engine::ESprite>();
     }
 
-    void Update(engine::Entity* entity) override{
+    void Update(engine::EEntity* entity) override{
         transform->x += speed_x * GetFrameTime();
         transform->y += speed_y * GetFrameTime();
 
@@ -35,14 +35,14 @@ public:
     float speed_x;
     float speed_y;
 
-    engine::Transform* transform;
-    engine::Sprite* sprite;
+    engine::ETransform* transform;
+    engine::ESprite* sprite;
 };
 
-class MySecondComponent : public engine::Component{
-    void Update(engine::Entity* entity) override{
+class MySecondComponent : public engine::EComponent{
+    void Update(engine::EEntity* entity) override{
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
-            entity->AddEntity(engine::EntityFactory("wolic")
+            entity->AddEntity(engine::EEntityFactory("wolic")
                                       .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
                                       .Sprite("src/img.png", WHITE)
                                       .Add(new MyComponent()).Get());
@@ -53,16 +53,16 @@ class MySecondComponent : public engine::Component{
 class Application {
 public:
     void Run(){
-        engine::Window window("Build And Program");
+        engine::EWindow window("Build And Program");
 
-        engine::Scene scene;
+        engine::EScene scene;
 
-        scene.root.AddEntity(engine::EntityFactory("Background").Background(WHITE).Get());
+        scene.root.AddEntity(engine::EEntityFactory("Background").Background(WHITE).Get());
 
-        scene.root.AddEntity(engine::EntityFactory("Spawner")
+        scene.root.AddEntity(engine::EEntityFactory("Spawner")
                                   .Add(new MySecondComponent()).Get());
 
-        scene.root.AddEntity(engine::EntityFactory("FPS").Transform(10, 10).FPSLabel().Get());
+        scene.root.AddEntity(engine::EEntityFactory("FPS").Transform(10, 10).FPSLabel().Get());
 
         scene.Run();
     }
