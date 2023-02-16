@@ -4,7 +4,7 @@
 
 #include "EScene.hpp"
 
-namespace engine {
+namespace Engine {
     void EScene::Render() {
         BeginDrawing();
         BeginMode3D(camera);

@@ -7,7 +7,7 @@
 
 #include <string>
 
-namespace engine{
+namespace Engine{
     class EWindow {
     public:
         explicit EWindow(const char* name);

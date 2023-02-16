@@ -13,7 +13,7 @@
 #include "Components/EComponent.hpp"
 #include "Components/ETransform.hpp"
 
-namespace engine {
+namespace Engine {
     class EEntity {
     public:
         EEntity() = default;

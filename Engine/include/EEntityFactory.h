@@ -13,7 +13,7 @@
 #include "Components/ESprite.hpp"
 #include "Components/FPSLabel.hpp"
 
-namespace engine {
+namespace Engine {
 
     class EEntityFactory {
     public:
@@ -28,55 +28,55 @@ namespace engine {
         EEntityFactory(EEntity* entity) : entity(entity) {};
 
         EEntityFactory Transform(){
-            auto transform = new engine::ETransform();
+            auto transform = new Engine::ETransform();
             entity->AddComponent(transform);
             return {entity};
         }
 
         EEntityFactory Transform(float x, float y){
-            auto transform = new engine::ETransform(x, y);
+            auto transform = new Engine::ETransform(x, y);
             entity->AddComponent(transform);
             return {entity};
         }
 
         EEntityFactory Transform(float x, float y, float rx, float ry){
-            auto transform = new engine::ETransform(x, y, rx, ry);
+            auto transform = new Engine::ETransform(x, y, rx, ry);
             entity->AddComponent(transform);
             return {entity};
         }
 
         EEntityFactory Transform(float x, float y, float rx, float ry, float sx, float sy){
-            auto transform = new engine::ETransform(x, y, rx, ry, sx, sy);
+            auto transform = new Engine::ETransform(x, y, rx, ry, sx, sy);
             entity->AddComponent(transform);
             return {entity};
         }
 
         EEntityFactory Text(const char* msg, int size, Color color){
-            auto text = new engine::EText(msg, size, color);
+            auto text = new Engine::EText(msg, size, color);
             entity->AddComponent(text);
             return {entity};
         }
 
         EEntityFactory Background(Color color){
-            auto background = new engine::EBackground(color);
+            auto background = new Engine::EBackground(color);
             entity->AddComponent(background);
             return {entity};
         }
 
         EEntityFactory Sprite(const char* filename){
-            auto sprite = new engine::ESprite(filename);
+            auto sprite = new Engine::ESprite(filename);
             entity->AddComponent(sprite);
             return {entity};
         }
 
         EEntityFactory Sprite(const char* filename, Color color){
-            auto sprite = new engine::ESprite(filename, color);
+            auto sprite = new Engine::ESprite(filename, color);
             entity->AddComponent(sprite);
             return {entity};
         }
 
         EEntityFactory FPSLabel(){
-            auto label = new engine::FPSLabel();
+            auto label = new Engine::FPSLabel();
             entity->AddComponent(label);
             return {entity};
         }

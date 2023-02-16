@@ -7,7 +7,7 @@
 
 #include "EComponent.hpp"
 
-namespace engine {
+namespace Engine {
     class ETransform : public EComponent {
     public:
         ETransform() = default;

@@ -9,7 +9,7 @@
 
 #include <raylib.h>
 
-namespace engine {
+namespace Engine {
 
     class EScene {
     public:

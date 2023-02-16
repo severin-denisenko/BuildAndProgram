@@ -10,7 +10,7 @@
 
 #include "raylib.h"
 
-namespace engine {
+namespace Engine {
     class EText : public EComponent {
     public:
         EText(const char* text, int font_size, Color color) : text(text),
@@ -29,7 +29,7 @@ namespace engine {
         const char* text;
         int font_size;
         Color color;
-        engine::ETransform* transform;
+        Engine::ETransform* transform;
     };
 } // engine
 

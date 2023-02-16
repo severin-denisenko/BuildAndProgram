@@ -9,7 +9,7 @@
 
 #include <raylib.h>
 
-namespace engine {
+namespace Engine {
 
     class FPSLabel : public EComponent{
     public:

@@ -4,5 +4,5 @@
 
 #include "EEntityFactory.h"
 
-namespace engine {
+namespace Engine {
 } // engine

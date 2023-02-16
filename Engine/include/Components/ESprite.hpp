@@ -9,7 +9,7 @@
 
 #include "raylib.h"
 
-namespace engine {
+namespace Engine {
     class ESprite : public EComponent {
     public:
         explicit ESprite(const char * filename, Color color = WHITE) : filename(filename), color(color){
@@ -45,7 +45,7 @@ namespace engine {
         Rectangle destination_rectangle;
         Vector2 origin;
         Texture2D texture;
-        engine::ETransform* transform;
+        Engine::ETransform* transform;
         Color color;
     };
 } // engine

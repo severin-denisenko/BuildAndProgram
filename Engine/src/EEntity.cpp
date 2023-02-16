@@ -4,7 +4,7 @@
 
 #include "EEntity.hpp"
 
-namespace engine{
+namespace Engine{
     EEntity::~EEntity() {
         for (auto component: components) {
             delete component;

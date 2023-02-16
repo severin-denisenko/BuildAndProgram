@@ -6,7 +6,7 @@
 
 #include "raylib.h"
 
-namespace engine{
+namespace Engine{
     EWindow::EWindow(const char* name) {
         const int screenWidth = GetScreenWidth();
         const int screenHeight = GetScreenHeight();

@@ -7,7 +7,7 @@
 
 #include "EEntity.hpp"
 
-namespace engine {
+namespace Engine {
     class EEntity;
 
     class EComponent {

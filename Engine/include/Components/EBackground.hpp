@@ -9,7 +9,7 @@
 
 #include <raylib.h>
 
-namespace engine {
+namespace Engine {
     class EBackground : public EComponent {
     public:
         explicit EBackground(Color color) : color(color) {}
