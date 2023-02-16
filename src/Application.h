@@ -10,33 +10,31 @@
 
 #include <EEntityFactory.h>
 
-class MyComponent : public Engine::EComponent{
+class MyComponent : public Engine::ERectangle{
 public:
-    MyComponent(){
+    explicit MyComponent(Engine::ESprite sprite) : ERectangle(sprite) {
         speed_x = GetRandomValue(-100, 100);
         speed_y = GetRandomValue(-100, 100);
     }
 
     void Create(Engine::EEntity* entity) override{
-        transform = entity->GetComponent<Engine::ETransform>();
-        sprite = entity->GetComponent<Engine::ESprite>();
+        Engine::ERectangle::Create(entity);
     }
 
     void Update(Engine::EEntity* entity) override{
+        Engine::ERectangle::Update(entity);
+
         transform->x += speed_x * GetFrameTime();
         transform->y += speed_y * GetFrameTime();
 
-        if (transform->x > GetScreenWidth() - sprite->source_rectangle.width * 2 || transform->x < 0)
+        if (transform->x > GetScreenWidth() - sprite.source.width * 2|| transform->x < 0)
             speed_x *= -1;
-        if (transform->y > GetScreenHeight() - sprite->source_rectangle.height * 2 || transform->y < 0)
+        if (transform->y > GetScreenHeight() - sprite.source.height * 2 || transform->y < 0)
             speed_y *= -1;
     }
 
     float speed_x;
     float speed_y;
-
-    Engine::ETransform* transform;
-    Engine::ESprite* sprite;
 };
 
 class MySecondComponent : public Engine::EComponent{
@@ -44,10 +42,12 @@ class MySecondComponent : public Engine::EComponent{
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
             entity->AddEntity(Engine::EEntityFactory("wolic")
                                       .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
-                                      .Sprite("src/img.png", WHITE)
-                                      .Add(new MyComponent()).Get());
+                                      .Add(new MyComponent(sprite)).Get());
         }
     }
+
+    Engine::ETexture texture = Engine::ETexture("src/img.png");
+    Engine::ESprite sprite = Engine::ESprite(texture);
 };
 
 class Application {

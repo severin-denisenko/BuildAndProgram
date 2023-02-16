@@ -10,7 +10,7 @@
 #include "Components/ETransform.hpp"
 #include "Components/EText.hpp"
 #include "Components/EBackground.hpp"
-#include "Components/ESprite.hpp"
+#include "Components/ERectangle.hpp"
 #include "Components/FPSLabel.hpp"
 
 namespace Engine {
@@ -63,15 +63,9 @@ namespace Engine {
             return {entity};
         }
 
-        EEntityFactory Sprite(const char* filename){
-            auto sprite = new Engine::ESprite(filename);
-            entity->AddComponent(sprite);
-            return {entity};
-        }
-
-        EEntityFactory Sprite(const char* filename, Color color){
-            auto sprite = new Engine::ESprite(filename, color);
-            entity->AddComponent(sprite);
+        EEntityFactory Sprite(ESprite sprite){
+            auto rectangle = new Engine::ERectangle(sprite);
+            entity->AddComponent(rectangle);
             return {entity};
         }
 
