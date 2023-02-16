@@ -7,7 +7,7 @@
 
 #include "Component.hpp"
 
-#include "raylib.h"
+#include <raylib.h>
 
 namespace engine {
     class Background : public Component {

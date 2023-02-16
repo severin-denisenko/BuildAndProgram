@@ -39,6 +39,17 @@ public:
     engine::Sprite* sprite;
 };
 
+class MySecondComponent : public engine::Component{
+    void Update(engine::Entity* entity) override{
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+            entity->AddEntity(engine::EntityFactory("wolic")
+                                      .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
+                                      .Sprite("src/img.png", WHITE)
+                                      .Add(new MyComponent()).Get());
+        }
+    }
+};
+
 class Application {
 public:
     void Run(){
@@ -48,14 +59,10 @@ public:
 
         scene.root.AddEntity(engine::EntityFactory("Background").Background(WHITE).Get());
 
-        for (int i = 0; i < 100; ++i) {
-            scene.root.AddEntity(engine::EntityFactory("wolic")
-                                         .Transform(GetScreenWidth()/2, GetScreenHeight()/2, 0, 0, 2, 2).Sprite("src/img.png", WHITE)
-                                         .Add(new MyComponent()).Get());
-        }
+        scene.root.AddEntity(engine::EntityFactory("Spawner")
+                                  .Add(new MySecondComponent()).Get());
 
-        scene.root.AddEntity(engine::EntityFactory("FPS Counter").Transform(10, 10)
-                                     .FPSLabel().Get());
+        scene.root.AddEntity(engine::EntityFactory("FPS").Transform(10, 10).FPSLabel().Get());
 
         scene.Run();
     }
