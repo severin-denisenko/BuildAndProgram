@@ -44,6 +44,7 @@ namespace Engine {
         }
 
         EEntity* GetChildByIndex(size_t index);
+        size_t GetChildCount();
 
         EEntity* GetChildByName(const std::string& name);
 

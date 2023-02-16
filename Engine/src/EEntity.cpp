@@ -83,5 +83,9 @@ namespace Engine{
         S_ERROR("Entity with this name does not exist: " + find);
         return nullptr;
     }
+
+    size_t EEntity::GetChildCount() {
+        return entities.size();
+    }
 }
 

@@ -27,7 +27,7 @@ public:
         transform->x += speed_x * GetFrameTime();
         transform->y += speed_y * GetFrameTime();
 
-        if (transform->x > GetScreenWidth() - sprite.source.width * 2|| transform->x < 0)
+        if (transform->x > GetScreenWidth() - sprite.source.width * 2|| transform->x < 400)
             speed_x *= -1;
         if (transform->y > GetScreenHeight() - sprite.source.height * 2 || transform->y < 0)
             speed_y *= -1;
@@ -40,14 +40,28 @@ public:
 class MySecondComponent : public Engine::EComponent{
     void Update(Engine::EEntity* entity) override{
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
-            entity->AddEntity(Engine::EEntityFactory("wolic")
-                                      .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
-                                      .Add(new MyComponent(sprite)).Get());
+            for (int i = 0; i < 100; ++i) {
+                entity->AddEntity(Engine::EEntityFactory("wolic")
+                                          .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
+                                          .Add(new MyComponent(sprite)).Get());
+
+            }
         }
     }
 
     Engine::ETexture texture = Engine::ETexture("src/img.png");
     Engine::ESprite sprite = Engine::ESprite(texture);
+};
+
+class MyThirdComponent : public Engine::EText{
+public:
+    MyThirdComponent() : Engine::EText("Wabits count: 0", 22, BLACK) {}
+
+    void Update(Engine::EEntity* entity) override{
+        Engine::EText::Update(entity);
+
+        text = "Wabits count: " + std::to_string(entity->GetChildCount());
+    }
 };
 
 class Application {
@@ -59,8 +73,10 @@ public:
 
         scene.root.AddEntity(Engine::EEntityFactory("Background").Background(WHITE).Get());
 
-        scene.root.AddEntity(Engine::EEntityFactory("Spawner")
-                                  .Add(new MySecondComponent()).Get());
+        scene.root.AddEntity(Engine::EEntityFactory("Spawner").Transform(10, 40)
+                                     .Add(new MyThirdComponent())
+                                     .Add(new MySecondComponent())
+                                     .Get());
 
         scene.root.AddEntity(Engine::EEntityFactory("FPS").Transform(10, 10).FPSLabel().Get());
 

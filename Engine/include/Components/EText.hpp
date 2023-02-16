@@ -5,6 +5,9 @@
 #ifndef BUILDANDPROGRAMM_TEXT_H
 #define BUILDANDPROGRAMM_TEXT_H
 
+#include <string>
+#include <utility>
+
 #include "EEntity.hpp"
 #include "EComponent.hpp"
 
@@ -13,7 +16,7 @@
 namespace Engine {
     class EText : public EComponent {
     public:
-        EText(const char* text, int font_size, Color color) : text(text),
+        EText(std::string text, int font_size, Color color) : text(std::move(text)),
                                                               font_size(font_size), color(color) {}
 
         void Create(EEntity *entity) override{
@@ -21,12 +24,12 @@ namespace Engine {
         }
 
         void Render2D(EEntity *entity) override{
-            DrawText(text, (int) transform->x,
+            DrawText(text.c_str(), (int) transform->x,
                      (int) transform->y,
                      font_size, color);
         }
 
-        const char* text;
+        std::string text;
         int font_size;
         Color color;
         Engine::ETransform* transform;
