@@ -17,7 +17,7 @@ public:
         speed_y = GetRandomValue(1, 100);
     }
 
-    void Apply(engine::Entity* entity) override{
+    void Update(engine::Entity* entity) override{
         if(!transform)
             transform = entity->GetComponent<engine::Transform>();
 

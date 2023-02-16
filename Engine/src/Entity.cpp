@@ -35,13 +35,13 @@ namespace engine{
         }
     }
 
-    void Entity::Apply() {
+    void Entity::Update() {
         for (auto component: components) {
-            component->Apply(this);
+            component->Update(this);
         }
 
         for (auto entity: entities) {
-            entity->Apply();
+            entity->Update();
         }
     }
 

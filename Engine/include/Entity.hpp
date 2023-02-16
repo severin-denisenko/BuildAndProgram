@@ -24,7 +24,7 @@ namespace engine {
 
         void AddEntity(Entity* entity);
 
-        void Apply();
+        void Update();
 
         void Render2D();
 

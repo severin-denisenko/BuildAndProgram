@@ -15,8 +15,8 @@ namespace engine {
     public:
         Scene() = default;
 
-        void Apply(){
-            root.Apply();
+        void Update(){
+            root.Update();
         }
 
         void Render2D();;

@@ -30,7 +30,7 @@ namespace engine {
 
     void Scene::Run() {
         while (!WindowShouldClose()){
-            Apply();
+            Update();
             Render();
         }
     }
