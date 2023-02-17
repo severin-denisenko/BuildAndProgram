@@ -16,9 +16,9 @@
 namespace Engine {
     class EEntity {
     public:
-        EEntity() = default;
+        EEntity();
 
-        EEntity(const std::string& name): name(name) {}
+        EEntity(const std::string& name);
 
         void AddComponent(EComponent* component);;
 
@@ -39,7 +39,7 @@ namespace Engine {
                     return val;
             }
 
-            S_ERROR("Can't find requested component.");
+            S_ERROR("Can't find component with type: " + std::string(typeid(T).name()));
             return nullptr;
         }
 

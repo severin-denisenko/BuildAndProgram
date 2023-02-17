@@ -13,6 +13,8 @@ namespace Engine{
         for (auto entity: entities) {
             delete entity;
         }
+
+        S_INFO("Entity " + name + " deleted.");
     }
 
     void EEntity::Render3D() {
@@ -86,6 +88,14 @@ namespace Engine{
 
     size_t EEntity::GetChildCount() {
         return entities.size();
+    }
+
+    EEntity::EEntity(const std::string &name) : name(name) {
+        S_INFO("Entity " + name + " created.");
+    }
+
+    EEntity::EEntity() {
+        S_INFO("Entity " + name + " created.");
     }
 }
 

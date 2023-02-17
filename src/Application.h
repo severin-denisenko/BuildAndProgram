@@ -39,8 +39,8 @@ public:
 
 class MySecondComponent : public Engine::EComponent{
     void Update(Engine::EEntity* entity) override{
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
-            for (int i = 0; i < 100; ++i) {
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+            for (int i = 0; i < 1; ++i) {
                 entity->AddEntity(Engine::EEntityFactory("wolic")
                                           .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
                                           .Add(new MyComponent(sprite)).Get());
@@ -68,6 +68,8 @@ class Application {
 public:
     void Run(){
         Engine::EWindow window("Build And Program");
+
+        S_LOG_LEVEL_INFO;
 
         Engine::EScene scene;
 
