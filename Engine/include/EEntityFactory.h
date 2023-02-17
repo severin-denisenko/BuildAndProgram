@@ -12,6 +12,7 @@
 #include "Components/EBackground.hpp"
 #include "Components/ERectangle.hpp"
 #include "Components/FPSLabel.hpp"
+#include "Components/ERigidBody.hpp"
 
 namespace Engine {
 
@@ -63,7 +64,7 @@ namespace Engine {
             return {entity};
         }
 
-        EEntityFactory Sprite(ESprite sprite){
+        EEntityFactory Rectangle(ESprite sprite){
             auto rectangle = new Engine::ERectangle(sprite);
             entity->AddComponent(rectangle);
             return {entity};
@@ -72,6 +73,12 @@ namespace Engine {
         EEntityFactory FPSLabel(){
             auto label = new Engine::FPSLabel();
             entity->AddComponent(label);
+            return {entity};
+        }
+
+        EEntityFactory RigidBody(){
+            auto rigidBody = new Engine::ERigidBody();
+            entity->AddComponent(rigidBody);
             return {entity};
         }
 

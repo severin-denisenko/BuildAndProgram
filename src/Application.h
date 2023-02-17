@@ -7,43 +7,18 @@
 
 #include <EWindow.hpp>
 #include <EScene.hpp>
+#include <ESprite.hpp>
 
 #include <EEntityFactory.h>
 
-class MyComponent : public Engine::ERectangle{
-public:
-    explicit MyComponent(Engine::ESprite sprite) : ERectangle(sprite) {
-        speed_x = GetRandomValue(-100, 100);
-        speed_y = GetRandomValue(-100, 100);
-    }
-
-    void Create(Engine::EEntity* entity) override{
-        Engine::ERectangle::Create(entity);
-    }
-
-    void Update(Engine::EEntity* entity) override{
-        Engine::ERectangle::Update(entity);
-
-        transform->x += speed_x * GetFrameTime();
-        transform->y += speed_y * GetFrameTime();
-
-        if (transform->x > GetScreenWidth() - sprite.source.width * 2|| transform->x < 400)
-            speed_x *= -1;
-        if (transform->y > GetScreenHeight() - sprite.source.height * 2 || transform->y < 0)
-            speed_y *= -1;
-    }
-
-    float speed_x;
-    float speed_y;
-};
-
 class MySecondComponent : public Engine::EComponent{
     void Update(Engine::EEntity* entity) override{
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
             for (int i = 0; i < 1; ++i) {
                 entity->AddEntity(Engine::EEntityFactory("wolic")
+                                          .Rectangle(sprite)
                                           .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
-                                          .Add(new MyComponent(sprite)).Get());
+                                          .RigidBody().Get());
 
             }
         }
