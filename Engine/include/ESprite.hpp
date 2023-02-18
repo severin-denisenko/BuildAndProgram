@@ -19,6 +19,7 @@ namespace Engine {
         Rectangle destination;
         float rotation;
         Vector2 origin;
+        Color color = WHITE;
 
     private:
         const ETexture& texture;

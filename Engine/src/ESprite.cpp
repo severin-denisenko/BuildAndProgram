@@ -13,6 +13,6 @@ namespace Engine {
 
     void ESprite::Render() {
         DrawTexturePro(texture.Get(), source, destination, origin,
-                       rotation, WHITE);
+                       rotation, color);
     }
 } // Engine

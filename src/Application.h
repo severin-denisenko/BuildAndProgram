@@ -19,6 +19,14 @@ class MySecondComponent : public Engine::EComponent{
                     .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
                     .RigidBody().Get();
 
+            new_entity->GetComponent<Engine::ERigidBody>()->acceleration_x = (float)GetRandomValue(-100, 100);
+            new_entity->GetComponent<Engine::ERigidBody>()->acceleration_y = (float)GetRandomValue(-200, 100);
+
+            new_entity->GetComponent<Engine::ERectangle>()->sprite.color = {(unsigned char)GetRandomValue(0, 255),
+                                                                            (unsigned char)GetRandomValue(0, 255),
+                                                                            (unsigned char)GetRandomValue(0, 255),
+                                                                            (unsigned char)GetRandomValue(0, 255)};
+
             entity->AddEntity(new_entity);
             entity->GetScene().creator.Add(new_entity);
             entity->GetScene().updater.Add(new_entity);
