@@ -32,6 +32,8 @@ namespace Engine {
 
         void Render3D();
 
+        void RenderUI();
+
         template<typename T>
         T* GetComponent(){
             for(auto component: components){

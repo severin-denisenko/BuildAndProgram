@@ -86,5 +86,14 @@ namespace Engine{
     EScene &EEntity::GetScene() {
         return scene;
     }
+
+    void EEntity::RenderUI() {
+        if(!created)
+            return;
+
+        for (auto component: components) {
+            component->RenderUI(this);
+        }
+    }
 }
 

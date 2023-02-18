@@ -14,26 +14,22 @@ namespace Engine {
     public:
         explicit ESceneComposer(EScene& scene): scene(scene) {}
 
-        void Add(EEntity* entity, bool create, bool update, bool render){
+        void Add(EEntity* entity){
             scene.root->AddEntity(entity);
 
-            if(create)
-                scene.creator.Add(entity);
-            if (update)
-                scene.updater.Add(entity);
-            if(render)
-                scene.renderer.Add2D(entity);
+            scene.creator.Add(entity);
+            scene.updater.Add(entity);
+            scene.renderer.Add2D(entity);
+            scene.renderer.AddUI(entity);
         }
 
-        void AddTo(EEntity* parent, EEntity* entity, bool create, bool update, bool render){
+        void AddTo(EEntity* parent, EEntity* entity){
             parent->AddEntity(entity);
 
-            if(create)
-                scene.creator.Add(entity);
-            if (update)
-                scene.updater.Add(entity);
-            if(render)
-                scene.renderer.Add2D(entity);
+            scene.creator.Add(entity);
+            scene.updater.Add(entity);
+            scene.renderer.Add2D(entity);
+            scene.renderer.AddUI(entity);
         }
     private:
         EScene& scene;

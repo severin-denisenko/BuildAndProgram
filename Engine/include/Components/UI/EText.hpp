@@ -9,7 +9,7 @@
 #include <utility>
 
 #include "EEntity.hpp"
-#include "EComponent.hpp"
+#include "Components/EComponent.hpp"
 
 #include "raylib.h"
 
@@ -24,7 +24,7 @@ namespace Engine {
             S_INFO("Component EText created.");
         }
 
-        void Render2D(EEntity *entity) override{
+        void RenderUI(EEntity *entity) override{
             if (transform == nullptr)
                 S_FATAL("ETransform is null!");
 

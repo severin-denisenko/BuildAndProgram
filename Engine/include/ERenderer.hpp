@@ -17,12 +17,14 @@ namespace Engine {
 
         void Add2D(Engine::EEntity* entity);
         void Add3D(Engine::EEntity* entity);
+        void AddUI(Engine::EEntity* entity);
 
         void Render(Camera2D& camera2D, Camera3D& camera3D);
 
     private:
         std::vector<Engine::EEntity*> entities2D;
         std::vector<Engine::EEntity*> entities3D;
+        std::vector<Engine::EEntity*> entitiesUI;
     };
 
 } // Engine

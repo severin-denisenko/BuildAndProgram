@@ -5,9 +5,9 @@
 #ifndef BUILDANDPROGRAMM_FPSLABEL_HPP
 #define BUILDANDPROGRAMM_FPSLABEL_HPP
 
-#include "EComponent.hpp"
+#include "Components/EComponent.hpp"
 
-#include <raylib.h>
+#include "raylib.h"
 
 namespace Engine {
 
@@ -20,7 +20,7 @@ namespace Engine {
             S_INFO("Component FPSLabel created.");
         }
 
-        void Render2D(EEntity * entity) override{
+        void RenderUI(EEntity * entity) override{
             if (transform == nullptr)
                 S_FATAL("ETransform is null!");
 

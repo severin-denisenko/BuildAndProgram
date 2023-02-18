@@ -16,6 +16,7 @@ namespace Engine {
         virtual void Create(EEntity* entity) {};
         virtual void Render2D(EEntity* entity) {};
         virtual void Render3D(EEntity* entity) {};
+        virtual void RenderUI(EEntity* entity) {};
 
         virtual ~EComponent() = default;
     };

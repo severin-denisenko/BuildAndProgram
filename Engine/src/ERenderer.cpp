@@ -14,6 +14,10 @@ namespace Engine {
         entities3D.push_back(entity);
     }
 
+    void ERenderer::AddUI(Engine::EEntity* entity) {
+        entitiesUI.push_back(entity);
+    }
+
     void ERenderer::Render(Camera2D& camera2D, Camera3D& camera3D) {
         BeginDrawing();
 
@@ -28,6 +32,10 @@ namespace Engine {
             entity->Render2D();
         }
         EndMode2D();
+
+        for (auto entity: entitiesUI) {
+            entity->RenderUI();
+        }
 
         EndDrawing();
     }
