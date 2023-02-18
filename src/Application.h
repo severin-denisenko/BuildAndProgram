@@ -10,27 +10,28 @@
 #include <ESprite.hpp>
 #include <EEngine.hpp>
 #include <EEntityFactory.hpp>
+#include <ESceneComposer.hpp>
 
 class MySecondComponent : public Engine::EComponent{
     void Update(Engine::EEntity* entity) override{
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
-            Engine::EEntity* new_entity = Engine::EEntityFactory("wolic", entity->GetScene())
-                    .Rectangle(sprite)
-                    .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
-                    .RigidBody().Get();
+            for (int i = 0; i < 10; ++i) {
+                Engine::EEntity* new_entity = Engine::EEntityFactory("wolic", entity->GetScene())
+                        .Rectangle(sprite)
+                        .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
+                        .RigidBody().Get();
 
-            new_entity->GetComponent<Engine::ERigidBody>()->acceleration_x = (float)GetRandomValue(-100, 100);
-            new_entity->GetComponent<Engine::ERigidBody>()->acceleration_y = (float)GetRandomValue(-200, 100);
+                new_entity->GetComponent<Engine::ERigidBody>()->speed_x = (float)GetRandomValue(-100, 100);
+                new_entity->GetComponent<Engine::ERigidBody>()->speed_y = (float)GetRandomValue(-100, 100);
 
-            new_entity->GetComponent<Engine::ERectangle>()->sprite.color = {(unsigned char)GetRandomValue(0, 255),
-                                                                            (unsigned char)GetRandomValue(0, 255),
-                                                                            (unsigned char)GetRandomValue(0, 255),
-                                                                            (unsigned char)GetRandomValue(0, 255)};
+                new_entity->GetComponent<Engine::ERectangle>()->sprite.color = {(unsigned char)GetRandomValue(0, 255),
+                                                                                (unsigned char)GetRandomValue(0, 255),
+                                                                                (unsigned char)GetRandomValue(0, 255),
+                                                                                (unsigned char)GetRandomValue(0, 255)};
 
-            entity->AddEntity(new_entity);
-            entity->GetScene().creator.Add(new_entity);
-            entity->GetScene().updater.Add(new_entity);
-            entity->GetScene().renderer.Add2D(new_entity);
+                Engine::ESceneComposer(entity->GetScene()).AddTo(entity, new_entity,
+                                                                 true, true, true);
+            }
         }
     }
 
@@ -57,28 +58,19 @@ public:
         S_LOG_LEVEL_INFO;
 
         Engine::EScene scene;
+        Engine::ESceneComposer composer(scene);
 
-        Engine::EEntity* first = Engine::EEntityFactory("Background", scene).Background(WHITE).Get();
+        composer.Add(Engine::EEntityFactory("Background", scene).Background(WHITE).Get(),
+                     true, false, true);
 
-        scene.root->AddEntity(first);
-        scene.renderer.Add2D(first);
-        scene.creator.Add(first);
 
-        Engine::EEntity* second = Engine::EEntityFactory("Spawner", scene).Transform(10, 40)
+        composer.Add(Engine::EEntityFactory("Spawner", scene).Transform(10, 40)
                 .Add(new MyThirdComponent())
                 .Add(new MySecondComponent())
-                .Get();
+                .Get(), true, true, true);
 
-        scene.root->AddEntity(second);
-        scene.renderer.Add2D(second);
-        scene.updater.Add(second);
-        scene.creator.Add(second);
-
-        Engine::EEntity* third = Engine::EEntityFactory("FPS", scene).Transform(10, 10).FPSLabel().Get();
-
-        scene.root->AddEntity(third);
-        scene.renderer.Add2D(third);
-        scene.creator.Add(third);
+        composer.Add(Engine::EEntityFactory("FPS", scene).Transform(10, 10).FPSLabel().Get(),
+                     true, true, true);
 
         Engine::EEngine engine(scene, window);
         engine.Run();
