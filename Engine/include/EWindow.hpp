@@ -12,6 +12,8 @@ namespace Engine{
     public:
         explicit EWindow(const char* name);
         ~EWindow();
+
+        bool Open();
     };
 }
 

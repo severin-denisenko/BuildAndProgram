@@ -8,8 +8,8 @@
 #include <EWindow.hpp>
 #include <EScene.hpp>
 #include <ESprite.hpp>
-
-#include <EEntityFactory.h>
+#include <EEngine.hpp>
+#include <EEntityFactory.hpp>
 
 class MySecondComponent : public Engine::EComponent{
     void Update(Engine::EEntity* entity) override{
@@ -48,16 +48,30 @@ public:
 
         Engine::EScene scene;
 
-        scene.root.AddEntity(Engine::EEntityFactory("Background").Background(WHITE).Get());
+        Engine::EEntity* first = Engine::EEntityFactory("Background").Background(WHITE).Get();
 
-        scene.root.AddEntity(Engine::EEntityFactory("Spawner").Transform(10, 40)
-                                     .Add(new MyThirdComponent())
-                                     .Add(new MySecondComponent())
-                                     .Get());
+        scene.root.AddEntity(first);
+        scene.renderer.Add2D(first);
+        scene.creator.Add(first);
 
-        scene.root.AddEntity(Engine::EEntityFactory("FPS").Transform(10, 10).FPSLabel().Get());
+        Engine::EEntity* second = Engine::EEntityFactory("Spawner").Transform(10, 40)
+                .Add(new MyThirdComponent())
+                .Add(new MySecondComponent())
+                .Get();
 
-        scene.Run();
+        scene.root.AddEntity(second);
+        scene.renderer.Add2D(second);
+        scene.updater.Add(second);
+        scene.creator.Add(second);
+
+        Engine::EEntity* third = Engine::EEntityFactory("FPS").Transform(10, 10).FPSLabel().Get();
+
+        scene.root.AddEntity(third);
+        scene.renderer.Add2D(third);
+        scene.creator.Add(third);
+
+        Engine::EEngine engine(scene, window);
+        engine.Run();
     }
 };
 

@@ -18,6 +18,10 @@ namespace Engine{
         ToggleFullscreen();
     }
 
+    bool EWindow::Open() {
+        return !WindowShouldClose();
+    }
+
     EWindow::~EWindow() {
         CloseWindow();
     }

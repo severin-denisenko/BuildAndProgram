@@ -26,6 +26,8 @@ namespace Engine {
 
         void Update();
 
+        void Create();
+
         void Render2D();
 
         void Render3D();
@@ -52,7 +54,6 @@ namespace Engine {
 
         std::string name = "default";
     private:
-        bool created  = false;
         std::vector<EComponent*> components;
         std::vector<EEntity*> entities;
     };

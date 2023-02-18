@@ -17,6 +17,8 @@ namespace Engine {
 
         void Create(EEntity* entity) override{
             transform = entity->GetComponent<ETransform>();
+            S_INFO("Component ERectangle created");
+
         }
 
         void Update(EEntity* entity) override{

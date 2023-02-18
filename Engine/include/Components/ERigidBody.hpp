@@ -19,6 +19,7 @@ namespace Engine {
             transform = entity->GetComponent<Engine::ETransform>();
 
             acceleration_y = gravity;
+            S_INFO("Component ERigidBody created");
         }
 
         void Update(Engine::EEntity * entity) override{

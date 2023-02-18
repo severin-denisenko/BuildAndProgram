@@ -6,8 +6,9 @@
 #define BUILDANDPROGRAMM_ESCENE_HPP
 
 #include "EEntity.hpp"
-
-#include <raylib.h>
+#include "ERenderer.hpp"
+#include "EUpdater.hpp"
+#include "ECreator.hpp"
 
 namespace Engine {
 
@@ -15,23 +16,10 @@ namespace Engine {
     public:
         EScene() = default;
 
-        void Update(){
-            root.Update();
-        }
-
-        void Render2D();;
-
-        void Render3D();
-
-        void Render();
-
-        void Run();
-
-        Camera camera = { { 5.0f, 5.0f, 5.0f },
-                          { 0.0f, 0.0f, 0.0f },
-                          { 0.0f, 1.0f, 0.0f },
-                          45.0f, 0 };;
-        EEntity root;
+        EEntity root = EEntity("Root");
+        ERenderer renderer;
+        EUpdater updater;
+        ECreator creator;
     };
 
 } // engine

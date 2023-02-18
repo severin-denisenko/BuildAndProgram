@@ -38,19 +38,6 @@ namespace Engine{
     }
 
     void EEntity::Update() {
-        if(!created){
-            for (auto component: components) {
-                component->Create(this);
-            }
-
-            for (auto entity: entities) {
-                entity->Update();
-            }
-
-            created = true;
-            return;
-        }
-
         for (auto component: components) {
             component->Update(this);
         }
@@ -96,6 +83,16 @@ namespace Engine{
 
     EEntity::EEntity() {
         S_INFO("Entity " + name + " created.");
+    }
+
+    void EEntity::Create() {
+        for (auto component: components) {
+            component->Create(this);
+        }
+
+        for (auto entity: entities) {
+            entity->Create();
+        }
     }
 }
 

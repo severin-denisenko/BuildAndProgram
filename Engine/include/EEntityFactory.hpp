@@ -2,8 +2,8 @@
 // Created by Severin on 15.02.2023.
 //
 
-#ifndef BUILDANDPROGRAMM_EENTITYFACTORY_H
-#define BUILDANDPROGRAMM_EENTITYFACTORY_H
+#ifndef BUILDANDPROGRAMM_EENTITYFACTORY_HPP
+#define BUILDANDPROGRAMM_EENTITYFACTORY_HPP
 
 #include "EEntity.hpp"
 #include "Components/EComponent.hpp"
@@ -96,4 +96,4 @@ namespace Engine {
 
 } // engine
 
-#endif //BUILDANDPROGRAMM_EENTITYFACTORY_H
+#endif //BUILDANDPROGRAMM_EENTITYFACTORY_HPP
