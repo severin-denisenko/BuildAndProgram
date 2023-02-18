@@ -18,7 +18,6 @@ namespace Engine {
             tileMap.Render();
         }
 
-    private:
         ETileMap &tileMap;
     };
 

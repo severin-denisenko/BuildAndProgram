@@ -13,7 +13,6 @@ namespace Engine {
     class ETileSet {
     public:
         explicit ETileSet(const ETexture& texture) : texture(texture) {
-            origin = {0, 0};
             Splice(1, 1);
             rotation = 0;
             scale = {1, 1};
@@ -25,6 +24,7 @@ namespace Engine {
             float width = (float)texture.Height()/(float)j;
 
             destination = {0, 0, width, height};
+            origin = {width/2, height/2};
 
             for (size_t k = 0; k < i; ++k) {
                 for (size_t l = 0; l < j; ++l) {

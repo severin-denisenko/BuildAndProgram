@@ -16,6 +16,9 @@ class Character: public Engine::EComponent{
 public:
     void Create(Engine::EEntity* entity) override{
         transform = entity->GetComponent<Engine::ETransform>();
+
+        entity->GetScene().camera2D.offset.x = (float) GetScreenWidth() / 2;
+        entity->GetScene().camera2D.offset.y = (float) GetScreenHeight() / 2;
     }
 
     void Update(Engine::EEntity* entity) override{
@@ -29,6 +32,9 @@ public:
             transform->y -= delta;
         if (IsKeyDown(KEY_S))
             transform->y += delta;
+
+        entity->GetScene().camera2D.target.x = transform->x;
+        entity->GetScene().camera2D.target.y = transform->y;
     }
 
     Engine::ETransform* transform;
@@ -69,6 +75,7 @@ public:
         Engine::ETexture texture("src/img.png");
         Engine::ETileSet tileSet(texture);
         tileSet.Splice(6, 1);
+        Engine::ESprite sprite(texture);
 
         composer.Add(Engine::EEntityFactory("Character", scene).Transform(0, 0)
                              .SlideShow(tileSet).Add(new Character()).Get(),true, true, true);

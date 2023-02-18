@@ -12,7 +12,7 @@ namespace Engine {
     class ESprite {
     public:
         explicit ESprite(const ETexture& texture) : texture(texture) {
-            origin = {0, 0};
+            origin = {(float)texture.Width()/2, (float)texture.Height()/2};
             source = {0, 0, (float)texture.Width(), (float)texture.Height()};
             rotation = 0;
             scale = {1, 1};
