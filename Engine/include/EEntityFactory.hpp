@@ -14,6 +14,7 @@
 #include "Components/FPSLabel.hpp"
 #include "Components/ERigidBody.hpp"
 #include "Components/ESlideShow.h"
+#include "Components/ETiling.hpp"
 
 namespace Engine {
 
@@ -88,6 +89,12 @@ namespace Engine {
         EEntityFactory SlideShow(ETileSet& tileSet){
             auto slideShow = new Engine::ESlideShow(tileSet);
             entity->AddComponent(slideShow);
+            return {entity};
+        }
+
+        EEntityFactory Tiling(ETileMap& tileMap){
+            auto tiling = new Engine::ETiling(tileMap);
+            entity->AddComponent(tiling);
             return {entity};
         }
 

@@ -12,41 +12,26 @@
 #include <EEntityFactory.hpp>
 #include <ESceneComposer.hpp>
 
-class MySecondComponent : public Engine::EComponent{
-    void Create(Engine::EEntity* entity) override{
-        tileSet.Splice(6, 1);
-    }
-
-    void Update(Engine::EEntity* entity) override{
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-            Engine::EEntity* new_entity = Engine::EEntityFactory("wolic", entity->GetScene())
-                    .SlideShow(tileSet)
-                    .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 1, 1)
-                    .Get();
-
-            //new_entity->GetComponent<Engine::ERigidBody>()->speed_x = (float)GetRandomValue(-100, 100);
-            //new_entity->GetComponent<Engine::ERigidBody>()->speed_y = (float)GetRandomValue(-100, 100);
-
-            new_entity->GetComponent<Engine::ESlideShow>()->frameBetweenSlides = 8;
-
-            Engine::ESceneComposer(entity->GetScene()).AddTo(entity, new_entity,
-                                                             true, true, true);
-        }
-    }
-
-    Engine::ETexture texture = Engine::ETexture("src/img.png");
-    Engine::ETileSet tileSet = Engine::ETileSet(texture);
-};
-
-class MyThirdComponent : public Engine::EText{
+class Character: public Engine::EComponent{
 public:
-    MyThirdComponent() : Engine::EText("Wabits count: 0", 22, BLACK) {}
+    void Create(Engine::EEntity* entity) override{
+        transform = entity->GetComponent<Engine::ETransform>();
+    }
 
     void Update(Engine::EEntity* entity) override{
-        Engine::EText::Update(entity);
+        float delta = GetFrameTime() * 100;
 
-        text = "Wabits count: " + std::to_string(entity->GetChildCount());
+        if (IsKeyDown(KEY_D))
+            transform->x += delta;
+        if (IsKeyDown(KEY_A))
+            transform->x -= delta;
+        if (IsKeyDown(KEY_W))
+            transform->y -= delta;
+        if (IsKeyDown(KEY_S))
+            transform->y += delta;
     }
+
+    Engine::ETransform* transform;
 };
 
 class Application {
@@ -59,17 +44,34 @@ public:
         Engine::EScene scene;
         Engine::ESceneComposer composer(scene);
 
-        composer.Add(Engine::EEntityFactory("Background", scene).Background(WHITE).Get(),
+        Engine::ETexture tiles("src/tiles.png");
+        Engine::ETileSet tilesSet(tiles);
+        tilesSet.scale = {2, 2};
+        tilesSet.Splice(21, 17);
+        Engine::ETileMap tileMap(tilesSet);
+
+        for (int i = 0; i < 21; ++i) {
+            for (int j = 0; j < 17; ++j) {
+                tileMap.Set(i, j, i * 17 + j);
+            }
+        }
+
+        composer.Add(Engine::EEntityFactory("Back", scene)
+                             .Transform(0, 0).Tiling(tileMap).Get(), true, true, true);
+
+        composer.Add(Engine::EEntityFactory("Background", scene).Background(BLACK).Get(),
                      true, false, true);
 
 
-        composer.Add(Engine::EEntityFactory("Spawner", scene).Transform(10, 40)
-                .Add(new MyThirdComponent())
-                .Add(new MySecondComponent())
-                .Get(), true, true, true);
-
         composer.Add(Engine::EEntityFactory("FPS", scene).Transform(10, 10).FPSLabel().Get(),
                      true, true, true);
+
+        Engine::ETexture texture("src/img.png");
+        Engine::ETileSet tileSet(texture);
+        tileSet.Splice(6, 1);
+
+        composer.Add(Engine::EEntityFactory("Character", scene).Transform(0, 0)
+                             .SlideShow(tileSet).Add(new Character()).Get(),true, true, true);
 
         Engine::EEngine engine(scene, window);
         engine.Run();
