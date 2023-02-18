@@ -17,10 +17,13 @@ namespace Engine {
 
         void Create(EEntity * entity) override{
             transform = entity->GetComponent<ETransform>();
-            S_INFO("Component FPSLabel created");
+            S_INFO("Component FPSLabel created.");
         }
 
         void Render2D(EEntity * entity) override{
+            if (transform == nullptr)
+                S_FATAL("ETransform is null!");
+
             DrawFPS((int)transform->x, (int)transform->y);
         }
 

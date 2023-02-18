@@ -8,9 +8,8 @@
 
 namespace Engine {
     void EEngine::Run() {
-        scene.creator.Create();
-
         while (window.Open()){
+            scene.creator.Create();
             scene.updater.Update();
             scene.renderer.Render();
         }

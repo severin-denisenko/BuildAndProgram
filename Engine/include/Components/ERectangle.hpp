@@ -17,11 +17,16 @@ namespace Engine {
 
         void Create(EEntity* entity) override{
             transform = entity->GetComponent<ETransform>();
-            S_INFO("Component ERectangle created");
-
+            S_INFO("Component ERectangle created.");
         }
 
         void Update(EEntity* entity) override{
+            if (transform == nullptr)
+                S_FATAL("ETransform is null!");
+
+            if (transform == nullptr)
+                S_FATAL("ESprite is null!");
+
             sprite.destination.x = transform->x;
             sprite.destination.y = transform->y;
             sprite.destination.height = sprite.source.height * transform->sx;

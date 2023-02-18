@@ -19,10 +19,13 @@ namespace Engine {
             transform = entity->GetComponent<Engine::ETransform>();
 
             acceleration_y = gravity;
-            S_INFO("Component ERigidBody created");
+            S_INFO("Component ERigidBody created.");
         }
 
         void Update(Engine::EEntity * entity) override{
+            if (transform == nullptr)
+                S_FATAL("ETransform is null!");
+
             transform->x += speed_x * GetFrameTime() + acceleration_x * GetFrameTime() * GetFrameTime() / 2;
             transform->y += speed_y * GetFrameTime() + acceleration_y * GetFrameTime() * GetFrameTime() / 2;
             speed_x += acceleration_x * GetFrameTime();

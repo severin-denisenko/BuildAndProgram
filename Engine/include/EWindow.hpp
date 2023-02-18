@@ -10,7 +10,7 @@
 namespace Engine{
     class EWindow {
     public:
-        explicit EWindow(const char* name);
+        explicit EWindow(const char* name, bool fullScreen);
         ~EWindow();
 
         bool Open();

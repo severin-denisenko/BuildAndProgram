@@ -5,21 +5,21 @@
 #ifndef BUILDANDPROGRAMM_ESCENE_HPP
 #define BUILDANDPROGRAMM_ESCENE_HPP
 
-#include "EEntity.hpp"
 #include "ERenderer.hpp"
-#include "EUpdater.hpp"
 #include "ECreator.hpp"
+#include "EUpdater.hpp"
+#include "EEntity.hpp"
 
 namespace Engine {
 
     class EScene {
     public:
-        EScene() = default;
+        EScene();
 
-        EEntity root = EEntity("Root");
-        ERenderer renderer;
-        EUpdater updater;
-        ECreator creator;
+        Engine::EEntity* root;
+        Engine::ERenderer renderer;
+        Engine::EUpdater updater;
+        Engine::ECreator creator;
     };
 
 } // engine

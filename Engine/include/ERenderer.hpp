@@ -5,10 +5,11 @@
 #ifndef BUILDANDPROGRAMM_ERENDERER_HPP
 #define BUILDANDPROGRAMM_ERENDERER_HPP
 
-#include "EEntity.hpp"
+#include <vector>
 #include <raylib.h>
 
 namespace Engine {
+    class EEntity;
 
     class ERenderer {
     public:

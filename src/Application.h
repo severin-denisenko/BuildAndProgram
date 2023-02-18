@@ -14,13 +14,15 @@
 class MySecondComponent : public Engine::EComponent{
     void Update(Engine::EEntity* entity) override{
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
-            for (int i = 0; i < 1; ++i) {
-                entity->AddEntity(Engine::EEntityFactory("wolic")
-                                          .Rectangle(sprite)
-                                          .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
-                                          .RigidBody().Get());
+            Engine::EEntity* new_entity = Engine::EEntityFactory("wolic", entity->GetScene())
+                    .Rectangle(sprite)
+                    .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
+                    .RigidBody().Get();
 
-            }
+            entity->AddEntity(new_entity);
+            entity->GetScene().creator.Add(new_entity);
+            entity->GetScene().updater.Add(new_entity);
+            entity->GetScene().renderer.Add2D(new_entity);
         }
     }
 
@@ -42,31 +44,31 @@ public:
 class Application {
 public:
     void Run(){
-        Engine::EWindow window("Build And Program");
+        Engine::EWindow window("Build And Program", true);
 
         S_LOG_LEVEL_INFO;
 
         Engine::EScene scene;
 
-        Engine::EEntity* first = Engine::EEntityFactory("Background").Background(WHITE).Get();
+        Engine::EEntity* first = Engine::EEntityFactory("Background", scene).Background(WHITE).Get();
 
-        scene.root.AddEntity(first);
+        scene.root->AddEntity(first);
         scene.renderer.Add2D(first);
         scene.creator.Add(first);
 
-        Engine::EEntity* second = Engine::EEntityFactory("Spawner").Transform(10, 40)
+        Engine::EEntity* second = Engine::EEntityFactory("Spawner", scene).Transform(10, 40)
                 .Add(new MyThirdComponent())
                 .Add(new MySecondComponent())
                 .Get();
 
-        scene.root.AddEntity(second);
+        scene.root->AddEntity(second);
         scene.renderer.Add2D(second);
         scene.updater.Add(second);
         scene.creator.Add(second);
 
-        Engine::EEntity* third = Engine::EEntityFactory("FPS").Transform(10, 10).FPSLabel().Get();
+        Engine::EEntity* third = Engine::EEntityFactory("FPS", scene).Transform(10, 10).FPSLabel().Get();
 
-        scene.root.AddEntity(third);
+        scene.root->AddEntity(third);
         scene.renderer.Add2D(third);
         scene.creator.Add(third);
 

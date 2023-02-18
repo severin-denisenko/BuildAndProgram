@@ -3,6 +3,7 @@
 //
 
 #include "ECreator.hpp"
+#include "EEntity.hpp"
 
 namespace Engine {
     void ECreator::Add(Engine::EEntity *entity) {

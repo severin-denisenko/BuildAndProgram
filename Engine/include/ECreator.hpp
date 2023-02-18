@@ -5,9 +5,10 @@
 #ifndef BUILDANDPROGRAMM_ECREATOR_HPP
 #define BUILDANDPROGRAMM_ECREATOR_HPP
 
-#include "EEntity.hpp"
+#include <vector>
 
 namespace Engine {
+    class EEntity;
 
     class ECreator {
     public:

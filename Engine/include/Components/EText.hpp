@@ -21,10 +21,13 @@ namespace Engine {
 
         void Create(EEntity *entity) override{
             transform = entity->GetComponent<ETransform>();
-            S_INFO("Component EText created");
+            S_INFO("Component EText created.");
         }
 
         void Render2D(EEntity *entity) override{
+            if (transform == nullptr)
+                S_FATAL("ETransform is null!");
+
             DrawText(text.c_str(), (int) transform->x,
                      (int) transform->y,
                      font_size, color);

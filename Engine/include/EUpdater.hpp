@@ -5,9 +5,10 @@
 #ifndef BUILDANDPROGRAMM_EUPDATER_HPP
 #define BUILDANDPROGRAMM_EUPDATER_HPP
 
-#include "EEntity.hpp"
+#include <vector>
 
 namespace Engine {
+    class EEntity;
 
     class EUpdater {
     public:
@@ -18,7 +19,7 @@ namespace Engine {
         void Update();
 
     private:
-        std::vector<Engine::EEntity*> entities;
+        std::vector<EEntity*> entities;
     };
 
 } // Engine

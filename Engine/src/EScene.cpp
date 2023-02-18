@@ -5,4 +5,6 @@
 #include "EScene.hpp"
 
 namespace Engine {
+    EScene::EScene() : root(new Engine::EEntity("Root", *this)) {
+    }
 } // engine

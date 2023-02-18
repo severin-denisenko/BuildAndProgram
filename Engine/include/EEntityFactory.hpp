@@ -18,15 +18,17 @@ namespace Engine {
 
     class EEntityFactory {
     public:
-        EEntityFactory(){
-            entity = new EEntity();
+        explicit EEntityFactory(const std::string& name, EScene& scene){
+            entity = new EEntity(name, scene);
+
+            if(entity == nullptr)
+                S_FATAL("Entity is null in factory constructor!");
         };
 
-        explicit EEntityFactory(const std::string& name){
-            entity = new EEntity(name);
+        EEntityFactory(EEntity* entity) : entity(entity) {
+            if(entity == nullptr)
+                S_FATAL("Entity is null in factory constructor!");
         };
-
-        EEntityFactory(EEntity* entity) : entity(entity) {};
 
         EEntityFactory Transform(){
             auto transform = new Engine::ETransform();
@@ -91,7 +93,7 @@ namespace Engine {
             return entity;
         }
 
-        EEntity* entity;
+        EEntity* entity = nullptr;
     };
 
 } // engine

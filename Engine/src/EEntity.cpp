@@ -18,32 +18,29 @@ namespace Engine{
     }
 
     void EEntity::Render3D() {
+        if(!created)
+            return;
+
         for (auto component: components) {
             component->Render3D(this);
-        }
-
-        for (auto entity: entities) {
-            entity->Render3D();
         }
     }
 
     void EEntity::Render2D() {
+        if(!created)
+            return;
+
         for (auto component: components) {
             component->Render2D(this);
-        }
-
-        for (auto entity: entities) {
-            entity->Render2D();
         }
     }
 
     void EEntity::Update() {
+        if(!created)
+            return;
+
         for (auto component: components) {
             component->Update(this);
-        }
-
-        for (auto entity: entities) {
-            entity->Update();
         }
     }
 
@@ -63,12 +60,10 @@ namespace Engine{
     }
 
     EEntity *EEntity::GetChildByName(const std::string& find) {
-
         for (auto entity: entities) {
             if (entity->name == find)
                 return entity;
         }
-
         S_ERROR("Entity with this name does not exist: " + find);
         return nullptr;
     }
@@ -77,11 +72,7 @@ namespace Engine{
         return entities.size();
     }
 
-    EEntity::EEntity(const std::string &name) : name(name) {
-        S_INFO("Entity " + name + " created.");
-    }
-
-    EEntity::EEntity() {
+    EEntity::EEntity(const std::string &name, EScene& scene) : name(name), scene(scene), created(false) {
         S_INFO("Entity " + name + " created.");
     }
 
@@ -89,10 +80,11 @@ namespace Engine{
         for (auto component: components) {
             component->Create(this);
         }
+        created = true;
+    }
 
-        for (auto entity: entities) {
-            entity->Create();
-        }
+    EScene &EEntity::GetScene() {
+        return scene;
     }
 }
 

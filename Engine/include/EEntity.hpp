@@ -14,11 +14,11 @@
 #include "Components/ETransform.hpp"
 
 namespace Engine {
+    class EScene;
+
     class EEntity {
     public:
-        EEntity();
-
-        EEntity(const std::string& name);
+        EEntity(const std::string& name, EScene& scene);
 
         void AddComponent(EComponent* component);;
 
@@ -49,11 +49,14 @@ namespace Engine {
         size_t GetChildCount();
 
         EEntity* GetChildByName(const std::string& name);
+        EScene& GetScene();
 
         ~EEntity();
 
         std::string name = "default";
+        Engine::EScene& scene;
     private:
+        bool created;
         std::vector<EComponent*> components;
         std::vector<EEntity*> entities;
     };

@@ -3,6 +3,7 @@
 //
 
 #include "ERenderer.hpp"
+#include "EEntity.hpp"
 
 namespace Engine {
     void ERenderer::Add2D(Engine::EEntity *entity) {

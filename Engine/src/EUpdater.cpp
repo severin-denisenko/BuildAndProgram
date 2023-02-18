@@ -3,6 +3,7 @@
 //
 
 #include "EUpdater.hpp"
+#include "EEntity.hpp"
 
 namespace Engine {
     void EUpdater::Add(Engine::EEntity *entity) {
@@ -10,8 +11,8 @@ namespace Engine {
     }
 
     void EUpdater::Update() {
-        for (auto entity: entities) {
-            entity->Update();
+        for(size_t i = 0; i < entities.size(); ++i) {
+            entities[i]->Update();
         }
     }
 } // Engine
