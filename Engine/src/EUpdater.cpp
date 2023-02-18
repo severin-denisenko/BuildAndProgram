@@ -15,4 +15,11 @@ namespace Engine {
             entities[i]->Update();
         }
     }
+
+    void EUpdater::Remove(EEntity *entity) {
+        auto i = std::find(entities.begin(), entities.end(), entity);
+        if (i == entities.end())
+            S_ERROR("Entity can't be deleted from Updater!");
+        entities.erase(i);
+    }
 } // Engine

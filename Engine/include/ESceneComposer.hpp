@@ -23,6 +23,12 @@ namespace Engine {
             scene.renderer.AddUI(entity);
         }
 
+        void Remove(EEntity* entity){
+            scene.renderer.Remove2D(entity);
+            scene.renderer.RemoveUI(entity);
+            scene.updater.Remove(entity);
+        }
+
         void AddTo(EEntity* parent, EEntity* entity){
             parent->AddEntity(entity);
 

@@ -95,5 +95,12 @@ namespace Engine{
             component->RenderUI(this);
         }
     }
+
+    void EEntity::RemoveEntity(EEntity* entity) {
+        auto i = std::find(entities.begin(), entities.end(), entity);
+        if (i == entities.end())
+            S_ERROR("Entity can't be deleted from Parent!");
+        entities.erase(i);
+    }
 }
 

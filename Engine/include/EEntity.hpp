@@ -23,6 +23,7 @@ namespace Engine {
         void AddComponent(EComponent* component);;
 
         void AddEntity(EEntity* entity);
+        void RemoveEntity(EEntity* entity);
 
         void Update();
 

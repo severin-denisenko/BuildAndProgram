@@ -21,6 +21,9 @@ namespace Engine {
 
         void Render(Camera2D& camera2D, Camera3D& camera3D);
 
+        void Remove2D(EEntity *entity);
+        void RemoveUI(EEntity *entity);
+
     private:
         std::vector<Engine::EEntity*> entities2D;
         std::vector<Engine::EEntity*> entities3D;

@@ -18,6 +18,8 @@ namespace Engine {
 
         void Update();
 
+        void Remove(EEntity *pEntity);
+
     private:
         std::vector<EEntity*> entities;
     };

@@ -33,6 +33,9 @@ public:
         if (IsKeyDown(KEY_S))
             transform->y += delta;
 
+        if (IsKeyReleased(KEY_Q))
+            Engine::ESceneComposer(entity->GetScene()).Remove(entity);
+
         entity->GetScene().camera2D.target.x = transform->x;
         entity->GetScene().camera2D.target.y = transform->y;
     }
