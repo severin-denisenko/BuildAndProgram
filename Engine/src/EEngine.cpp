@@ -11,7 +11,7 @@ namespace Engine {
         while (window.Open()){
             scene.creator.Create();
             scene.updater.Update();
-            scene.renderer.Render();
+            scene.renderer.Render(scene.camera2D, scene.camera3D);
         }
     }
 } // Engine

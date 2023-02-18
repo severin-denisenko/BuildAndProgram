@@ -20,6 +20,13 @@ namespace Engine {
         Engine::ERenderer renderer;
         Engine::EUpdater updater;
         Engine::ECreator creator;
+
+        Camera3D camera3D = {{5.0f, 5.0f, 5.0f },
+                           { 0.0f, 0.0f, 0.0f },
+                           { 0.0f, 1.0f, 0.0f },
+                           45.0f, 0 };
+
+        Camera2D camera2D = {{0, 0}, {0, 0}, 0, 1};
     };
 
 } // engine

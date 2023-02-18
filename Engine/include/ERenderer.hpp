@@ -13,19 +13,14 @@ namespace Engine {
 
     class ERenderer {
     public:
-        ERenderer() = default;
+        ERenderer();
 
         void Add2D(Engine::EEntity* entity);
         void Add3D(Engine::EEntity* entity);
 
-        void Render();
+        void Render(Camera2D& camera2D, Camera3D& camera3D);
 
     private:
-        Camera camera = { { 5.0f, 5.0f, 5.0f },
-                          { 0.0f, 0.0f, 0.0f },
-                          { 0.0f, 1.0f, 0.0f },
-                          45.0f, 0 };;
-
         std::vector<Engine::EEntity*> entities2D;
         std::vector<Engine::EEntity*> entities3D;
     };

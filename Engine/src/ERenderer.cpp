@@ -14,19 +14,24 @@ namespace Engine {
         entities3D.push_back(entity);
     }
 
-    void ERenderer::Render() {
+    void ERenderer::Render(Camera2D& camera2D, Camera3D& camera3D) {
         BeginDrawing();
 
-        BeginMode3D(camera);
+        BeginMode3D(camera3D);
         for (auto entity: entities3D) {
             entity->Render3D();
         }
         EndMode3D();
 
+        BeginMode2D(camera2D);
         for (auto entity: entities2D) {
             entity->Render2D();
         }
+        EndMode2D();
 
         EndDrawing();
+    }
+
+    ERenderer::ERenderer() {
     }
 } // Engine
