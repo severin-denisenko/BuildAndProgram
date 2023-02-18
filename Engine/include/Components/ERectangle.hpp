@@ -27,15 +27,12 @@ namespace Engine {
             if (transform == nullptr)
                 S_FATAL("ESprite is null!");
 
-            sprite.destination.x = transform->x;
-            sprite.destination.y = transform->y;
-            sprite.destination.height = sprite.source.height * transform->sx;
-            sprite.destination.width = sprite.source.width * transform->sy;
-            sprite.rotation = transform->rz;
+            sprite.scale.x = transform->sx;
+            sprite.scale.y = transform->sy;
         }
 
         void Render2D(EEntity *entity) override{
-            sprite.Render();
+            sprite.Render(transform->x, transform->y);
         }
 
         Engine::ESprite sprite;

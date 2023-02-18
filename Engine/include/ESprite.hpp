@@ -11,16 +11,31 @@ namespace Engine {
 
     class ESprite {
     public:
-        explicit ESprite(const ETexture& texture);
+        explicit ESprite(const ETexture& texture) : texture(texture) {
+            origin = {0, 0};
+            source = {0, 0, (float)texture.Width(), (float)texture.Height()};
+            rotation = 0;
+            scale = {1, 1};
+            destination = source;
+        }
 
-        void Render();
+        void Render(){
+            DrawTexturePro(texture.Get(), source, destination, origin,
+                           rotation, color);
+        }
+
+        void Render(float x, float y){
+            DrawTexturePro(texture.Get(), source,
+                           {x, y, source.width * scale.x, source.height * scale.y},
+                           origin, rotation, color);
+        }
 
         Rectangle source;
         Rectangle destination;
         float rotation;
         Vector2 origin;
+        Vector2 scale;
         Color color = WHITE;
-
     private:
         const ETexture& texture;
     };

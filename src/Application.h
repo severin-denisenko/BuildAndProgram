@@ -13,30 +13,29 @@
 #include <ESceneComposer.hpp>
 
 class MySecondComponent : public Engine::EComponent{
+    void Create(Engine::EEntity* entity) override{
+        tileSet.Splice(6, 1);
+    }
+
     void Update(Engine::EEntity* entity) override{
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
-            for (int i = 0; i < 10; ++i) {
-                Engine::EEntity* new_entity = Engine::EEntityFactory("wolic", entity->GetScene())
-                        .Rectangle(sprite)
-                        .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 2, 2)
-                        .RigidBody().Get();
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+            Engine::EEntity* new_entity = Engine::EEntityFactory("wolic", entity->GetScene())
+                    .SlideShow(tileSet)
+                    .Transform(GetMousePosition().x, GetMousePosition().y, 0, 0, 1, 1)
+                    .Get();
 
-                new_entity->GetComponent<Engine::ERigidBody>()->speed_x = (float)GetRandomValue(-100, 100);
-                new_entity->GetComponent<Engine::ERigidBody>()->speed_y = (float)GetRandomValue(-100, 100);
+            //new_entity->GetComponent<Engine::ERigidBody>()->speed_x = (float)GetRandomValue(-100, 100);
+            //new_entity->GetComponent<Engine::ERigidBody>()->speed_y = (float)GetRandomValue(-100, 100);
 
-                new_entity->GetComponent<Engine::ERectangle>()->sprite.color = {(unsigned char)GetRandomValue(0, 255),
-                                                                                (unsigned char)GetRandomValue(0, 255),
-                                                                                (unsigned char)GetRandomValue(0, 255),
-                                                                                (unsigned char)GetRandomValue(0, 255)};
+            new_entity->GetComponent<Engine::ESlideShow>()->frameBetweenSlides = 8;
 
-                Engine::ESceneComposer(entity->GetScene()).AddTo(entity, new_entity,
-                                                                 true, true, true);
-            }
+            Engine::ESceneComposer(entity->GetScene()).AddTo(entity, new_entity,
+                                                             true, true, true);
         }
     }
 
     Engine::ETexture texture = Engine::ETexture("src/img.png");
-    Engine::ESprite sprite = Engine::ESprite(texture);
+    Engine::ETileSet tileSet = Engine::ETileSet(texture);
 };
 
 class MyThirdComponent : public Engine::EText{

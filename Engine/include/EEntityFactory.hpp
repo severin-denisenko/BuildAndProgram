@@ -13,6 +13,7 @@
 #include "Components/ERectangle.hpp"
 #include "Components/FPSLabel.hpp"
 #include "Components/ERigidBody.hpp"
+#include "Components/ESlideShow.h"
 
 namespace Engine {
 
@@ -81,6 +82,12 @@ namespace Engine {
         EEntityFactory RigidBody(){
             auto rigidBody = new Engine::ERigidBody();
             entity->AddComponent(rigidBody);
+            return {entity};
+        }
+
+        EEntityFactory SlideShow(ETileSet& tileSet){
+            auto slideShow = new Engine::ESlideShow(tileSet);
+            entity->AddComponent(slideShow);
             return {entity};
         }
 

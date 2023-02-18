@@ -15,6 +15,8 @@ namespace Engine {
     public:
         explicit ETexture(const std::string& filename);
         ~ETexture();
+        [[nodiscard]] size_t Width() const {return texture.width; }
+        [[nodiscard]] size_t Height() const {return texture.height; }
 
         [[nodiscard]] const Texture2D& Get() const;
 
