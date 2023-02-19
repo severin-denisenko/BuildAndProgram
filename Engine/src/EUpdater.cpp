@@ -11,15 +11,17 @@ namespace Engine {
     }
 
     void EUpdater::Update() {
-        for(size_t i = 0; i < entities.size(); ++i) {
-            entities[i]->Update();
+        for(auto entity : entities) {
+            entity->Update();
         }
     }
 
     void EUpdater::Remove(EEntity *entity) {
         auto i = std::find(entities.begin(), entities.end(), entity);
-        if (i == entities.end())
+        if (i == entities.end()){
             S_ERROR("Entity can't be deleted from Updater!");
+            return;
+        }
         entities.erase(i);
     }
 } // Engine

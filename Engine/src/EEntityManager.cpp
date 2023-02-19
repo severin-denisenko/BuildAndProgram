@@ -9,8 +9,10 @@
 void Engine::EEntityManager::Delete(EEntity *entity) {
     auto i = std::find(entities.begin(), entities.end(), entity);
 
-    if (i == entities.end())
+    if (i == entities.end()){
         S_ERROR("Entity " + entity->name + " cannot be deleted from Entity manager!");
+        return;
+    }
 
     entities.erase(i);
 
