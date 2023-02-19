@@ -5,30 +5,38 @@
 #ifndef BUILDANDPROGRAMM_TRANSFORM_H
 #define BUILDANDPROGRAMM_TRANSFORM_H
 
+#include "EEntity.hpp"
 #include "EComponent.hpp"
+#include <raylib.h>
 
 namespace Engine {
     class ETransform : public EComponent {
     public:
         ETransform() = default;
 
-        ETransform(float x, float y) : x(x), y(y) {}
-        ETransform(float x, float y, float rx, float ry) : x(x), y(y), rx(rx), ry(ry) {}
-        ETransform(float x, float y, float rx, float ry, float sx, float sy) : x(x), y(y),
-        rx(rx), ry(ry), sx(sx), sy(sy) {}
-        ETransform(float x, float y, float z) : x(x), y(y), z(z) {}
-        ETransform(float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz) : x(x),
-        y(y), z(z), rx(rx), ry(ry), rz(rz), sx(sx), sy(sy), sz(sz) {}
+        void Create(EEntity* e) override{
+            this->entity = e;
+        }
 
-        float x = 0;
-        float y = 0;
-        float z = 0;
-        float rx = 0;
-        float ry = 0;
-        float rz = 0;
-        float sx = 1;
-        float sy = 1;
-        float sz = 1;
+        Vector3 GetGlobalPosition();
+
+        Vector3 GetGlobalRotation();
+
+        Vector3 GetGlobalScale();
+
+        ETransform(float x, float y) : position({x, y, 0}) {}
+        ETransform(float x, float y, float rx, float ry) : position({x, y, 0}), rotation({rx, ry, 0}) {}
+        ETransform(float x, float y, float rx, float ry, float sx, float sy) : position({x, y, 0}),
+        rotation({rx, ry, 0}), scale({sx, sy, 1}) {}
+        ETransform(float x, float y, float z) : position({x, y, z}) {}
+        ETransform(float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz) :
+        position({x, y, z}), rotation({rx, ry, rz}), scale({sx, sy, sz}) {}
+
+        Vector3 position = {0, 0, 0};
+        Vector3 rotation = {0, 0, 0};
+        Vector3 scale = {1, 1, 1};
+    private:
+        EEntity* entity = nullptr;
     };
 } // engine
 

@@ -21,7 +21,7 @@ namespace Engine {
         }
 
         void Render3D(EEntity* entity) override{
-            DrawModel(mesh.Get(), {transform->x, transform->y, transform->z}, 1.0f, WHITE);
+            DrawModel(mesh.Get(), {transform->position.x, transform->position.y, transform->position.z}, 1.0f, WHITE);
         }
 
     private:

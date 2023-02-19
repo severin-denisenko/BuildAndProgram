@@ -18,7 +18,7 @@ namespace Engine {
     public:
         EScene();
 
-        EEntity* root;
+        EEntity* root = nullptr;
         ERenderer renderer;
         EUpdater updater;
         ECreator creator;

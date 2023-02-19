@@ -3,9 +3,10 @@
 //
 
 #include "EScene.hpp"
+#include "EEntityFactory.hpp"
 
 namespace Engine {
     EScene::EScene() {
-        root = entityManager.Create("Root");
+        root = EEntityFactory("Root", nullptr, *this).Get();
     }
 } // engine

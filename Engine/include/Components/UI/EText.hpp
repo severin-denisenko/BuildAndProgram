@@ -28,8 +28,8 @@ namespace Engine {
             if (transform == nullptr)
                 S_FATAL("ETransform is null!");
 
-            DrawText(text.c_str(), (int) transform->x,
-                     (int) transform->y,
+            DrawText(text.c_str(), (int) transform->position.x,
+                     (int) transform->position.y,
                      font_size, color);
         }
 

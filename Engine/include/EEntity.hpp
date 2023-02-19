@@ -19,7 +19,7 @@ namespace Engine {
 
     class EEntity {
     public:
-        EEntity(const std::string& name, EScene& scene);
+        EEntity(const std::string& name, EEntity* parent, EScene& scene);
         ~EEntity();
 
         void AddComponent(EComponent* component);;
@@ -27,8 +27,10 @@ namespace Engine {
         void RemoveEntity(EEntity* entity);
 
         EEntity* GetChildByIndex(size_t index);
-        size_t GetChildCount() const;
+        [[nodiscard]] size_t GetChildCount() const;
         EEntity* GetChildByName(const std::string& name);
+
+        [[nodiscard]] EEntity* GetPatent() const;
 
         EScene& GetScene();
 
@@ -53,10 +55,11 @@ namespace Engine {
 
         std::string name = "Default";
         std::vector<EEntity*> entities;
+        std::vector<EComponent*> components;
     private:
         bool created;
-        Engine::EScene& scene;
-        std::vector<EComponent*> components;
+        EScene& scene;
+        EEntity* parent = nullptr;
     };
 } // engine
 

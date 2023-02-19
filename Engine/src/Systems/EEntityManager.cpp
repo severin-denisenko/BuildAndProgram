@@ -53,12 +53,6 @@ void Engine::EEntityManager::Add(EEntity *entity) {
     //physics.Add(entity);
 }
 
-Engine::EEntity *Engine::EEntityManager::Create(const std::string &name) {
-    auto* entity = new EEntity(name, scene);
-    Add(entity);
-    return entity;
-}
-
 Engine::EEntityManager::~EEntityManager() {
     while (!entities.empty()){
         delete entities.back();

@@ -83,7 +83,8 @@ namespace Engine{
         return entities.size();
     }
 
-    EEntity::EEntity(const std::string &name, EScene& scene) : name(name), created(false), scene(scene) {
+    EEntity::EEntity(const std::string &name, EEntity* parent, EScene& scene) :
+    name(name), created(false), scene(scene), parent(parent) {
         S_INFO("Entity " + name + " created.");
     }
 
@@ -97,6 +98,10 @@ namespace Engine{
 
     EScene &EEntity::GetScene() {
         return scene;
+    }
+
+    EEntity *EEntity::GetPatent() const {
+        return parent;
     }
 }
 

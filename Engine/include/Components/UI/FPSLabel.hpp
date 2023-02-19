@@ -24,7 +24,7 @@ namespace Engine {
             if (transform == nullptr)
                 S_FATAL("ETransform is null!");
 
-            DrawFPS((int)transform->x, (int)transform->y);
+            DrawFPS((int)transform->position.x, (int)transform->position.y);
         }
 
         ETransform* transform = nullptr;

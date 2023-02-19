@@ -18,7 +18,7 @@
 
 #include "Components/2D/EBackground.hpp"
 #include "Components/2D/ERectangle.hpp"
-#include "Components/2D/ESlideShow.h"
+#include "Components/2D/ESlideShow.hpp"
 #include "Components/2D/ETiling.hpp"
 
 #include "Components/3D/EModel.hpp"
@@ -28,8 +28,8 @@ namespace Engine {
 
     class EEntityFactory {
     public:
-        explicit EEntityFactory(const std::string& name, EScene& scene){
-            entity = new EEntity(name, scene);
+        explicit EEntityFactory(const std::string& name, EEntity* parent, EScene& scene){
+            entity = new EEntity(name, parent, scene);
 
             if(entity == nullptr)
                 S_FATAL("Entity is null in factory constructor!");

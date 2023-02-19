@@ -21,8 +21,8 @@ public:
     }
 
     void Update(Engine::EEntity* entity) override{
-        collider->rec.x = transform->x;
-        collider->rec.y = transform->y;
+        collider->rec.x = transform->position.x;
+        collider->rec.y = transform->position.y;
     }
 
 private:
@@ -40,7 +40,7 @@ public:
 
     void Update(Engine::EEntity* entity) override{
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-            Engine::EEntity* new_entity = Engine::EEntityFactory("Falling",
+            Engine::EEntity* new_entity = Engine::EEntityFactory("Falling", entity,
                                                                  entity->GetScene()).RigidBody().Collider2D()
                     .Transform(GetMousePosition().x,
                                GetMousePosition().y)
@@ -68,16 +68,16 @@ public:
         Engine::EScene scene;
 
         scene.entityManager.AddTo(scene.root,
-                                  Engine::EEntityFactory("Background", scene)
+                                  Engine::EEntityFactory("Background", scene.root, scene)
                                   .Background(WHITE).Get());
 
         scene.entityManager.AddTo(scene.root,
-                                  Engine::EEntityFactory("FPS", scene)
+                                  Engine::EEntityFactory("FPS", scene.root, scene)
                                   .Transform(10, 10)
                                   .FPSLabel().Get());
 
         scene.entityManager.AddTo(scene.root,
-                                  Engine::EEntityFactory("Boxes", scene)
+                                  Engine::EEntityFactory("Boxes", scene.root, scene)
                                   .Add(new Boxes()).Get());
 
         Engine::EEngine engine(scene, window);

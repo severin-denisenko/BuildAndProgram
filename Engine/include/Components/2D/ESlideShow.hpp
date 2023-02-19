@@ -2,8 +2,8 @@
 // Created by Severin on 18.02.2023.
 //
 
-#ifndef BUILDANDPROGRAMM_ESLIDESHOW_H
-#define BUILDANDPROGRAMM_ESLIDESHOW_H
+#ifndef BUILDANDPROGRAMM_ESLIDESHOW_HPP
+#define BUILDANDPROGRAMM_ESLIDESHOW_HPP
 
 #include "Components/EComponent.hpp"
 #include "Graphics/ETileSet.hpp"
@@ -26,12 +26,12 @@ namespace Engine{
                 slide = slide % tileSet.Count();
             }
 
-            tileSet.scale.x = transform->sx;
-            tileSet.scale.y = transform->sy;
+            tileSet.scale.x = transform->scale.x;
+            tileSet.scale.y = transform->scale.y;
         }
 
         void Render2D(EEntity* entity) override{
-            tileSet.Render(transform->x, transform->y, slide);
+            tileSet.Render(transform->position.x, transform->position.y, slide);
         }
 
         size_t frameBetweenSlides = 30;
@@ -43,4 +43,4 @@ namespace Engine{
     };
 }
 
-#endif //BUILDANDPROGRAMM_ESLIDESHOW_H
+#endif //BUILDANDPROGRAMM_ESLIDESHOW_HPP
