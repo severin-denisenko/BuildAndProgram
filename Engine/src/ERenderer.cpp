@@ -46,14 +46,21 @@ namespace Engine {
     void ERenderer::Remove2D(EEntity *entity) {
         auto i = std::find(entities2D.begin(), entities2D.end(), entity);
         if (i == entities2D.end())
-            S_ERROR("Entity can't be deleted from 2D Renderer!");
+            S_ERROR("Entity " + entity->name + " can't be deleted from 2D Renderer!");
         entities2D.erase(i);
     }
 
     void ERenderer::RemoveUI(EEntity *entity) {
         auto i = std::find(entitiesUI.begin(), entitiesUI.end(), entity);
         if (i == entitiesUI.end())
-            S_ERROR("Entity can't be deleted from UI Renderer!");
+            S_ERROR("Entity " + entity->name + " can't be deleted from UI Renderer!");
         entitiesUI.erase(i);
+    }
+
+    void ERenderer::Remove3D(EEntity *entity) {
+        auto i = std::find(entities3D.begin(), entities3D.end(), entity);
+        if (i == entities3D.end())
+            S_ERROR("Entity " + entity->name + " can't be deleted from 2D Renderer!");
+        entities3D.erase(i);
     }
 } // Engine

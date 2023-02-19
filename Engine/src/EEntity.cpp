@@ -64,7 +64,7 @@ namespace Engine{
         return nullptr;
     }
 
-    size_t EEntity::GetChildCount() {
+    size_t EEntity::GetChildCount() const {
         return entities.size();
     }
 
@@ -95,7 +95,7 @@ namespace Engine{
     void EEntity::RemoveEntity(EEntity* entity) {
         auto i = std::find(entities.begin(), entities.end(), entity);
         if (i == entities.end())
-            S_ERROR("Entity can't be deleted from Parent!");
+            S_ERROR("Entity " + entity->name + " can't be deleted from Parent!");
         entities.erase(i);
     }
 }

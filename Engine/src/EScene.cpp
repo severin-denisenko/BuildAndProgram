@@ -6,6 +6,6 @@
 
 namespace Engine {
     EScene::EScene() {
-        root = new Engine::EEntity("Root", *this);
+        root = entityManager.Create("Root");
     }
 } // engine

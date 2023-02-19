@@ -27,83 +27,83 @@ namespace Engine {
                 S_FATAL("Entity is null in factory constructor!");
         };
 
-        EEntityFactory(EEntity* entity) : entity(entity) {
+        explicit EEntityFactory(EEntity* entity) : entity(entity) {
             if(entity == nullptr)
                 S_FATAL("Entity is null in factory constructor!");
         };
 
-        EEntityFactory Transform(){
+        [[nodiscard]] EEntityFactory Transform() const{
             auto transform = new Engine::ETransform();
             entity->AddComponent(transform);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory Transform(float x, float y){
+        [[nodiscard]] EEntityFactory Transform(float x, float y) const{
             auto transform = new Engine::ETransform(x, y);
             entity->AddComponent(transform);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory Transform(float x, float y, float rx, float ry){
+        [[nodiscard]] EEntityFactory Transform(float x, float y, float rx, float ry) const{
             auto transform = new Engine::ETransform(x, y, rx, ry);
             entity->AddComponent(transform);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory Transform(float x, float y, float rx, float ry, float sx, float sy){
+        [[nodiscard]] EEntityFactory Transform(float x, float y, float rx, float ry, float sx, float sy) const{
             auto transform = new Engine::ETransform(x, y, rx, ry, sx, sy);
             entity->AddComponent(transform);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory Text(const char* msg, int size, Color color){
+        [[nodiscard]] EEntityFactory Text(const char* msg, int size, Color color) const{
             auto text = new Engine::EText(msg, size, color);
             entity->AddComponent(text);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory Background(Color color){
+        [[nodiscard]] EEntityFactory Background(Color color) const{
             auto background = new Engine::EBackground(color);
             entity->AddComponent(background);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory Rectangle(ESprite sprite){
+        [[nodiscard]] EEntityFactory Rectangle(ESprite sprite) const{
             auto rectangle = new Engine::ERectangle(sprite);
             entity->AddComponent(rectangle);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory FPSLabel(){
+        [[nodiscard]] EEntityFactory FPSLabel() const{
             auto label = new Engine::FPSLabel();
             entity->AddComponent(label);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory RigidBody(){
+        [[nodiscard]] EEntityFactory RigidBody() const{
             auto rigidBody = new Engine::ERigidBody();
             entity->AddComponent(rigidBody);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory SlideShow(ETileSet& tileSet){
+        [[nodiscard]] EEntityFactory SlideShow(ETileSet& tileSet) const{
             auto slideShow = new Engine::ESlideShow(tileSet);
             entity->AddComponent(slideShow);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory Tiling(ETileMap& tileMap){
+        [[nodiscard]] EEntityFactory Tiling(ETileMap& tileMap) const{
             auto tiling = new Engine::ETiling(tileMap);
             entity->AddComponent(tiling);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntityFactory Add(EComponent* component){
+        [[nodiscard]] EEntityFactory Add(EComponent* component) const{
             entity->AddComponent(component);
-            return {entity};
+            return EEntityFactory(entity);
         }
 
-        EEntity* Get(){
+        [[nodiscard]] EEntity* Get() const{
             return entity;
         }
 

@@ -49,7 +49,7 @@ namespace Engine {
         }
 
         EEntity* GetChildByIndex(size_t index);
-        size_t GetChildCount();
+        size_t GetChildCount() const;
 
         EEntity* GetChildByName(const std::string& name);
         EScene& GetScene();

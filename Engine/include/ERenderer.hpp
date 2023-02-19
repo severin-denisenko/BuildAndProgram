@@ -24,6 +24,8 @@ namespace Engine {
         void Remove2D(EEntity *entity);
         void RemoveUI(EEntity *entity);
 
+        void Remove3D(EEntity *pEntity);
+
     private:
         std::vector<Engine::EEntity*> entities2D;
         std::vector<Engine::EEntity*> entities3D;

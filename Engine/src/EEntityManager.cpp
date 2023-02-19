@@ -10,14 +10,17 @@ void Engine::EEntityManager::Delete(Engine::EEntity *entity) {
     auto i = std::find(entities.begin(), entities.end(), entity);
 
     if (i == entities.end())
-        S_ERROR("Entity can't be deleted from Entity manager!");
+        S_ERROR("Entity " + entity->name + " cannot be deleted from Entity manager!");
+
+    entities.erase(i);
 
     renderer.Remove2D(entity);
+    renderer.Remove3D(entity);
     renderer.RemoveUI(entity);
     updater.Remove(entity);
 
-    for (auto child: entity->entities) {
-        Delete(child);
+    while (!entity->entities.empty()){
+        Delete(entities.back());
     }
 
     delete entity;
@@ -46,6 +49,13 @@ void Engine::EEntityManager::Add(Engine::EEntity *entity) {
 
 Engine::EEntity *Engine::EEntityManager::Create(const std::string &name) {
     auto* entity = new EEntity(name, scene);
-    entities.push_back(entity);
+    Add(entity);
     return entity;
+}
+
+Engine::EEntityManager::~EEntityManager() {
+    while (!entities.empty()){
+        delete entities.back();
+        entities.pop_back();
+    }
 }

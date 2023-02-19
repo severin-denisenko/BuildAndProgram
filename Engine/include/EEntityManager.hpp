@@ -25,6 +25,8 @@ namespace Engine{
 
         void Delete(EEntity* entity);
 
+        ~EEntityManager();
+
         ERenderer& renderer;
         EUpdater& updater;
         ECreator& creator;
