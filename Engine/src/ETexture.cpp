@@ -2,7 +2,7 @@
 // Created by Severin on 16.02.2023.
 //
 
-#include "ETexture.hpp"
+#include "Graphics/ETexture.hpp"
 
 namespace Engine {
     ETexture::ETexture(const std::string& filename) : texture(LoadTexture(filename.c_str())) {

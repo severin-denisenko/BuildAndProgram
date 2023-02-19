@@ -7,7 +7,7 @@
 
 #include <EWindow.hpp>
 #include <EScene.hpp>
-#include <ESprite.hpp>
+#include "Graphics/ESprite.hpp"
 #include <EEngine.hpp>
 #include <EEntityFactory.hpp>
 

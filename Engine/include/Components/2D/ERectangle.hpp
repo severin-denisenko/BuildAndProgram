@@ -5,9 +5,9 @@
 #ifndef BUILDANDPROGRAMM_ERECTANGLE_HPP
 #define BUILDANDPROGRAMM_ERECTANGLE_HPP
 
-#include "EComponent.hpp"
+#include "Components/EComponent.hpp"
 
-#include "ESprite.hpp"
+#include "Graphics/ESprite.hpp"
 
 namespace Engine {
     class ERectangle : public EComponent {

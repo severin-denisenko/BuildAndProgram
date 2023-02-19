@@ -5,8 +5,8 @@
 #ifndef BUILDANDPROGRAMM_ESLIDESHOW_H
 #define BUILDANDPROGRAMM_ESLIDESHOW_H
 
-#include "EComponent.hpp"
-#include "ETileSet.hpp"
+#include "Components/EComponent.hpp"
+#include "Graphics/ETileSet.hpp"
 
 namespace Engine{
     class ESlideShow : public EComponent{

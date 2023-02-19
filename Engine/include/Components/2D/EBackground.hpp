@@ -5,9 +5,9 @@
 #ifndef BUILDANDPROGRAMM_BACKGROUND_H
 #define BUILDANDPROGRAMM_BACKGROUND_H
 
-#include "EComponent.hpp"
+#include "Components/EComponent.hpp"
 
-#include <raylib.h>
+#include "raylib.h"
 
 namespace Engine {
     class EBackground : public EComponent {

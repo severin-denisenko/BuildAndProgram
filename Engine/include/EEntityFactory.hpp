@@ -9,12 +9,12 @@
 #include "Components/EComponent.hpp"
 #include "Components/ETransform.hpp"
 #include "Components/UI/EText.hpp"
-#include "Components/EBackground.hpp"
-#include "Components/ERectangle.hpp"
+#include "Components/2D/EBackground.hpp"
+#include "Components/2D/ERectangle.hpp"
 #include "Components/UI/FPSLabel.hpp"
 #include "Components/ERigidBody.hpp"
-#include "Components/ESlideShow.h"
-#include "Components/ETiling.hpp"
+#include "Components/2D/ESlideShow.h"
+#include "Components/2D/ETiling.hpp"
 
 namespace Engine {
 

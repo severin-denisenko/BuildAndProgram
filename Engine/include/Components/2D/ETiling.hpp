@@ -5,8 +5,8 @@
 #ifndef BUILDANDPROGRAMM_ETILING_HPP
 #define BUILDANDPROGRAMM_ETILING_HPP
 
-#include "EComponent.hpp"
-#include "ETileMap.hpp"
+#include "Components/EComponent.hpp"
+#include "Graphics/ETileMap.hpp"
 
 namespace Engine {
 
