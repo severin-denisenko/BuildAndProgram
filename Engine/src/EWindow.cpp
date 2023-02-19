@@ -5,7 +5,6 @@
 #include "EWindow.hpp"
 
 #include "raylib.h"
-#include "GLFW/glfw3.h"
 
 namespace Engine{
     EWindow::EWindow(const char* name, bool fullScreen) {

@@ -9,8 +9,9 @@
 
 #include "Components/EComponent.hpp"
 #include "Components/ETransform.hpp"
-#include "Components/ERigidBody.hpp"
+#include "Components/Physics/ERigidBody.hpp"
 #include "Components/ECameraController3D.hpp"
+#include "Components/Physics/ECollider2D.hpp"
 
 #include "Components/UI/EText.hpp"
 #include "Components/UI/FPSLabel.hpp"
@@ -125,6 +126,12 @@ namespace Engine {
 
         [[nodiscard]] EEntityFactory CameraController3D() const{
             auto controller = new ECameraController3D();
+            entity->AddComponent(controller);
+            return EEntityFactory(entity);
+        }
+
+        [[nodiscard]] EEntityFactory Collider2D() const{
+            auto controller = new ECollider2D(ECollider2D::RECTANGLE);
             entity->AddComponent(controller);
             return EEntityFactory(entity);
         }

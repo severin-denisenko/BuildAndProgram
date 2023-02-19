@@ -15,6 +15,7 @@
 
 namespace Engine {
     class EScene;
+    class EComponent;
 
     class EEntity {
     public:

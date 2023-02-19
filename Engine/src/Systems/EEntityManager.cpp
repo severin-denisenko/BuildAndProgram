@@ -20,6 +20,7 @@ void Engine::EEntityManager::Delete(EEntity *entity) {
     renderer.Remove3D(entity);
     renderer.RemoveUI(entity);
     updater.Remove(entity);
+    physics.Remove(entity);
 
     while (!entity->entities.empty()){
         entity->RemoveEntity(entities.back());
@@ -38,6 +39,7 @@ void Engine::EEntityManager::AddTo(EEntity *parent, EEntity *entity) {
     renderer.Add2D(entity);
     renderer.Add3D(entity);
     renderer.AddUI(entity);
+    //physics.Add(entity);
 }
 
 void Engine::EEntityManager::Add(EEntity *entity) {
@@ -48,6 +50,7 @@ void Engine::EEntityManager::Add(EEntity *entity) {
     renderer.Add2D(entity);
     renderer.Add3D(entity);
     renderer.AddUI(entity);
+    //physics.Add(entity);
 }
 
 Engine::EEntity *Engine::EEntityManager::Create(const std::string &name) {

@@ -12,6 +12,7 @@ namespace Engine {
             scene.creator.Create();
             scene.updater.Update();
             scene.renderer.Render(scene.camera2D, scene.camera3D);
+            scene.physics.SolvePhysics();
         }
     }
 } // Engine

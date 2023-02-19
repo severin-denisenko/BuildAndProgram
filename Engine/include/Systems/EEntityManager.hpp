@@ -7,6 +7,7 @@
 
 #include "ERenderer.hpp"
 #include "Systems/ECreator.hpp"
+#include "Systems/EPhysics.hpp"
 #include "EUpdater.hpp"
 
 namespace Engine{
@@ -14,8 +15,8 @@ namespace Engine{
 
     class EEntityManager {
     public:
-        EEntityManager(ERenderer& renderer, EUpdater& updater, ECreator& creator, EScene& scene)
-        : renderer(renderer), updater(updater), creator(creator), scene(scene) {}
+        EEntityManager(ERenderer& renderer, EUpdater& updater, ECreator& creator, EPhysics& physics, EScene& scene)
+        : renderer(renderer), updater(updater), creator(creator), physics(physics), scene(scene) {}
 
         EEntity* Create(const std::string& name);
 
@@ -30,7 +31,9 @@ namespace Engine{
         ERenderer& renderer;
         EUpdater& updater;
         ECreator& creator;
+        EPhysics& physics;
         EScene& scene;
+
         std::vector<EEntity*> entities;
     };
 }

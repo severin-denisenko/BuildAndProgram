@@ -9,6 +9,7 @@
 #include "Systems/ERenderer.hpp"
 #include "Systems/ECreator.hpp"
 #include "Systems/EUpdater.hpp"
+#include "Systems/EPhysics.hpp"
 #include "EEntity.hpp"
 
 namespace Engine {
@@ -21,7 +22,8 @@ namespace Engine {
         ERenderer renderer;
         EUpdater updater;
         ECreator creator;
-        EEntityManager entityManager = EEntityManager(renderer, updater, creator, *this);
+        EPhysics physics;
+        EEntityManager entityManager = EEntityManager(renderer, updater, creator, physics, *this);
 
         Camera3D camera3D = {{10.0f, 10.0f, 10.0f },
                            { 0.0f, 0.0f, 0.0f },

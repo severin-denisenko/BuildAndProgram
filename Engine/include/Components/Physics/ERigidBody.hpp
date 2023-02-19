@@ -5,9 +5,10 @@
 #ifndef BUILDANDPROGRAMM_ERIGIDBODY_HPP
 #define BUILDANDPROGRAMM_ERIGIDBODY_HPP
 
-#include "EComponent.hpp"
+#include "Components/EComponent.hpp"
+#include "ECollider2D.hpp"
 
-#include <raylib.h>
+#include "raylib.h"
 
 namespace Engine {
 
@@ -17,6 +18,7 @@ namespace Engine {
 
         void Create(Engine::EEntity * entity) override{
             transform = entity->GetComponent<ETransform>();
+            collider = entity->GetComponent<ECollider2D>();
 
             acceleration_y += gravity;
             S_INFO("Component ERigidBody created.");
@@ -40,6 +42,7 @@ namespace Engine {
         float gravity = 98;
 
         ETransform *transform;
+        ECollider2D *collider;
     };
 
 } // Engine

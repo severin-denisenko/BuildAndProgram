@@ -5,8 +5,6 @@
 #ifndef BUILDANDPROGRAMM_ECOMPONENT_HPP
 #define BUILDANDPROGRAMM_ECOMPONENT_HPP
 
-#include "EEntity.hpp"
-
 namespace Engine {
     class EEntity;
 
