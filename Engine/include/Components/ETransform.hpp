@@ -15,7 +15,10 @@ namespace Engine {
         ETransform(float x, float y) : x(x), y(y) {}
         ETransform(float x, float y, float rx, float ry) : x(x), y(y), rx(rx), ry(ry) {}
         ETransform(float x, float y, float rx, float ry, float sx, float sy) : x(x), y(y),
-                                                                               rx(rx), ry(ry), sx(sx), sy(sy) {}
+        rx(rx), ry(ry), sx(sx), sy(sy) {}
+        ETransform(float x, float y, float z) : x(x), y(y), z(z) {}
+        ETransform(float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz) : x(x),
+        y(y), z(z), rx(rx), ry(ry), rz(rz), sx(sx), sy(sy), sz(sz) {}
 
         float x = 0;
         float y = 0;

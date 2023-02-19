@@ -5,6 +5,7 @@
 #include "EWindow.hpp"
 
 #include "raylib.h"
+#include "GLFW/glfw3.h"
 
 namespace Engine{
     EWindow::EWindow(const char* name, bool fullScreen) {
@@ -15,7 +16,7 @@ namespace Engine{
             InitWindow(screenWidth, screenHeight, name);
             ToggleFullscreen();
         } else{
-            InitWindow(320, 320, name);
+            InitWindow(600, 600, name);
         }
 
         SetTargetFPS(60);

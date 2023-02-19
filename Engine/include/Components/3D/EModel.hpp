@@ -5,8 +5,8 @@
 #ifndef BUILDANDPROGRAMM_EMODEL_HPP
 #define BUILDANDPROGRAMM_EMODEL_HPP
 
+#include "Graphics/EMesh.h"
 #include "Components/EComponent.hpp"
-#include "Graphics/ETexture.hpp"
 
 #include <raylib.h>
 
@@ -14,23 +14,19 @@ namespace Engine {
 
     class EModel : public EComponent{
     public:
-        explicit EModel(const std::string& filename, const ETexture& texture) : texture(texture){
-            model = LoadModel(filename.c_str());
-        }
+        explicit EModel(const EMesh& mesh) : mesh(mesh) {}
 
         void Create(EEntity* entity) override{
             transform = entity->GetComponent<ETransform>();
-            model.materials->maps[MATERIAL_MAP_DIFFUSE].texture = texture.Get();
         }
 
         void Render3D(EEntity* entity) override{
-            DrawModel(model, {transform->x, transform->y, transform->z}, 1.0f, WHITE);
+            DrawModel(mesh.Get(), {transform->x, transform->y, transform->z}, 1.0f, WHITE);
         }
 
     private:
-        const ETexture& texture;
+        const EMesh& mesh;
         ETransform* transform;
-        Model model;
     };
 
 } // Engine

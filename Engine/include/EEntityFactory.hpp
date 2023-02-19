@@ -10,6 +10,7 @@
 #include "Components/EComponent.hpp"
 #include "Components/ETransform.hpp"
 #include "Components/ERigidBody.hpp"
+#include "Components/ECameraController3D.hpp"
 
 #include "Components/UI/EText.hpp"
 #include "Components/UI/FPSLabel.hpp"
@@ -52,6 +53,12 @@ namespace Engine {
 
         [[nodiscard]] EEntityFactory Transform(float x, float y, float rx, float ry) const{
             auto transform = new ETransform(x, y, rx, ry);
+            entity->AddComponent(transform);
+            return EEntityFactory(entity);
+        }
+
+        [[nodiscard]] EEntityFactory Transform(float x, float y, float z) const{
+            auto transform = new ETransform(x, y, z);
             entity->AddComponent(transform);
             return EEntityFactory(entity);
         }
@@ -104,15 +111,21 @@ namespace Engine {
             return EEntityFactory(entity);
         }
 
-        [[nodiscard]] EEntityFactory Model(const std::string& filename, ETexture& texture) const{
-            auto tiling = new EModel(filename, texture);
-            entity->AddComponent(tiling);
+        [[nodiscard]] EEntityFactory Model(EMesh mesh) const{
+            auto model = new EModel(mesh);
+            entity->AddComponent(model);
             return EEntityFactory(entity);
         }
 
         [[nodiscard]] EEntityFactory Grid(int slices, float spacing) const{
             auto grid = new EGrid(slices, spacing);
             entity->AddComponent(grid);
+            return EEntityFactory(entity);
+        }
+
+        [[nodiscard]] EEntityFactory CameraController3D() const{
+            auto controller = new ECameraController3D();
+            entity->AddComponent(controller);
             return EEntityFactory(entity);
         }
 

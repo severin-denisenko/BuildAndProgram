@@ -14,7 +14,7 @@
 class Application {
 public:
     void Run(){
-        Engine::EWindow window("Build And Program", true);
+        Engine::EWindow window("Build And Program", false);
 
         S_LOG_LEVEL_INFO;
 
@@ -30,14 +30,24 @@ public:
                                   .FPSLabel().Get());
 
         Engine::ETexture cube("src/cube_diffuse.png");
+        Engine::EMesh mesh("src/cube.obj");
+        mesh.SetTexture(cube);
 
-        scene.entityManager.AddTo(scene.root,
-                                  Engine::EEntityFactory("Cube", scene)
-                                  .Transform(0, 0).Model("src/cube.obj", cube).Get());
+        for (int i = -10; i < 10; ++i) {
+            for (int j = -10; j < 10; ++j) {
+                scene.entityManager.AddTo(scene.root,
+                                          Engine::EEntityFactory("Cube", scene)
+                                                  .Transform(i * 2, 0, j * 2).Model(mesh).Get());
+            }
+        }
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Grid", scene)
                                   .Grid(10, 1).Get());
+
+        scene.entityManager.AddTo(scene.root,
+                                  Engine::EEntityFactory("CameraController", scene)
+                                  .CameraController3D().Get());
 
         Engine::EEngine engine(scene, window);
         engine.Run();
