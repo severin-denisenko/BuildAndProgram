@@ -63,23 +63,23 @@ public:
             }
         }
 
+        Engine::ETexture texture("src/img.png");
+        Engine::ETileSet tileSet(texture);
+        tileSet.Splice(6, 1);
+        Engine::ESprite sprite(texture);
+
         scene.entityManager.AddTo(scene.root, Engine::EEntityFactory("Back", scene).Transform(0, 0).Tiling(tileMap).Get());
+
+        scene.entityManager.AddTo(scene.root, Engine::EEntityFactory("Back", scene).Transform(0, -200)
+                .Rectangle(sprite).Get());
 
         scene.entityManager.AddTo(scene.root, Engine::EEntityFactory("Background", scene).Background(BLACK).Get());
 
 
         scene.entityManager.AddTo(scene.root, Engine::EEntityFactory("FPS", scene).Transform(10, 10).FPSLabel().Get());
 
-        Engine::ETexture texture("src/img.png");
-        Engine::ETileSet tileSet(texture);
-        tileSet.Splice(6, 1);
-        Engine::ESprite sprite(texture);
-
         scene.entityManager.AddTo(scene.root, Engine::EEntityFactory("Character", scene).Transform(0, 0)
                              .SlideShow(tileSet).Add(new Character()).Get());
-
-        scene.entityManager.AddTo(scene.root, Engine::EEntityFactory("Back", scene).Transform(0, -200)
-                .Rectangle(sprite).Get());
 
         Engine::EEngine engine(scene, window);
         engine.Run();

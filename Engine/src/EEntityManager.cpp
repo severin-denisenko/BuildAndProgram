@@ -6,7 +6,7 @@
 #include "EEntity.hpp"
 #include "SLib/SLog.hpp"
 
-void Engine::EEntityManager::Delete(Engine::EEntity *entity) {
+void Engine::EEntityManager::Delete(EEntity *entity) {
     auto i = std::find(entities.begin(), entities.end(), entity);
 
     if (i == entities.end())
@@ -20,13 +20,14 @@ void Engine::EEntityManager::Delete(Engine::EEntity *entity) {
     updater.Remove(entity);
 
     while (!entity->entities.empty()){
+        entity->RemoveEntity(entities.back());
         Delete(entities.back());
     }
 
     delete entity;
 }
 
-void Engine::EEntityManager::AddTo(Engine::EEntity *parent, Engine::EEntity *entity) {
+void Engine::EEntityManager::AddTo(EEntity *parent, EEntity *entity) {
     entities.push_back(entity);
     parent->AddEntity(entity);
 
@@ -37,7 +38,7 @@ void Engine::EEntityManager::AddTo(Engine::EEntity *parent, Engine::EEntity *ent
     renderer.AddUI(entity);
 }
 
-void Engine::EEntityManager::Add(Engine::EEntity *entity) {
+void Engine::EEntityManager::Add(EEntity *entity) {
     entities.push_back(entity);
 
     creator.Add(entity);

@@ -6,15 +6,15 @@
 #include "EEntity.hpp"
 
 namespace Engine {
-    void ERenderer::Add2D(Engine::EEntity *entity) {
+    void ERenderer::Add2D(EEntity *entity) {
         entities2D.push_back(entity);
     }
 
-    void ERenderer::Add3D(Engine::EEntity *entity) {
+    void ERenderer::Add3D(EEntity *entity) {
         entities3D.push_back(entity);
     }
 
-    void ERenderer::AddUI(Engine::EEntity* entity) {
+    void ERenderer::AddUI(EEntity* entity) {
         entitiesUI.push_back(entity);
     }
 

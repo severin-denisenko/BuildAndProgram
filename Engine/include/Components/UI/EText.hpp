@@ -36,7 +36,7 @@ namespace Engine {
         std::string text;
         int font_size;
         Color color;
-        Engine::ETransform* transform;
+        ETransform* transform;
     };
 } // engine
 

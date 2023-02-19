@@ -6,7 +6,7 @@
 #include "EEntity.hpp"
 
 namespace Engine {
-    void EUpdater::Add(Engine::EEntity *entity) {
+    void EUpdater::Add(EEntity *entity) {
         entities.push_back(entity);
     }
 

@@ -68,7 +68,7 @@ namespace Engine{
         return entities.size();
     }
 
-    EEntity::EEntity(const std::string &name, EScene& scene) : name(name), scene(scene), created(false) {
+    EEntity::EEntity(const std::string &name, EScene& scene) : name(name), created(false), scene(scene) {
         S_INFO("Entity " + name + " created.");
     }
 

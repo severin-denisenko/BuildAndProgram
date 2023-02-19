@@ -14,12 +14,12 @@ namespace Engine {
     public:
         ECreator() = default;
 
-        void Add(Engine::EEntity *entity);
+        void Add(EEntity *entity);
 
         void Create();
 
     private:
-        std::vector<Engine::EEntity*> creating;
+        std::vector<EEntity*> creating;
     };
 
 } // Engine

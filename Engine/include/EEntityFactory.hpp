@@ -33,43 +33,43 @@ namespace Engine {
         };
 
         [[nodiscard]] EEntityFactory Transform() const{
-            auto transform = new Engine::ETransform();
+            auto transform = new ETransform();
             entity->AddComponent(transform);
             return EEntityFactory(entity);
         }
 
         [[nodiscard]] EEntityFactory Transform(float x, float y) const{
-            auto transform = new Engine::ETransform(x, y);
+            auto transform = new ETransform(x, y);
             entity->AddComponent(transform);
             return EEntityFactory(entity);
         }
 
         [[nodiscard]] EEntityFactory Transform(float x, float y, float rx, float ry) const{
-            auto transform = new Engine::ETransform(x, y, rx, ry);
+            auto transform = new ETransform(x, y, rx, ry);
             entity->AddComponent(transform);
             return EEntityFactory(entity);
         }
 
         [[nodiscard]] EEntityFactory Transform(float x, float y, float rx, float ry, float sx, float sy) const{
-            auto transform = new Engine::ETransform(x, y, rx, ry, sx, sy);
+            auto transform = new ETransform(x, y, rx, ry, sx, sy);
             entity->AddComponent(transform);
             return EEntityFactory(entity);
         }
 
         [[nodiscard]] EEntityFactory Text(const char* msg, int size, Color color) const{
-            auto text = new Engine::EText(msg, size, color);
+            auto text = new EText(msg, size, color);
             entity->AddComponent(text);
             return EEntityFactory(entity);
         }
 
         [[nodiscard]] EEntityFactory Background(Color color) const{
-            auto background = new Engine::EBackground(color);
+            auto background = new EBackground(color);
             entity->AddComponent(background);
             return EEntityFactory(entity);
         }
 
         [[nodiscard]] EEntityFactory Rectangle(ESprite sprite) const{
-            auto rectangle = new Engine::ERectangle(sprite);
+            auto rectangle = new ERectangle(sprite);
             entity->AddComponent(rectangle);
             return EEntityFactory(entity);
         }
@@ -81,19 +81,19 @@ namespace Engine {
         }
 
         [[nodiscard]] EEntityFactory RigidBody() const{
-            auto rigidBody = new Engine::ERigidBody();
+            auto rigidBody = new ERigidBody();
             entity->AddComponent(rigidBody);
             return EEntityFactory(entity);
         }
 
         [[nodiscard]] EEntityFactory SlideShow(ETileSet& tileSet) const{
-            auto slideShow = new Engine::ESlideShow(tileSet);
+            auto slideShow = new ESlideShow(tileSet);
             entity->AddComponent(slideShow);
             return EEntityFactory(entity);
         }
 
         [[nodiscard]] EEntityFactory Tiling(ETileMap& tileMap) const{
-            auto tiling = new Engine::ETiling(tileMap);
+            auto tiling = new ETiling(tileMap);
             entity->AddComponent(tiling);
             return EEntityFactory(entity);
         }

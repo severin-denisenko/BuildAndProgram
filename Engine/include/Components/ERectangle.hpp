@@ -35,8 +35,8 @@ namespace Engine {
             sprite.Render(transform->x, transform->y);
         }
 
-        Engine::ESprite sprite;
-        Engine::ETransform* transform;
+        ESprite sprite;
+        ETransform* transform;
     };
 } // engine
 

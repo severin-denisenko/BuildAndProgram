@@ -19,20 +19,22 @@ namespace Engine {
     class EEntity {
     public:
         EEntity(const std::string& name, EScene& scene);
+        ~EEntity();
 
         void AddComponent(EComponent* component);;
-
         void AddEntity(EEntity* entity);
         void RemoveEntity(EEntity* entity);
 
+        EEntity* GetChildByIndex(size_t index);
+        size_t GetChildCount() const;
+        EEntity* GetChildByName(const std::string& name);
+
+        EScene& GetScene();
+
         void Update();
-
         void Create();
-
         void Render2D();
-
         void Render3D();
-
         void RenderUI();
 
         template<typename T>
@@ -48,21 +50,11 @@ namespace Engine {
             return nullptr;
         }
 
-        EEntity* GetChildByIndex(size_t index);
-        size_t GetChildCount() const;
-
-        EEntity* GetChildByName(const std::string& name);
-        EScene& GetScene();
-
-        ~EEntity();
-
-        std::string name = "default";
-        Engine::EScene& scene;
-
+        std::string name = "Default";
         std::vector<EEntity*> entities;
     private:
         bool created;
-
+        Engine::EScene& scene;
         std::vector<EComponent*> components;
     };
 } // engine

@@ -15,9 +15,9 @@ namespace Engine {
     public:
         ERenderer();
 
-        void Add2D(Engine::EEntity* entity);
-        void Add3D(Engine::EEntity* entity);
-        void AddUI(Engine::EEntity* entity);
+        void Add2D(EEntity* entity);
+        void Add3D(EEntity* entity);
+        void AddUI(EEntity* entity);
 
         void Render(Camera2D& camera2D, Camera3D& camera3D);
 
@@ -27,9 +27,9 @@ namespace Engine {
         void Remove3D(EEntity *pEntity);
 
     private:
-        std::vector<Engine::EEntity*> entities2D;
-        std::vector<Engine::EEntity*> entities3D;
-        std::vector<Engine::EEntity*> entitiesUI;
+        std::vector<EEntity*> entities2D;
+        std::vector<EEntity*> entities3D;
+        std::vector<EEntity*> entitiesUI;
     };
 
 } // Engine
