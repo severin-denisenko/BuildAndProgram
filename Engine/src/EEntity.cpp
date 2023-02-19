@@ -10,10 +10,6 @@ namespace Engine{
             delete component;
         }
 
-        for (auto entity: entities) {
-            delete entity;
-        }
-
         S_INFO("Entity " + name + " deleted.");
     }
 

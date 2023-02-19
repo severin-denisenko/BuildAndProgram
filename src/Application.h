@@ -10,7 +10,6 @@
 #include <ESprite.hpp>
 #include <EEngine.hpp>
 #include <EEntityFactory.hpp>
-#include <ESceneComposer.hpp>
 
 class Character: public Engine::EComponent{
 public:
@@ -33,14 +32,14 @@ public:
         if (IsKeyDown(KEY_S))
             transform->y += delta;
 
-        if (IsKeyReleased(KEY_Q))
-            Engine::ESceneComposer(entity->GetScene()).Remove(entity);
-
         entity->GetScene().camera2D.target.x = transform->x;
         entity->GetScene().camera2D.target.y = transform->y;
+
+        if (IsKeyReleased(KEY_Q))
+            entity->GetScene().entityManager.Delete(entity);
     }
 
-    Engine::ETransform* transform;
+    Engine::ETransform* transform = nullptr;
 };
 
 class Application {
@@ -51,7 +50,6 @@ public:
         S_LOG_LEVEL_INFO;
 
         Engine::EScene scene;
-        Engine::ESceneComposer composer(scene);
 
         Engine::ETexture tiles("src/tiles.png");
         Engine::ETileSet tilesSet(tiles);
@@ -65,19 +63,19 @@ public:
             }
         }
 
-        composer.Add(Engine::EEntityFactory("Back", scene).Transform(0, 0).Tiling(tileMap).Get());
+        scene.entityManager.Add(Engine::EEntityFactory("Back", scene).Transform(0, 0).Tiling(tileMap).Get());
 
-        composer.Add(Engine::EEntityFactory("Background", scene).Background(BLACK).Get());
+        scene.entityManager.Add(Engine::EEntityFactory("Background", scene).Background(BLACK).Get());
 
 
-        composer.Add(Engine::EEntityFactory("FPS", scene).Transform(10, 10).FPSLabel().Get());
+        scene.entityManager.Add(Engine::EEntityFactory("FPS", scene).Transform(10, 10).FPSLabel().Get());
 
         Engine::ETexture texture("src/img.png");
         Engine::ETileSet tileSet(texture);
         tileSet.Splice(6, 1);
         Engine::ESprite sprite(texture);
 
-        composer.Add(Engine::EEntityFactory("Character", scene).Transform(0, 0)
+        scene.entityManager.Add(Engine::EEntityFactory("Character", scene).Transform(0, 0)
                              .SlideShow(tileSet).Add(new Character()).Get());
 
         Engine::EEngine engine(scene, window);

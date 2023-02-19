@@ -5,6 +5,7 @@
 #ifndef BUILDANDPROGRAMM_ESCENE_HPP
 #define BUILDANDPROGRAMM_ESCENE_HPP
 
+#include "EEntityManager.hpp"
 #include "ERenderer.hpp"
 #include "ECreator.hpp"
 #include "EUpdater.hpp"
@@ -16,10 +17,11 @@ namespace Engine {
     public:
         EScene();
 
-        Engine::EEntity* root;
-        Engine::ERenderer renderer;
-        Engine::EUpdater updater;
-        Engine::ECreator creator;
+        EEntity* root;
+        ERenderer renderer;
+        EUpdater updater;
+        ECreator creator;
+        EEntityManager entityManager = EEntityManager(renderer, updater, creator, *this);
 
         Camera3D camera3D = {{5.0f, 5.0f, 5.0f },
                            { 0.0f, 0.0f, 0.0f },

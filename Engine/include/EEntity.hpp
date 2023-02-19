@@ -58,10 +58,12 @@ namespace Engine {
 
         std::string name = "default";
         Engine::EScene& scene;
+
+        std::vector<EEntity*> entities;
     private:
         bool created;
+
         std::vector<EComponent*> components;
-        std::vector<EEntity*> entities;
     };
 } // engine
 
