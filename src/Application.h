@@ -37,7 +37,7 @@ public:
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Grid", scene)
-                                  .Grid(10, 0.1).Get());
+                                  .Grid(10, 1).Get());
 
         Engine::EEngine engine(scene, window);
         engine.Run();

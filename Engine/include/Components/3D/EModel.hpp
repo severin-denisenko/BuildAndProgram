@@ -24,7 +24,7 @@ namespace Engine {
         }
 
         void Render3D(EEntity* entity) override{
-            DrawModel(model, {transform->x, transform->y, transform->z}, 0.1f, WHITE);
+            DrawModel(model, {transform->x, transform->y, transform->z}, 1.0f, WHITE);
         }
 
     private:

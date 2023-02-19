@@ -23,7 +23,7 @@ namespace Engine {
         ECreator creator;
         EEntityManager entityManager = EEntityManager(renderer, updater, creator, *this);
 
-        Camera3D camera3D = {{5.0f, 5.0f, 5.0f },
+        Camera3D camera3D = {{10.0f, 10.0f, 10.0f },
                            { 0.0f, 0.0f, 0.0f },
                            { 0.0f, 1.0f, 0.0f },
                            45.0f, 0 };
