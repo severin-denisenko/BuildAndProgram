@@ -2,7 +2,7 @@
 // Created by Severin on 19.02.2023.
 //
 
-#include "EEntityManager.hpp"
+#include "Systems/EEntityManager.hpp"
 #include "EEntity.hpp"
 #include "SLib/SLog.hpp"
 

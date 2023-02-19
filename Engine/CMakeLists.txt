@@ -11,7 +11,7 @@ include_directories(include)
 
 include_directories(deps/SLib/include)
 
-file(GLOB SRC src/*)
-file(GLOB INCLUDE include/*)
+file(GLOB SRC src/* src/*/*)
+file(GLOB INCLUDE include/* include/*/*)
 add_library(BAPEngine ${SRC} ${INCLUDE})
 target_link_libraries(BAPEngine raylib)

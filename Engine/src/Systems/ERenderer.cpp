@@ -2,7 +2,7 @@
 // Created by Severin on 18.02.2023.
 //
 
-#include "ERenderer.hpp"
+#include "Systems/ERenderer.hpp"
 #include "EEntity.hpp"
 
 namespace Engine {

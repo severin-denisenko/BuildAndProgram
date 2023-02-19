@@ -5,10 +5,10 @@
 #ifndef BUILDANDPROGRAMM_ESCENE_HPP
 #define BUILDANDPROGRAMM_ESCENE_HPP
 
-#include "EEntityManager.hpp"
-#include "ERenderer.hpp"
-#include "ECreator.hpp"
-#include "EUpdater.hpp"
+#include "Systems/EEntityManager.hpp"
+#include "Systems/ERenderer.hpp"
+#include "Systems/ECreator.hpp"
+#include "Systems/EUpdater.hpp"
 #include "EEntity.hpp"
 
 namespace Engine {
