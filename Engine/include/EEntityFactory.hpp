@@ -6,15 +6,21 @@
 #define BUILDANDPROGRAMM_EENTITYFACTORY_HPP
 
 #include "EEntity.hpp"
+
 #include "Components/EComponent.hpp"
 #include "Components/ETransform.hpp"
+#include "Components/ERigidBody.hpp"
+
 #include "Components/UI/EText.hpp"
+#include "Components/UI/FPSLabel.hpp"
+
 #include "Components/2D/EBackground.hpp"
 #include "Components/2D/ERectangle.hpp"
-#include "Components/UI/FPSLabel.hpp"
-#include "Components/ERigidBody.hpp"
 #include "Components/2D/ESlideShow.h"
 #include "Components/2D/ETiling.hpp"
+
+#include "Components/3D/EModel.hpp"
+#include "Components/3D/EGrid.h"
 
 namespace Engine {
 
@@ -95,6 +101,18 @@ namespace Engine {
         [[nodiscard]] EEntityFactory Tiling(ETileMap& tileMap) const{
             auto tiling = new ETiling(tileMap);
             entity->AddComponent(tiling);
+            return EEntityFactory(entity);
+        }
+
+        [[nodiscard]] EEntityFactory Model(const std::string& filename, ETexture& texture) const{
+            auto tiling = new EModel(filename, texture);
+            entity->AddComponent(tiling);
+            return EEntityFactory(entity);
+        }
+
+        [[nodiscard]] EEntityFactory Grid(int slices, float spacing) const{
+            auto grid = new EGrid(slices, spacing);
+            entity->AddComponent(grid);
             return EEntityFactory(entity);
         }
 

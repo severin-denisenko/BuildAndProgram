@@ -5,12 +5,11 @@
 #include "EEntity.hpp"
 
 namespace Engine{
-    EEntity::~EEntity() {
+    void EEntity::Create() {
         for (auto component: components) {
-            delete component;
+            component->Create(this);
         }
-
-        S_INFO("Entity " + name + " deleted.");
+        created = true;
     }
 
     void EEntity::Render3D() {
@@ -31,6 +30,15 @@ namespace Engine{
         }
     }
 
+    void EEntity::RenderUI() {
+        if(!created)
+            return;
+
+        for (auto component: components) {
+            component->RenderUI(this);
+        }
+    }
+
     void EEntity::Update() {
         if(!created)
             return;
@@ -42,6 +50,13 @@ namespace Engine{
 
     void EEntity::AddEntity(EEntity *entity) {
         entities.emplace_back(entity);
+    }
+
+    void EEntity::RemoveEntity(EEntity* entity) {
+        auto i = std::find(entities.begin(), entities.end(), entity);
+        if (i == entities.end())
+            S_ERROR("Entity " + entity->name + " can't be deleted from Parent!");
+        entities.erase(i);
     }
 
     void EEntity::AddComponent(EComponent *component) {
@@ -72,31 +87,16 @@ namespace Engine{
         S_INFO("Entity " + name + " created.");
     }
 
-    void EEntity::Create() {
+    EEntity::~EEntity() {
         for (auto component: components) {
-            component->Create(this);
+            delete component;
         }
-        created = true;
+
+        S_INFO("Entity " + name + " deleted.");
     }
 
     EScene &EEntity::GetScene() {
         return scene;
-    }
-
-    void EEntity::RenderUI() {
-        if(!created)
-            return;
-
-        for (auto component: components) {
-            component->RenderUI(this);
-        }
-    }
-
-    void EEntity::RemoveEntity(EEntity* entity) {
-        auto i = std::find(entities.begin(), entities.end(), entity);
-        if (i == entities.end())
-            S_ERROR("Entity " + entity->name + " can't be deleted from Parent!");
-        entities.erase(i);
     }
 }
 
