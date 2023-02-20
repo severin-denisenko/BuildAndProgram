@@ -20,7 +20,8 @@ namespace Engine {
         void Render(float scale_x, float scale_y){
             for (auto tile: tiles) {
                 auto [x, j, k] = tile;
-                tileSet.Render((float)x * tileSet.destination.height, (float)j * tileSet.destination.width,
+                tileSet.Render((float)x * tileSet.destination.height * scale_x,
+                               (float)j * tileSet.destination.width * scale_y,
                                 scale_x, scale_y, k);
             }
         }

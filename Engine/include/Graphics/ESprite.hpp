@@ -24,9 +24,9 @@ namespace Engine {
                            rotation, color);
         }
 
-        void Render(float x, float y){
+        void Render(float x, float y, float scale_x, float scale_y){
             DrawTexturePro(texture.Get(), source,
-                           {x, y, source.width * scale.x, source.height * scale.y},
+                           {x, y, source.width * scale.x * scale_x, source.height * scale.y * scale_x},
                            origin, rotation, color);
         }
 

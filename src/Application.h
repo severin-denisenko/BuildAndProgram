@@ -11,69 +11,59 @@
 #include <EEngine.hpp>
 #include <EEntityFactory.hpp>
 
-class ColorChanger : public Engine::EComponent{
+class PlayerControls: public Engine::EComponent{
 public:
-    ColorChanger() = default;
-
     void Create(Engine::EEntity* entity) override{
-        collider2D = entity->GetComponent<Engine::ECollider2D>();
-        slideShow = entity->GetComponent<Engine::ESlideShow>();
-
-        slideShow->frameBetweenSlides = 120;
-
-        collider2D->rec.width = (float)slideShow->tileSet.destination.width;
-        collider2D->rec.height = (float)slideShow->tileSet.destination.height;
-
-        entity->GetScene().physics.Add(entity);
+        transform = entity->GetComponent<Engine::ETransform>();
     }
 
     void Update(Engine::EEntity* entity) override{
-        if (!addedChanger && collider2D->colliding){
-            slideShow->frameBetweenSlides = 10;
-            addedChanger = true;
+        if (IsKeyPressed(KEY_D)){
+            transform->position.x+=distance * transform->GetGlobalScale().x;
+        } else if(IsKeyPressed(KEY_A)){
+            transform->position.x-=distance * transform->GetGlobalScale().x;
+        } else if(IsKeyPressed(KEY_S)){
+            transform->position.y+=distance * transform->GetGlobalScale().y;
+        } else if(IsKeyPressed(KEY_W)){
+            transform->position.y-=distance * transform->GetGlobalScale().y;
         }
     }
 
-    bool addedChanger = false;
-    Engine::ECollider2D* collider2D;
-    Engine::ESlideShow* slideShow;
-};
-
-class Boxes : public Engine::EComponent{
-public:
-    Boxes() = default;
-
-    void Create(Engine::EEntity* entity) override{
-        tileSet.Splice(2, 2);
-    }
-
-    void Update(Engine::EEntity* entity) override{
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-            Engine::EEntity* new_entity = Engine::EEntityFactory("Falling",entity,entity->GetScene())
-                    .RigidBody().Add(new ColorChanger()).Collider2D()
-                    .Transform(GetMousePosition().x,GetMousePosition().y, 0, 0, 0.5, 0.5)
-                    .SlideShow(tileSet).Get();
-
-            entity->GetScene().entityManager.AddTo(entity,new_entity);
-        }
-    }
 private:
-    Engine::ETexture texture = Engine::ETexture("src/cube_diffuse.png");
-    Engine::ETileSet tileSet = Engine::ETileSet(texture);
+    Engine::ETransform* transform;
+
+    float distance = 16;
 };
 
 class Application {
 public:
     void Run(){
-        Engine::EWindow window("Build And Program", false);
+        Engine::EWindow window("Build And Program", true);
 
         S_LOG_LEVEL_INFO;
 
         Engine::EScene scene;
 
+        scene.camera2D.offset = {0, 0};
+
+        Engine::ETexture texture("src/Assets/tiles.png");
+        Engine::ETileSet tileSet(texture);
+        tileSet.Splice(6,16);
+        Engine::ETileMap tileMap(tileSet);
+        for (int j = 0; j < 6; ++j) {
+            for (int i = 0; i < 16; ++i) {
+                tileMap.Set(j, i, j * 16 + i);
+            }
+        }
+
+        Engine::ETexture playerTexture("src/Assets/Characters/character7.png");
+        Engine::ETileSet playerTileSet(playerTexture);
+        playerTileSet.Splice(1, 2);
+        playerTileSet.origin = {0, 0};
+
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)
-                                  .Background(WHITE).Get());
+                                  .Background(BLACK).Get());
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("FPS", scene.root, scene)
@@ -81,9 +71,16 @@ public:
                                   .FPSLabel().Get());
 
         scene.entityManager.AddTo(scene.root,
-                                  Engine::EEntityFactory("Boxes", scene.root, scene)
-                                          .Transform(0, 0)
-                                          .Add(new Boxes()).Get());
+                                  Engine::EEntityFactory("Tiles", scene.root, scene)
+                                          .Transform(0, 0, 0, 0, 4, 4)
+                                          .Tiling(tileMap).Get());
+
+        scene.entityManager.AddTo(scene.root,
+                                  Engine::EEntityFactory("Player", scene.root, scene)
+                                          .Transform(0, 0, 0, 0, 4, 4)
+                                          .SlideShow(playerTileSet)
+                                          .Add(new PlayerControls())
+                                          .Get());
 
         Engine::EEngine engine(scene, window);
         engine.Run();

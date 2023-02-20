@@ -26,13 +26,11 @@ namespace Engine {
 
             if (transform == nullptr)
                 S_FATAL("ESprite is null!");
-
-            sprite.scale.x = transform->GetGlobalScale().x;
-            sprite.scale.y = transform->GetGlobalScale().y;
         }
 
         void Render2D(EEntity *entity) override{
-            sprite.Render(transform->GetGlobalPosition().x, transform->GetGlobalPosition().y);
+            sprite.Render(transform->GetGlobalPosition().x, transform->GetGlobalPosition().y,
+                          transform->GetGlobalScale().x, transform->GetGlobalScale().y);
         }
 
         ESprite sprite;

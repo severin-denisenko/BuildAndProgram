@@ -30,14 +30,15 @@ namespace Engine{
         void Render2D(EEntity* entity) override{
             tileSet.Render(transform->GetGlobalPosition().x, transform->GetGlobalPosition().y,
                            transform->GetGlobalScale().x, transform->GetGlobalScale().y, slide);
+            S_INFO(slide);
         }
 
-        size_t frameBetweenSlides = 30;
+        size_t frameBetweenSlides = 60;
 
         ETileSet& tileSet;
     private:
-        size_t slide;
-        size_t frame;
+        size_t slide = 0;
+        size_t frame = 0;
         ETransform* transform;
     };
 }

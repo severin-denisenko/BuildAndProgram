@@ -33,15 +33,10 @@ namespace Engine {
             }
         }
 
-        void Render(size_t index){
-            DrawTexturePro(texture.Get(), sources[index], destination, origin,
-                           rotation, color);
-        }
-
         void Render(float x, float y, float scale_x, float scale_y, size_t index){
             DrawTexturePro(texture.Get(), sources[index],
                            {x, y, sources[index].width * scale_x, sources[index].height * scale_y},
-                           {destination.width/2 * scale_x, destination.height/2 * scale_y}, rotation, color);
+                           {origin.x, origin.x}, rotation, color);
         }
 
         [[nodiscard]] size_t Count() const{

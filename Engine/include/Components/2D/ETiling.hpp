@@ -12,10 +12,11 @@ namespace Engine {
 
     class ETiling : public EComponent{
     public:
-        explicit ETiling(ETileMap &tileMap) : tileMap(tileMap) {}
+        explicit ETiling(ETileMap tileMap) : tileMap(tileMap) {}
 
         void Create(EEntity* entity) override{
             transform = entity->GetComponent<ETransform>();
+            tileMap.tileSet.origin = {0, 0};
         }
 
         void Render2D(EEntity* entity) override{
@@ -24,7 +25,7 @@ namespace Engine {
 
     private:
         ETransform* transform;
-        ETileMap &tileMap;
+        ETileMap tileMap;
     };
 
 } // Engine
