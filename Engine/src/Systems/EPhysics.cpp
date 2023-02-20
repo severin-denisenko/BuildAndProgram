@@ -146,10 +146,6 @@ namespace Engine {
                                           threshold);
         }
 
-        if(res){
-            S_INFO("Collision!");
-        }
-
         collider1->colliding = res;
         collider2->colliding = res;
     }
