@@ -25,13 +25,11 @@ namespace Engine{
                 slide++;
                 slide = slide % tileSet.Count();
             }
-
-            tileSet.scale.x = transform->scale.x;
-            tileSet.scale.y = transform->scale.y;
         }
 
         void Render2D(EEntity* entity) override{
-            tileSet.Render(transform->position.x, transform->position.y, slide);
+            tileSet.Render(transform->GetGlobalPosition().x, transform->GetGlobalPosition().y,
+                           transform->GetGlobalScale().x, transform->GetGlobalScale().y, slide);
         }
 
         size_t frameBetweenSlides = 30;

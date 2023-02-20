@@ -20,7 +20,7 @@ namespace Engine {
             transform = entity->GetComponent<ETransform>();
             collider = entity->GetComponent<ECollider2D>();
 
-            acceleration_y += gravity;
+            //acceleration_y += gravity;
             S_INFO("Component ERigidBody created.");
         }
 

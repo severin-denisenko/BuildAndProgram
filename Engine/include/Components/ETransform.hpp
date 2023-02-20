@@ -10,6 +10,17 @@
 #include <raylib.h>
 
 namespace Engine {
+    Vector3 operator+(Vector3 a, Vector3 b);
+    Vector3 operator*(Vector3 a, Vector3 b);
+    Vector2 operator+(Vector2 a, Vector3 b);
+    Vector2 operator*(Vector2 a, Vector3 b);
+    Vector2 operator+(Vector3 a, Vector2 b);
+    Vector2 operator*(Vector3 a, Vector2 b);
+    Rectangle operator+(Vector3 a, Rectangle b);
+    Rectangle operator+(Rectangle a, Vector3 b);
+    Rectangle operator*(Vector3 a, Rectangle b);
+    Rectangle operator*(Rectangle a, Vector3 b);
+
     class ETransform : public EComponent {
     public:
         ETransform() = default;
@@ -19,9 +30,7 @@ namespace Engine {
         }
 
         Vector3 GetGlobalPosition();
-
         Vector3 GetGlobalRotation();
-
         Vector3 GetGlobalScale();
 
         ETransform(float x, float y) : position({x, y, 0}) {}

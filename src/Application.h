@@ -11,42 +11,26 @@
 #include <EEngine.hpp>
 #include <EEntityFactory.hpp>
 
-class ColliderUpdater : public Engine::EComponent{
-public:
-    ColliderUpdater() = default;
-
-    void Create(Engine::EEntity* entity) override{
-        transform = entity->GetComponent<Engine::ETransform>();
-        collider = entity->GetComponent<Engine::ECollider2D>();
-    }
-
-    void Update(Engine::EEntity* entity) override{
-        collider->rec.x = transform->position.x;
-        collider->rec.y = transform->position.y;
-    }
-
-private:
-    Engine::ETransform* transform;
-    Engine::ECollider2D* collider;
-};
-
 class Boxes : public Engine::EComponent{
 public:
     Boxes() = default;
 
     void Create(Engine::EEntity* entity) override{
-        tileSet.Splice(6, 1);
+        tileSet.Splice(1, 1);
     }
 
     void Update(Engine::EEntity* entity) override{
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-            Engine::EEntity* new_entity = Engine::EEntityFactory("Falling", entity,
-                                                                 entity->GetScene()).RigidBody().Collider2D()
-                    .Transform(GetMousePosition().x,
-                               GetMousePosition().y)
-                    .SlideShow(tileSet).Add(new ColliderUpdater()).Get();
+            Engine::EEntity* new_entity = Engine::EEntityFactory(
+                    "Falling",
+                    entity,
+                    entity->GetScene()
+                    ).RigidBody()
+                            .Collider2D()
+                            .Transform(GetMousePosition().x,GetMousePosition().y, 0, 0, 0.5, 0.5)
+                            .SlideShow(tileSet).Get();
 
-            new_entity->GetComponent<Engine::ECollider2D>()->rec.width = (float)texture.Width() / 6;
+            new_entity->GetComponent<Engine::ECollider2D>()->rec.width = (float)texture.Width();
             new_entity->GetComponent<Engine::ECollider2D>()->rec.height = (float)texture.Height();
 
             entity->GetScene().entityManager.AddTo(entity,new_entity);
@@ -54,7 +38,7 @@ public:
         }
     }
 private:
-    Engine::ETexture texture = Engine::ETexture("src/img.png");
+    Engine::ETexture texture = Engine::ETexture("src/cube_diffuse.png");
     Engine::ETileSet tileSet = Engine::ETileSet(texture);
 };
 
@@ -78,7 +62,8 @@ public:
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Boxes", scene.root, scene)
-                                  .Add(new Boxes()).Get());
+                                          .Transform(0, 0)
+                                          .Add(new Boxes()).Get());
 
         Engine::EEngine engine(scene, window);
         engine.Run();

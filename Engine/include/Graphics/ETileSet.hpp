@@ -15,7 +15,6 @@ namespace Engine {
         explicit ETileSet(const ETexture& texture) : texture(texture) {
             Splice(1, 1);
             rotation = 0;
-            scale = {1, 1};
         }
 
         void Splice(size_t i, size_t j){
@@ -39,10 +38,10 @@ namespace Engine {
                            rotation, color);
         }
 
-        void Render(float x, float y, size_t index){
+        void Render(float x, float y, float scale_x, float scale_y, size_t index){
             DrawTexturePro(texture.Get(), sources[index],
-                           {x, y, sources[index].width * scale.x, sources[index].height * scale.y},
-                           origin, rotation, color);
+                           {x, y, sources[index].width * scale_x, sources[index].height * scale_y},
+                           {destination.width/2 * scale_x, destination.height/2 * scale_y}, rotation, color);
         }
 
         [[nodiscard]] size_t Count() const{
@@ -52,7 +51,6 @@ namespace Engine {
         Rectangle destination;
         float rotation;
         Vector2 origin;
-        Vector2 scale;
         Color color = WHITE;
     private:
         std::vector<Rectangle> sources;

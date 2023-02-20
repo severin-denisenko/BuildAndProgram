@@ -7,6 +7,7 @@
 
 namespace Engine {
     EScene::EScene() {
-        root = EEntityFactory("Root", nullptr, *this).Get();
+        root = new EEntity("Root", nullptr, *this);
+        root->AddComponent(new ETransform(0, 0));
     }
 } // engine

@@ -3,6 +3,7 @@
 //
 
 #include "EEntity.hpp"
+#include "Components/EComponent.hpp"
 
 namespace Engine{
     void EEntity::Create() {
@@ -100,7 +101,10 @@ namespace Engine{
         return scene;
     }
 
-    EEntity *EEntity::GetPatent() const {
+    EEntity *EEntity::GetParent() const {
+        if (parent == nullptr){
+            S_ERROR("Returning null parent in Entity " + name + ".");
+        }
         return parent;
     }
 }

@@ -15,48 +15,81 @@ namespace Engine{
         return {a.x * b.x, a.y * b.y, a.z * b.z};
     }
 
+    Vector2 operator+(Vector2 a, Vector3 b){
+        return {a.x + b.x, a.y + b.y};
+    }
+
+    Vector2 operator*(Vector2 a, Vector3 b){
+        return {a.x * b.x, a.y * b.y};
+    }
+
+    Vector2 operator+(Vector3 a, Vector2 b){
+        return b + a;
+    }
+
+    Vector2 operator*(Vector3 a, Vector2 b){
+        return b * a;
+    }
+
+    Rectangle operator+(Rectangle a, Vector3 b){
+        return {a.x + b.x, a.y + b.y, a.width, a.height};
+    }
+
+    Rectangle operator+(Vector3 a, Rectangle b){
+        return b + a;
+    }
+
+    Rectangle operator*(Rectangle a, Vector3 b){
+        return {a.x, a.y, a.width * b.x, a.height * b.y};
+    }
+
+    Rectangle operator*(Vector3 a, Rectangle b){
+        return b * a;
+    }
+
+
     Vector3 ETransform::GetGlobalPosition() {
-        if (entity->name == "Root"){
+        if (entity == nullptr)
+            return {0, 0 ,0};
+
+        EEntity* parent = entity->GetParent();
+
+        if (parent == nullptr){
             return {0, 0 ,0};
         }
 
-        auto* transform = entity->GetPatent()->GetComponent<ETransform>();
+        auto* transform = parent->GetComponent<ETransform>();
 
-        if(transform == nullptr){
-            S_ERROR("Transform is null in GetGlobalPosition on entity " + entity->name);
-            return {0, 0, 0};
-        }
-
-        return position + transform->GetGlobalPosition();
+        return position * transform->GetGlobalScale() + transform->GetGlobalPosition();
     }
 
     Vector3 ETransform::GetGlobalRotation() {
-        if (entity->name == "Root"){
+        if (entity == nullptr)
+            return {0, 0 ,0};
+
+        EEntity* parent = entity->GetParent();
+
+        if (parent == nullptr){
             return {0, 0 ,0};
         }
 
-        auto* transform = entity->GetPatent()->GetComponent<ETransform>();
-
-        if(transform == nullptr){
-            S_ERROR("Transform is null in GetGlobalRotation on entity " + entity->name);
-            return {0, 0, 0};
-        }
+        auto* transform = entity->GetComponent<ETransform>();
 
         return rotation + transform->GetGlobalRotation();
     }
 
     Vector3 ETransform::GetGlobalScale() {
-        if (entity->name == "Root"){
+        if (entity == nullptr)
+            return {1, 1 ,1};
+
+        EEntity* parent = entity->GetParent();
+
+        if (parent == nullptr){
             return {1, 1 ,1};
         }
 
-        auto* transform = entity->GetPatent()->GetComponent<ETransform>();
+        auto* transform = parent->GetComponent<ETransform>();
 
-        if(transform == nullptr){
-            S_ERROR("Transform is null in GetGlobalScale on entity " + entity->name);
-            return {1, 1, 1};
-        }
-
-        return rotation * transform->GetGlobalScale();
+        return scale * transform->GetGlobalScale();
     }
 }

@@ -14,10 +14,16 @@ namespace Engine {
     public:
         explicit ETiling(ETileMap &tileMap) : tileMap(tileMap) {}
 
-        void Render2D(EEntity* entity) override{
-            tileMap.Render();
+        void Create(EEntity* entity) override{
+            transform = entity->GetComponent<ETransform>();
         }
 
+        void Render2D(EEntity* entity) override{
+            tileMap.Render(transform->GetGlobalScale().x, transform->GetGlobalScale().y);
+        }
+
+    private:
+        ETransform* transform;
         ETileMap &tileMap;
     };
 

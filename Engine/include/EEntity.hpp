@@ -10,9 +10,6 @@
 
 #include "../deps/SLib/include/SLib/SLog.hpp"
 
-#include "Components/EComponent.hpp"
-#include "Components/ETransform.hpp"
-
 namespace Engine {
     class EScene;
     class EComponent;
@@ -30,7 +27,7 @@ namespace Engine {
         [[nodiscard]] size_t GetChildCount() const;
         EEntity* GetChildByName(const std::string& name);
 
-        [[nodiscard]] EEntity* GetPatent() const;
+        [[nodiscard]] EEntity* GetParent() const;
 
         EScene& GetScene();
 
@@ -56,8 +53,8 @@ namespace Engine {
         std::string name = "Default";
         std::vector<EEntity*> entities;
         std::vector<EComponent*> components;
-    private:
         bool created;
+    private:
         EScene& scene;
         EEntity* parent = nullptr;
     };

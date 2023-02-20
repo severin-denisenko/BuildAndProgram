@@ -5,6 +5,7 @@
 #include "Systems/EPhysics.hpp"
 #include "EEntity.hpp"
 #include "Components/Physics/ECollider2D.hpp"
+#include "Components/ETransform.hpp"
 #include <raylib.h>
 
 namespace Engine {
@@ -24,6 +25,8 @@ namespace Engine {
     void EPhysics::SolvePhysics() {
         for (size_t i = 0; i < entities.size(); ++i) {
             for (size_t j = 0; j < entities.size(); ++j) {
+                if (!entities[i]->created || !entities[j]->created)
+                    continue;
                 if (i == j)
                     continue;
                 TestCollisions(entities[i], entities[j]);
@@ -34,6 +37,14 @@ namespace Engine {
     void EPhysics::TestCollisions(EEntity *entity1, EEntity *entity2) {
         auto* collider1 = entity1->GetComponent<ECollider2D>();
         auto* collider2 = entity2->GetComponent<ECollider2D>();
+
+        auto* transform1 = entity1->GetComponent<ETransform>();
+        auto* transform2 = entity2->GetComponent<ETransform>();
+
+        Vector3 globalPosition1 = transform1->GetGlobalPosition();
+        Vector3 globalPosition2 = transform2->GetGlobalPosition();
+        Vector3 globalScale1 = transform1->GetGlobalScale();
+        Vector3 globalScale2 = transform2->GetGlobalScale();
 
         if (collider1 == nullptr){
             S_ERROR("Can't find collider on object " + entity1->name + ".");
@@ -50,37 +61,89 @@ namespace Engine {
         bool res = false;
 
         if (shape1 == ECollider2D::RECTANGLE && shape2 == ECollider2D::RECTANGLE){
-            res = CheckCollisionRecs(collider1->rec, collider2->rec);
+
+            res = CheckCollisionRecs(collider1->rec * globalScale1 + globalPosition1,
+                                     collider2->rec * globalScale2 + globalPosition2);
+
         } else if(shape1 == ECollider2D::CIRCLE && shape2 == ECollider2D::CIRCLE){
-            res = CheckCollisionCircles(collider1->center, collider1->radius,
-                                  collider2->center, collider2->radius);
+
+            res = CheckCollisionCircles(collider1->center + globalPosition1,
+                                        collider1->radius * transform1->GetGlobalScale().x, //TODO
+                                        collider2->center + globalPosition2,
+                                        collider2->radius * transform2->GetGlobalScale().x); //TODO
+
         } else if(shape1 == ECollider2D::CIRCLE && shape2 == ECollider2D::RECTANGLE){
-            res = CheckCollisionCircleRec(collider1->center,
-                                          collider1->radius, collider2->rec);
+
+            res = CheckCollisionCircleRec(collider1->center + globalPosition1,
+                                          collider1->radius * transform1->GetGlobalScale().x, //TODO
+                                          collider2->rec + globalPosition2);
+
         } else if(shape1 == ECollider2D::RECTANGLE && shape2 == ECollider2D::CIRCLE){
-            res = CheckCollisionCircleRec(collider2->center,
-                                          collider2->radius, collider1->rec);
+
+            res = CheckCollisionCircleRec(collider2->center + globalPosition2,
+                                          collider2->radius * transform2->GetGlobalScale().x, //TODO
+                                          collider1->rec + globalPosition1);
+
         } else if(shape1 == ECollider2D::RECTANGLE && shape2 == ECollider2D::POINT){
-            res = CheckCollisionPointRec(collider2->point, collider1->rec);
+
+            res = CheckCollisionPointRec(collider2->point + globalPosition2,
+                                         collider1->rec + globalPosition1);
+
         } else if(shape1 == ECollider2D::POINT && shape2 == ECollider2D::RECTANGLE){
-            res = CheckCollisionPointRec(collider1->point, collider2->rec);
+
+            res = CheckCollisionPointRec(collider1->point + globalPosition1,
+                                         collider2->rec + globalPosition2);
+
         } else if(shape1 == ECollider2D::CIRCLE && shape2 == ECollider2D::POINT){
-            res = CheckCollisionPointCircle(collider2->point, collider1->center, collider1->radius);
+
+            res = CheckCollisionPointCircle(collider2->point + globalPosition2,
+                                            collider1->center + globalPosition1,
+                                            collider1->radius * transform1->GetGlobalScale().x); // TODO
+
         } else if(shape1 == ECollider2D::POINT && shape2 == ECollider2D::CIRCLE){
-            res = CheckCollisionPointCircle(collider1->point, collider2->center, collider2->radius);
+
+            res = CheckCollisionPointCircle(collider1->point + globalPosition1,
+                                            collider2->center + globalPosition2,
+                                            collider2->radius * transform1->GetGlobalScale().y); //TODO
+
         } else if(shape1 == ECollider2D::TRIANGLE && shape2 == ECollider2D::POINT){
-            res = CheckCollisionPointTriangle(collider2->point, collider1->p1, collider1->p2, collider1->p3);
+
+            res = CheckCollisionPointTriangle(collider2->point + globalPosition2,
+                                              collider1->p1 + globalPosition1,
+                                              collider1->p2 + globalPosition1,
+                                              collider1->p3 + globalPosition1);
+
         } else if(shape1 == ECollider2D::POINT && shape2 == ECollider2D::TRIANGLE){
-            res = CheckCollisionPointTriangle(collider1->point, collider2->p1, collider2->p2, collider2->p3);
+
+            res = CheckCollisionPointTriangle(collider1->point + globalPosition1,
+                                              collider2->p1 + globalPosition2,
+                                              collider2->p2 + globalPosition2,
+                                              collider2->p3 + globalPosition2);
+
         } else if(shape1 == ECollider2D::LINE && shape2 == ECollider2D::LINE){
+
             Vector2 point;
-            res = CheckCollisionLines(collider1->l1, collider1->l2, collider2->l1, collider2->l2, &point);
+            res = CheckCollisionLines(collider1->l1 + globalPosition1,
+                                      collider1->l2 + globalPosition1,
+                                      collider2->l1 + globalPosition2,
+                                      collider2->l2 + globalPosition2,
+                                      &point);
+
         } else if(shape1 == ECollider2D::LINE && shape2 == ECollider2D::POINT){
+
             int threshold = 0;
-            res = CheckCollisionPointLine(collider2->point, collider1->p1, collider1->p2, threshold);
+            res = CheckCollisionPointLine(collider2->point + globalPosition2,
+                                          collider1->p1 + globalPosition1,
+                                          collider1->p2 + globalPosition1,
+                                          threshold);
+
         } else if(shape1 == ECollider2D::POINT && shape2 == ECollider2D::LINE){
+
             int threshold = 0;
-            res = CheckCollisionPointLine(collider1->point, collider2->p1, collider2->p2, threshold);
+            res = CheckCollisionPointLine(collider1->point + globalPosition1,
+                                          collider2->p1 + globalPosition2,
+                                          collider2->p2 + globalPosition2,
+                                          threshold);
         }
 
         if(res){
