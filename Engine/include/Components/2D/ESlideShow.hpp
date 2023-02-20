@@ -33,10 +33,11 @@ namespace Engine{
         }
 
         size_t frameBetweenSlides = 30;
+
+        ETileSet& tileSet;
     private:
         size_t slide;
         size_t frame;
-        ETileSet& tileSet;
         ETransform* transform;
     };
 }
