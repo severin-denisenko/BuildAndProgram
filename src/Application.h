@@ -69,7 +69,7 @@ public:
 
         Engine::ETileSet playerTileSet(characters.Get(Characters::Dino_green));
         playerTileSet.Splice(2, 1);
-        playerTileSet.origin = {0, 0};
+        playerTileSet.SetOrigin({0, 0});
 
         Texture texture = LoadTexture("src/Assets/tiles.png");
         Engine::ETileSet tileSet(texture);
@@ -80,6 +80,7 @@ public:
                 tileMap.Set(i, j, i * 16 + j);
             }
         }
+        tileSet.SetOrigin({0, 0});
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)

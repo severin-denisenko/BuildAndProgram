@@ -12,20 +12,20 @@ namespace Engine {
 
     class ETiling : public EComponent{
     public:
-        explicit ETiling(ETileMap tileMap) : tileMap(tileMap) {}
+        explicit ETiling(ETileMap& tileMap) : tileMap(tileMap) {}
 
         void Create(EEntity* entity) override{
             transform = entity->GetComponent<ETransform>();
-            tileMap.tileSet.origin = {0, 0};
         }
 
         void Render2D(EEntity* entity) override{
-            tileMap.Render(transform->GetGlobalScale().x, transform->GetGlobalScale().y);
+            tileMap.Render(transform->GetGlobalPosition().x, transform->GetGlobalPosition().y,
+                           transform->GetGlobalScale().x, transform->GetGlobalScale().y);
         }
 
     private:
-        ETransform* transform;
-        ETileMap tileMap;
+        ETransform* transform = nullptr;
+        ETileMap& tileMap;
     };
 
 } // Engine

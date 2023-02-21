@@ -13,9 +13,8 @@ namespace Engine {
     public:
         explicit ESprite(const Texture& texture) : texture(texture) {
             origin = {(float)texture.width/2, (float)texture.height/2};
-            source = {0, 0, (float)texture.width, (float)texture.height/2};
+            source = {0, 0, (float)texture.width, (float)texture.height};
             rotation = 0;
-            scale = {1, 1};
             destination = source;
         }
 
@@ -26,7 +25,7 @@ namespace Engine {
 
         void Render(float x, float y, float scale_x, float scale_y){
             DrawTexturePro(texture, source,
-                           {x, y, source.width * scale.x * scale_x, source.height * scale.y * scale_x},
+                           {x, y, source.width * scale_x, source.height * scale_y},
                            origin, rotation, color);
         }
 
@@ -34,7 +33,6 @@ namespace Engine {
         Rectangle destination;
         float rotation;
         Vector2 origin;
-        Vector2 scale;
         Color color = WHITE;
     private:
         const Texture texture;

@@ -17,11 +17,11 @@ namespace Engine {
             tiles.emplace_back(x, y, tile_index);
         }
 
-        void Render(float scale_x, float scale_y){
+        void Render(float x, float y, float scale_x, float scale_y){
             for (auto tile: tiles) {
-                auto [x, j, k] = tile;
-                tileSet.Render((float)x * tileSet.destination.height * scale_x,
-                               (float)j * tileSet.destination.width * scale_y,
+                auto [i, j, k] = tile;
+                tileSet.Render(x + i * tileSet.width * scale_x,
+                               y + j * tileSet.height * scale_y,
                                 scale_x, scale_y, k);
             }
         }
