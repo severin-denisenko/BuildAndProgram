@@ -22,7 +22,7 @@ void Engine::EEntityManager::Delete(EEntity *entity) {
     updater.Remove(entity);
     physics.Remove(entity);
 
-    while (!entity->entities.empty()){
+    while (!entity->children.empty()){
         entity->RemoveEntity(entities.back());
         Delete(entities.back());
     }

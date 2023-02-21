@@ -10,6 +10,7 @@
 #include <Graphics/ESprite.hpp>
 #include <EEngine.hpp>
 #include <EEntityFactory.hpp>
+#include <Systems/ETextureHolder.hpp>
 
 class PlayerControls: public Engine::EComponent{
 public:
@@ -44,20 +45,41 @@ public:
 
         Engine::EScene scene;
 
-        Engine::ETexture texture("src/Assets/tiles.png");
-        Engine::ETileSet tileSet(texture);
-        tileSet.Splice(16,6);
-        Engine::ETileMap tileMap(tileSet);
-        for (int i = 0; i < 16; ++i) {
-            for (int j = 0; j < 6; ++j) {
-                tileMap.Set(i, j, i * 6 + j);
-            }
-        }
+        enum class Characters{
+            Knight_pink,
+            Knight_orange,
+            Wanderer_male,
+            Wanderer_female,
+            Wizard_male,
+            Wizard_female,
+            Dino_red,
+            Dino_green
+        };
 
-        Engine::ETexture playerTexture("src/Assets/Characters/character7.png");
-        Engine::ETileSet playerTileSet(playerTexture);
+        Engine::ETextureHolder<Characters> characters;
+
+        characters.Load(Characters::Knight_pink, "src/Assets/Characters/1.png");
+        characters.Load(Characters::Knight_orange, "src/Assets/Characters/2.png");
+        characters.Load(Characters::Wanderer_male, "src/Assets/Characters/3.png");
+        characters.Load(Characters::Wanderer_female, "src/Assets/Characters/4.png");
+        characters.Load(Characters::Wizard_male, "src/Assets/Characters/5.png");
+        characters.Load(Characters::Wizard_female, "src/Assets/Characters/6.png");
+        characters.Load(Characters::Dino_red, "src/Assets/Characters/7.png");
+        characters.Load(Characters::Dino_green, "src/Assets/Characters/8.png");
+
+        Engine::ETileSet playerTileSet(characters.Get(Characters::Dino_green));
         playerTileSet.Splice(2, 1);
         playerTileSet.origin = {0, 0};
+
+        Texture texture = LoadTexture("src/Assets/tiles.png");
+        Engine::ETileSet tileSet(texture);
+        tileSet.Splice(6,16);
+        Engine::ETileMap tileMap(tileSet);
+        for (int i = 0; i < 6; ++i) {
+            for (int j = 0; j < 16; ++j) {
+                tileMap.Set(i, j, i * 16 + j);
+            }
+        }
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)

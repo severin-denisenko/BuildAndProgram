@@ -50,14 +50,14 @@ namespace Engine{
     }
 
     void EEntity::AddEntity(EEntity *entity) {
-        entities.emplace_back(entity);
+        children.emplace_back(entity);
     }
 
     void EEntity::RemoveEntity(EEntity* entity) {
-        auto i = std::find(entities.begin(), entities.end(), entity);
-        if (i == entities.end())
+        auto i = std::find(children.begin(), children.end(), entity);
+        if (i == children.end())
             S_ERROR("Entity " + entity->name + " can't be deleted from Parent!");
-        entities.erase(i);
+        children.erase(i);
     }
 
     void EEntity::AddComponent(EComponent *component) {
@@ -65,14 +65,14 @@ namespace Engine{
     }
 
     EEntity *EEntity::GetChildByIndex(size_t index) {
-        if(index < entities.size())
-            return entities[index];
+        if(index < children.size())
+            return children[index];
         S_ERROR("Entity by this index does not exist: " + std::to_string(index));
         return nullptr;
     }
 
     EEntity *EEntity::GetChildByName(const std::string& find) {
-        for (auto entity: entities) {
+        for (auto entity: children) {
             if (entity->name == find)
                 return entity;
         }
@@ -81,7 +81,7 @@ namespace Engine{
     }
 
     size_t EEntity::GetChildCount() const {
-        return entities.size();
+        return children.size();
     }
 
     EEntity::EEntity(const std::string &name, EEntity* parent, EScene& scene) :

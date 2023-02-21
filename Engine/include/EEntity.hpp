@@ -51,7 +51,7 @@ namespace Engine {
         }
 
         std::string name = "Default";
-        std::vector<EEntity*> entities;
+        std::vector<EEntity*> children;
         std::vector<EComponent*> components;
         bool created;
     private:

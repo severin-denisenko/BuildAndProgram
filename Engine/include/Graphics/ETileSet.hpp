@@ -6,21 +6,20 @@
 #define BUILDANDPROGRAMM_ETILESET_HPP
 
 #include <vector>
-#include "ETexture.hpp"
 
 namespace Engine {
 
     class ETileSet {
     public:
-        explicit ETileSet(const ETexture& texture) : texture(texture) {
+        explicit ETileSet(const Texture& texture) : texture(texture) {
             Splice(1, 1);
             rotation = 0;
         }
 
         void Splice(size_t i, size_t j){
             sources.clear();
-            float height = (float)texture.Width()/(float)i;
-            float width = (float)texture.Height()/(float)j;
+            float height = (float)texture.width/(float)i;
+            float width = (float)texture.height/(float)j;
 
             destination = {0, 0, width, height};
             origin = {width/2, height/2};
@@ -33,7 +32,7 @@ namespace Engine {
         }
 
         void Render(float x, float y, float scale_x, float scale_y, size_t index){
-            DrawTexturePro(texture.Get(), sources[index],
+            DrawTexturePro(texture, sources[index],
                            {x, y, sources[index].width * scale_x, sources[index].height * scale_y},
                            {origin.x, origin.x}, rotation, color);
         }
@@ -48,7 +47,7 @@ namespace Engine {
         Color color = WHITE;
     private:
         std::vector<Rectangle> sources;
-        const ETexture& texture;
+        const Texture& texture;
     };
 
 } // Engine

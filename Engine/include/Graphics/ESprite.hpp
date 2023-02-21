@@ -5,27 +5,27 @@
 #ifndef BUILDANDPROGRAMM_ESPRITE_HPP
 #define BUILDANDPROGRAMM_ESPRITE_HPP
 
-#include "ETexture.hpp"
+#include <raylib.h>
 
 namespace Engine {
 
     class ESprite {
     public:
-        explicit ESprite(const ETexture& texture) : texture(texture) {
-            origin = {(float)texture.Width()/2, (float)texture.Height()/2};
-            source = {0, 0, (float)texture.Width(), (float)texture.Height()};
+        explicit ESprite(const Texture& texture) : texture(texture) {
+            origin = {(float)texture.width/2, (float)texture.height/2};
+            source = {0, 0, (float)texture.width, (float)texture.height/2};
             rotation = 0;
             scale = {1, 1};
             destination = source;
         }
 
         void Render(){
-            DrawTexturePro(texture.Get(), source, destination, origin,
+            DrawTexturePro(texture, source, destination, origin,
                            rotation, color);
         }
 
         void Render(float x, float y, float scale_x, float scale_y){
-            DrawTexturePro(texture.Get(), source,
+            DrawTexturePro(texture, source,
                            {x, y, source.width * scale.x * scale_x, source.height * scale.y * scale_x},
                            origin, rotation, color);
         }
@@ -37,7 +37,7 @@ namespace Engine {
         Vector2 scale;
         Color color = WHITE;
     private:
-        const ETexture& texture;
+        const Texture texture;
     };
 } // Engine
 

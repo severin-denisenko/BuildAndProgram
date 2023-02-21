@@ -9,8 +9,6 @@
 
 #include <raylib.h>
 
-#include "ETexture.hpp"
-
 namespace Engine {
 
     class EMesh {
@@ -19,8 +17,8 @@ namespace Engine {
             model = LoadModel(filename.c_str());
         }
 
-        void SetTexture(ETexture& texture){
-            model.materials->maps[MATERIAL_MAP_DIFFUSE].texture = texture.Get();
+        void SetTexture(Texture& texture){
+            model.materials->maps[MATERIAL_MAP_DIFFUSE].texture = texture;
         }
 
         [[nodiscard]] const Model& Get() const{
