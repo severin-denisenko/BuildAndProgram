@@ -12,7 +12,9 @@
 #include <EEntityFactory.hpp>
 #include <Systems/ETextureHolder.hpp>
 
-class PlayerControls: public Engine::EComponent{
+#include <array>
+
+class PlayerAControls: public Engine::EComponent{
 public:
     void Create(Engine::EEntity* entity) override{
         transform = entity->GetComponent<Engine::ETransform>();
@@ -36,10 +38,34 @@ private:
     float distance = 16;
 };
 
+class PlayerBControls: public Engine::EComponent{
+public:
+    void Create(Engine::EEntity* entity) override{
+        transform = entity->GetComponent<Engine::ETransform>();
+    }
+
+    void Update(Engine::EEntity* entity) override{
+        if (IsKeyPressed(KEY_RIGHT)){
+            transform->position.x+=distance * transform->GetGlobalScale().x;
+        } else if(IsKeyPressed(KEY_LEFT)){
+            transform->position.x-=distance * transform->GetGlobalScale().x;
+        } else if(IsKeyPressed(KEY_DOWN)){
+            transform->position.y+=distance * transform->GetGlobalScale().y;
+        } else if(IsKeyPressed(KEY_UP)){
+            transform->position.y-=distance * transform->GetGlobalScale().y;
+        }
+    }
+
+private:
+    Engine::ETransform* transform;
+
+    float distance = 16;
+};
+
 class Application {
 public:
     void Run(){
-        Engine::EWindow window("Build And Program", true);
+        Engine::EWindow window("Build And Program", false);
 
         S_LOG_LEVEL_INFO;
 
@@ -67,17 +93,22 @@ public:
         characters.Load(Characters::Dino_red, "src/Assets/Characters/7.png");
         characters.Load(Characters::Dino_green, "src/Assets/Characters/8.png");
 
-        Engine::ETileSet playerTileSet(characters.Get(Characters::Dino_green));
-        playerTileSet.Splice(2, 1);
-        playerTileSet.SetOrigin({0, 0});
+        Engine::ETileSet playerATiles(characters.Get(Characters::Wizard_male));
+        playerATiles.Splice(2, 1);
+        playerATiles.SetOrigin({0, 0});
+
+        Engine::ETileSet playerBTiles(characters.Get(Characters::Wizard_female));
+        playerBTiles.Splice(2, 1);
+        playerBTiles.SetOrigin({0, 0});
 
         Texture texture = LoadTexture("src/Assets/tiles.png");
         Engine::ETileSet tileSet(texture);
         tileSet.Splice(6,16);
         Engine::ETileMap tileMap(tileSet);
-        for (int i = 0; i < 6; ++i) {
-            for (int j = 0; j < 16; ++j) {
-                tileMap.Set(i, j, i * 16 + j);
+        std::array<int, 8> floor = {4, 5, 6, 20, 21, 22, 36, 37};
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                tileMap.Set(i, j, floor[rand() % floor.size()]); // i * 16 + j
             }
         }
         tileSet.SetOrigin({0, 0});
@@ -87,20 +118,22 @@ public:
                                   .Background(BLACK).Get());
 
         scene.entityManager.AddTo(scene.root,
-                                  Engine::EEntityFactory("FPS", scene.root, scene)
-                                  .Transform(10, 10)
-                                  .FPSLabel().Get());
-
-        scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Tiles", scene.root, scene)
-                                          .Transform(0, 0, 0, 0, 4, 4)
+                                          .Transform(0, 0, 0, 0, 1, 1)
                                           .Tiling(tileMap).Get());
 
         scene.entityManager.AddTo(scene.root,
-                                  Engine::EEntityFactory("Player", scene.root, scene)
-                                          .Transform(0, 0, 0, 0, 4, 4)
-                                          .SlideShow(playerTileSet)
-                                          .Add(new PlayerControls())
+                                  Engine::EEntityFactory("PlayerA", scene.root, scene)
+                                          .Transform(0, 0, 0, 0, 1, 1)
+                                          .SlideShow(playerATiles)
+                                          .Add(new PlayerAControls())
+                                          .Get());
+
+        scene.entityManager.AddTo(scene.root,
+                                  Engine::EEntityFactory("PlayerB", scene.root, scene)
+                                          .Transform(0, 0, 0, 0, 1, 1)
+                                          .SlideShow(playerBTiles)
+                                          .Add(new PlayerBControls())
                                           .Get());
 
         Engine::EEngine engine(scene, window);

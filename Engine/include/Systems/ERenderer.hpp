@@ -13,7 +13,8 @@ namespace Engine {
 
     class ERenderer {
     public:
-        ERenderer();
+        ERenderer(int width, int height);
+        ~ERenderer();
 
         void Add2D(EEntity* entity);
         void Add3D(EEntity* entity);
@@ -25,10 +26,13 @@ namespace Engine {
         void Remove3D(EEntity *pEntity);
         void RemoveUI(EEntity *entity);
 
+        bool preserveAspectRatio = true;
     private:
         std::vector<EEntity*> entities2D;
         std::vector<EEntity*> entities3D;
         std::vector<EEntity*> entitiesUI;
+
+        RenderTexture2D gameView2D;
     };
 
 } // Engine

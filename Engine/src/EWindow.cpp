@@ -18,6 +18,7 @@ namespace Engine{
             InitWindow(600, 600, name);
         }
 
+        SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
         SetTargetFPS(60);
     }
 

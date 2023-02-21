@@ -6,7 +6,7 @@
 #include "EEntityFactory.hpp"
 
 namespace Engine {
-    EScene::EScene() {
+    EScene::EScene() : renderer(128, 128) {
         root = new EEntity("Root", nullptr, *this);
         root->AddComponent(new ETransform(0, 0));
     }

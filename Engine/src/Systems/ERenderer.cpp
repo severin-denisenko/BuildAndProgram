@@ -21,11 +21,28 @@ namespace Engine {
     void ERenderer::Render(Camera2D& camera2D, Camera3D& camera3D) {
         BeginDrawing();
 
+        BeginTextureMode(gameView2D);
         BeginMode2D(camera2D);
         for (auto entity: entities2D) {
             entity->Render2D();
         }
         EndMode2D();
+        EndTextureMode();
+
+        Rectangle source = {0.0f, 0.0f, (float)gameView2D.texture.width, (float)-gameView2D.texture.height };
+        Rectangle dist = { 0, 0 , (float)GetScreenWidth(), (float)GetScreenHeight()};
+
+        if(preserveAspectRatio){
+            float scale = std::min((float)GetScreenWidth() / (float)gameView2D.texture.width,
+                                   (float)GetScreenHeight() / (float)gameView2D.texture.height);
+
+            dist = { ((float)GetScreenWidth() - ((float)gameView2D.texture.width * scale)) * 0.5f,
+                     ((float)GetScreenHeight() - ((float)gameView2D.texture.height * scale)) * 0.5f,
+                     (float)gameView2D.texture.width * scale,
+                     (float)gameView2D.texture.height * scale };
+        }
+
+        DrawTexturePro(gameView2D.texture, source,dist,{0, 0}, 0.0f, WHITE);
 
         BeginMode3D(camera3D);
         for (auto entity: entities3D) {
@@ -40,7 +57,9 @@ namespace Engine {
         EndDrawing();
     }
 
-    ERenderer::ERenderer() = default;
+    ERenderer::ERenderer(int width, int height){
+        gameView2D = LoadRenderTexture(width, height);
+    }
 
     void ERenderer::Remove2D(EEntity *entity) {
         auto i = std::find(entities2D.begin(), entities2D.end(), entity);
@@ -67,5 +86,9 @@ namespace Engine {
             return;
         }
         entities3D.erase(i);
+    }
+
+    ERenderer::~ERenderer() {
+        UnloadRenderTexture(gameView2D);
     }
 } // Engine
