@@ -27,8 +27,7 @@ namespace Engine {
 
             for (size_t k = 0; k < i; ++k) {
                 for (size_t l = 0; l < j; ++l) {
-                    sources.push_back({width * (float)k, height * (float)l,
-                                       width, height});
+                    sources.push_back({height * (float)k, width * (float)l, height, width});
                 }
             }
         }

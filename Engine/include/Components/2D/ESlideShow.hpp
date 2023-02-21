@@ -20,25 +20,22 @@ namespace Engine{
 
         void Update(EEntity* entity) override{
             frame++;
-            if (frame % frameBetweenSlides == 0){
-                frame = 0;
+            if (frame % frameBetweenSlides == 0)
                 slide++;
-                slide = slide % tileSet.Count();
-            }
         }
 
         void Render2D(EEntity* entity) override{
             tileSet.Render(transform->GetGlobalPosition().x, transform->GetGlobalPosition().y,
-                           transform->GetGlobalScale().x, transform->GetGlobalScale().y, slide);
-            S_INFO(slide);
+                           transform->GetGlobalScale().x, transform->GetGlobalScale().y,
+                           slide % tileSet.Count());
         }
 
-        size_t frameBetweenSlides = 60;
+        size_t frameBetweenSlides = 30;
 
         ETileSet& tileSet;
     private:
-        size_t slide = 0;
         size_t frame = 0;
+        size_t slide = 0;
         ETransform* transform;
     };
 }

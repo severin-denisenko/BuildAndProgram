@@ -44,21 +44,19 @@ public:
 
         Engine::EScene scene;
 
-        scene.camera2D.offset = {0, 0};
-
         Engine::ETexture texture("src/Assets/tiles.png");
         Engine::ETileSet tileSet(texture);
-        tileSet.Splice(6,16);
+        tileSet.Splice(16,6);
         Engine::ETileMap tileMap(tileSet);
-        for (int j = 0; j < 6; ++j) {
-            for (int i = 0; i < 16; ++i) {
-                tileMap.Set(j, i, j * 16 + i);
+        for (int i = 0; i < 16; ++i) {
+            for (int j = 0; j < 6; ++j) {
+                tileMap.Set(i, j, i * 6 + j);
             }
         }
 
         Engine::ETexture playerTexture("src/Assets/Characters/character7.png");
         Engine::ETileSet playerTileSet(playerTexture);
-        playerTileSet.Splice(1, 2);
+        playerTileSet.Splice(2, 1);
         playerTileSet.origin = {0, 0};
 
         scene.entityManager.AddTo(scene.root,
