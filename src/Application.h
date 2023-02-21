@@ -21,13 +21,13 @@ public:
     }
 
     void Update(Engine::EEntity* entity) override{
-        if (IsKeyPressed(KEY_D)){
+        if (IsKeyPressed(KEY_D) && transform->position.x < distance * 6){
             transform->position.x+=distance * transform->GetGlobalScale().x;
-        } else if(IsKeyPressed(KEY_A)){
+        } else if(IsKeyPressed(KEY_A) && transform->position.x > distance){
             transform->position.x-=distance * transform->GetGlobalScale().x;
-        } else if(IsKeyPressed(KEY_S)){
+        } else if(IsKeyPressed(KEY_S) && transform->position.y < distance * 5){
             transform->position.y+=distance * transform->GetGlobalScale().y;
-        } else if(IsKeyPressed(KEY_W)){
+        } else if(IsKeyPressed(KEY_W) && transform->position.y >= distance){
             transform->position.y-=distance * transform->GetGlobalScale().y;
         }
     }
@@ -45,13 +45,13 @@ public:
     }
 
     void Update(Engine::EEntity* entity) override{
-        if (IsKeyPressed(KEY_RIGHT)){
+        if (IsKeyPressed(KEY_RIGHT) && transform->position.x < distance * 6){
             transform->position.x+=distance * transform->GetGlobalScale().x;
-        } else if(IsKeyPressed(KEY_LEFT)){
+        } else if(IsKeyPressed(KEY_LEFT) && transform->position.x > distance){
             transform->position.x-=distance * transform->GetGlobalScale().x;
-        } else if(IsKeyPressed(KEY_DOWN)){
+        } else if(IsKeyPressed(KEY_DOWN) && transform->position.y < distance * 5){
             transform->position.y+=distance * transform->GetGlobalScale().y;
-        } else if(IsKeyPressed(KEY_UP)){
+        } else if(IsKeyPressed(KEY_UP) && transform->position.y >= distance){
             transform->position.y-=distance * transform->GetGlobalScale().y;
         }
     }
@@ -70,6 +70,8 @@ public:
         S_LOG_LEVEL_INFO;
 
         Engine::EScene scene;
+
+        scene.renderer.ChangeResolution(128, 128);
 
         enum class Characters{
             Knight_pink,
@@ -93,25 +95,27 @@ public:
         characters.Load(Characters::Dino_red, "src/Assets/Characters/7.png");
         characters.Load(Characters::Dino_green, "src/Assets/Characters/8.png");
 
-        Engine::ETileSet playerATiles(characters.Get(Characters::Wizard_male));
+        Engine::ETileSet playerATiles(characters.Get(Characters::Knight_pink));
         playerATiles.Splice(2, 1);
         playerATiles.SetOrigin({0, 0});
 
-        Engine::ETileSet playerBTiles(characters.Get(Characters::Wizard_female));
+        Engine::ETileSet playerBTiles(characters.Get(Characters::Knight_orange));
         playerBTiles.Splice(2, 1);
         playerBTiles.SetOrigin({0, 0});
 
-        Texture texture = LoadTexture("src/Assets/tiles.png");
-        Engine::ETileSet tileSet(texture);
-        tileSet.Splice(6,16);
-        Engine::ETileMap tileMap(tileSet);
-        std::array<int, 8> floor = {4, 5, 6, 20, 21, 22, 36, 37};
-        for (int i = 0; i < 8; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                tileMap.Set(i, j, floor[rand() % floor.size()]); // i * 16 + j
-            }
-        }
-        tileSet.SetOrigin({0, 0});
+        //////
+
+        Texture backgroundTexture = LoadTexture("src/Assets/background.png");
+        Engine::ESprite backgroundSprite(backgroundTexture);
+        backgroundSprite.origin = {0, 0};
+
+        Texture doorsTexture = LoadTexture("src/Assets/doors.png");
+        Engine::ETileSet doorsTileSet(doorsTexture);
+        doorsTileSet.Splice(2, 2);
+        doorsTileSet.SetOrigin({0, 0});
+        Engine::ETileMap doorsTileMap(doorsTileSet);
+        doorsTileMap.Set(3, 0, 0);
+        doorsTileMap.Set(4, 0, 2);
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)
@@ -120,18 +124,19 @@ public:
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Tiles", scene.root, scene)
                                           .Transform(0, 0, 0, 0, 1, 1)
-                                          .Tiling(tileMap).Get());
+                                          .Rectangle(backgroundSprite)
+                                          .Tiling(doorsTileMap).Get());
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("PlayerA", scene.root, scene)
-                                          .Transform(0, 0, 0, 0, 1, 1)
+                                          .Transform(16, 0, 0, 0, 1, 1)
                                           .SlideShow(playerATiles)
                                           .Add(new PlayerAControls())
                                           .Get());
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("PlayerB", scene.root, scene)
-                                          .Transform(0, 0, 0, 0, 1, 1)
+                                          .Transform(16, 0, 0, 0, 1, 1)
                                           .SlideShow(playerBTiles)
                                           .Add(new PlayerBControls())
                                           .Get());

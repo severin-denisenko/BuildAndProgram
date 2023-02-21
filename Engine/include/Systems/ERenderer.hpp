@@ -26,6 +26,8 @@ namespace Engine {
         void Remove3D(EEntity *pEntity);
         void RemoveUI(EEntity *entity);
 
+        void ChangeResolution(int width, int height);
+
         bool preserveAspectRatio = true;
     private:
         std::vector<EEntity*> entities2D;

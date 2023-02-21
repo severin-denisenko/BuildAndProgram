@@ -91,4 +91,9 @@ namespace Engine {
     ERenderer::~ERenderer() {
         UnloadRenderTexture(gameView2D);
     }
+
+    void ERenderer::ChangeResolution(int width, int height) {
+        UnloadRenderTexture(gameView2D);
+        gameView2D = LoadRenderTexture(width, height);
+    }
 } // Engine
