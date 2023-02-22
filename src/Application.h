@@ -14,52 +14,57 @@
 
 #include <array>
 
-class PlayerAControls: public Engine::EComponent{
+class PlayerController : public Engine::EComponent{
 public:
     void Create(Engine::EEntity* entity) override{
         transform = entity->GetComponent<Engine::ETransform>();
+        collider2D = entity->GetComponent<Engine::ECollider2D>();
+
+        collider2D->rec = {0, 0, distance, distance};
+
+        entity->GetScene().physics.Add(entity);
     }
 
     void Update(Engine::EEntity* entity) override{
-        if (IsKeyPressed(KEY_D) && transform->position.x < distance * 6){
-            transform->position.x+=distance * transform->GetGlobalScale().x;
-        } else if(IsKeyPressed(KEY_A) && transform->position.x > distance){
-            transform->position.x-=distance * transform->GetGlobalScale().x;
-        } else if(IsKeyPressed(KEY_S) && transform->position.y < distance * 5){
-            transform->position.y+=distance * transform->GetGlobalScale().y;
-        } else if(IsKeyPressed(KEY_W) && transform->position.y >= distance){
-            transform->position.y-=distance * transform->GetGlobalScale().y;
+        if (IsKeyPressed(key_right) && transform->position.x < distance * 6){
+            transform->position.x += distance * transform->GetGlobalScale().x;
+        } else if(IsKeyPressed(key_left) && transform->position.x > distance){
+            transform->position.x -= distance * transform->GetGlobalScale().x;
+        } else if(IsKeyPressed(key_down) && transform->position.y < distance * 7){
+            transform->position.y += distance * transform->GetGlobalScale().y;
+        } else if(IsKeyPressed(key_up) && transform->position.y > 2 * distance){
+            transform->position.y -= distance * transform->GetGlobalScale().y;
         }
     }
 
-private:
+    int key_up = KEY_W;
+    int key_down = KEY_S;
+    int key_left = KEY_A;
+    int key_right = KEY_D;
+protected:
     Engine::ETransform* transform;
+    Engine::ECollider2D* collider2D;
 
     float distance = 16;
 };
 
-class PlayerBControls: public Engine::EComponent{
+class PlayerAControls: public PlayerController{
 public:
     void Create(Engine::EEntity* entity) override{
-        transform = entity->GetComponent<Engine::ETransform>();
+        PlayerController::Create(entity);
     }
+};
 
-    void Update(Engine::EEntity* entity) override{
-        if (IsKeyPressed(KEY_RIGHT) && transform->position.x < distance * 6){
-            transform->position.x+=distance * transform->GetGlobalScale().x;
-        } else if(IsKeyPressed(KEY_LEFT) && transform->position.x > distance){
-            transform->position.x-=distance * transform->GetGlobalScale().x;
-        } else if(IsKeyPressed(KEY_DOWN) && transform->position.y < distance * 5){
-            transform->position.y+=distance * transform->GetGlobalScale().y;
-        } else if(IsKeyPressed(KEY_UP) && transform->position.y >= distance){
-            transform->position.y-=distance * transform->GetGlobalScale().y;
-        }
+class PlayerBControls: public PlayerController{
+public:
+    void Create(Engine::EEntity* entity) override{
+        PlayerController::Create(entity);
+
+        key_up = KEY_UP;
+        key_down = KEY_DOWN;
+        key_left = KEY_LEFT;
+        key_right = KEY_RIGHT;
     }
-
-private:
-    Engine::ETransform* transform;
-
-    float distance = 16;
 };
 
 class Application {
@@ -97,11 +102,11 @@ public:
 
         Engine::ETileSet playerATiles(characters.Get(Characters::Knight_pink));
         playerATiles.Splice(2, 1);
-        playerATiles.SetOrigin({0, 0});
+        playerATiles.SetOrigin({0, (float)characters.Get(Characters::Knight_pink).height});
 
         Engine::ETileSet playerBTiles(characters.Get(Characters::Knight_orange));
         playerBTiles.Splice(2, 1);
-        playerBTiles.SetOrigin({0, 0});
+        playerBTiles.SetOrigin({0, (float)characters.Get(Characters::Knight_orange).height});
 
         //////
 
@@ -117,6 +122,21 @@ public:
         doorsTileMap.Set(3, 0, 0);
         doorsTileMap.Set(4, 0, 2);
 
+        Texture propsTexture = LoadTexture("src/Assets/props.png");
+        Engine::ETileSet propsTileSet(propsTexture);
+        propsTileSet.Splice(9, 1);
+        propsTileSet.SetOrigin({0, 0});
+        Engine::ETileMap propsTileMap(propsTileSet);
+        propsTileMap.Set(1, 1, 0);
+
+        Texture lightTexture = LoadTexture("src/Assets/light.png");
+        Engine::ETileSet lightTileSet(lightTexture);
+        lightTileSet.Splice(6, 1);
+        lightTileSet.SetOrigin({0, 0});
+        Engine::ETileMap lightTileMap(lightTileSet);
+        lightTileMap.Set(1, 4, 1);
+        lightTileMap.Set(5, 4, 3);
+
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)
                                   .Background(BLACK).Get());
@@ -125,19 +145,23 @@ public:
                                   Engine::EEntityFactory("Tiles", scene.root, scene)
                                           .Transform(0, 0, 0, 0, 1, 1)
                                           .Rectangle(backgroundSprite)
-                                          .Tiling(doorsTileMap).Get());
+                                          .Tiling(doorsTileMap)
+                                          .Tiling(propsTileMap)
+                                          .Tiling(lightTileMap).Get());
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("PlayerA", scene.root, scene)
-                                          .Transform(16, 0, 0, 0, 1, 1)
+                                          .Transform(16, 32 + 16, 0, 0, 1, 1)
                                           .SlideShow(playerATiles)
+                                          .Collider2D(Engine::ECollider2D::RECTANGLE)
                                           .Add(new PlayerAControls())
                                           .Get());
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("PlayerB", scene.root, scene)
-                                          .Transform(16, 0, 0, 0, 1, 1)
+                                          .Transform(128 - 32, 32 + 16, 0, 0, 1, 1)
                                           .SlideShow(playerBTiles)
+                                          .Collider2D(Engine::ECollider2D::RECTANGLE)
                                           .Add(new PlayerBControls())
                                           .Get());
 

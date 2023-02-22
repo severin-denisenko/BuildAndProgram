@@ -130,8 +130,8 @@ namespace Engine {
             return EEntityFactory(entity);
         }
 
-        [[nodiscard]] EEntityFactory Collider2D() const{
-            auto controller = new ECollider2D(ECollider2D::RECTANGLE);
+        [[nodiscard]] EEntityFactory Collider2D(ECollider2D::ECollider2DShape shape) const{
+            auto controller = new ECollider2D(shape);
             entity->AddComponent(controller);
             return EEntityFactory(entity);
         }
