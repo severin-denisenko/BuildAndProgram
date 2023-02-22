@@ -11,6 +11,7 @@
 #include <EEngine.hpp>
 #include <EEntityFactory.hpp>
 #include <Systems/ETextureHolder.hpp>
+#include <EAnimation.h>
 
 #include <array>
 
@@ -22,18 +23,40 @@ public:
 
         collider2D->rec = {0, 0, distance, distance};
 
+        moveAnimationX = Engine::EAnimation<float>(&transform->position.x);
+        moveAnimationY = Engine::EAnimation<float>(&transform->position.y);
+
         entity->GetScene().physics.Add(entity);
     }
 
     void Update(Engine::EEntity* entity) override{
+        if (moveAnimationX.Started() && !moveAnimationX.Ended()){
+            moveAnimationX.Step();
+            return;
+        }
+        if (moveAnimationY.Started() && !moveAnimationY.Ended()){
+            moveAnimationY.Step();
+            return;
+        }
+
+        int animationFrames = 4;
+
         if (IsKeyPressed(key_right) && transform->position.x < distance * 6){
-            transform->position.x += distance * transform->GetGlobalScale().x;
+            moveAnimationX.Start(transform->position.x,
+                                 transform->position.x + distance * transform->GetGlobalScale().x,
+                                 animationFrames);
         } else if(IsKeyPressed(key_left) && transform->position.x > distance){
-            transform->position.x -= distance * transform->GetGlobalScale().x;
+            moveAnimationX.Start(transform->position.x,
+                                 transform->position.x - distance * transform->GetGlobalScale().x,
+                                 animationFrames);
         } else if(IsKeyPressed(key_down) && transform->position.y < distance * 7){
-            transform->position.y += distance * transform->GetGlobalScale().y;
+            moveAnimationY.Start(transform->position.y,
+                                 transform->position.y + distance * transform->GetGlobalScale().y,
+                                 animationFrames);
         } else if(IsKeyPressed(key_up) && transform->position.y > 2 * distance){
-            transform->position.y -= distance * transform->GetGlobalScale().y;
+            moveAnimationY.Start(transform->position.y,
+                                 transform->position.y - distance * transform->GetGlobalScale().y,
+                                 animationFrames);
         }
     }
 
@@ -44,6 +67,8 @@ public:
 protected:
     Engine::ETransform* transform;
     Engine::ECollider2D* collider2D;
+    Engine::EAnimation<float> moveAnimationX;
+    Engine::EAnimation<float> moveAnimationY;
 
     float distance = 16;
 };
