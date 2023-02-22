@@ -35,110 +35,105 @@ namespace Engine {
                 S_FATAL("Entity is null in factory constructor!");
         };
 
-        explicit EEntityFactory(EEntity* entity) : entity(entity) {
-            if(entity == nullptr)
-                S_FATAL("Entity is null in factory constructor!");
-        };
-
-        [[nodiscard]] EEntityFactory Transform() const{
+        [[nodiscard]] EEntityFactory& Transform(){
             auto transform = new ETransform();
             entity->AddComponent(transform);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Transform(float x, float y) const{
+        [[nodiscard]] EEntityFactory& Transform(float x, float y){
             auto transform = new ETransform(x, y);
             entity->AddComponent(transform);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Transform(float x, float y, float rx, float ry) const{
+        [[nodiscard]] EEntityFactory& Transform(float x, float y, float rx, float ry){
             auto transform = new ETransform(x, y, rx, ry);
             entity->AddComponent(transform);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Transform(float x, float y, float z) const{
+        [[nodiscard]] EEntityFactory& Transform(float x, float y, float z){
             auto transform = new ETransform(x, y, z);
             entity->AddComponent(transform);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Transform(float x, float y, float rx, float ry, float sx, float sy) const{
+        [[nodiscard]] EEntityFactory& Transform(float x, float y, float rx, float ry, float sx, float sy){
             auto transform = new ETransform(x, y, rx, ry, sx, sy);
             entity->AddComponent(transform);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Text(const char* msg, int size, Color color) const{
+        [[nodiscard]] EEntityFactory& Text(const char* msg, int size, Color color){
             auto text = new EText(msg, size, color);
             entity->AddComponent(text);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Background(Color color) const{
+        [[nodiscard]] EEntityFactory& Background(Color color){
             auto background = new EBackground(color);
             entity->AddComponent(background);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Rectangle(ESprite sprite) const{
+        [[nodiscard]] EEntityFactory& Rectangle(ESprite sprite){
             auto rectangle = new ERectangle(sprite);
             entity->AddComponent(rectangle);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory FPSLabel() const{
+        [[nodiscard]] EEntityFactory& FPSLabel(){
             auto label = new Engine::FPSLabel();
             entity->AddComponent(label);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory RigidBody() const{
+        [[nodiscard]] EEntityFactory& RigidBody(){
             auto rigidBody = new ERigidBody();
             entity->AddComponent(rigidBody);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory SlideShow(ETileSet& tileSet) const{
+        [[nodiscard]] EEntityFactory& SlideShow(ETileSet& tileSet){
             auto slideShow = new ESlideShow(tileSet);
             entity->AddComponent(slideShow);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Tiling(ETileMap& tileMap) const{
+        [[nodiscard]] EEntityFactory& Tiling(ETileMap& tileMap){
             auto tiling = new ETiling(tileMap);
             entity->AddComponent(tiling);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Model(EMesh mesh) const{
+        [[nodiscard]] EEntityFactory& Model(EMesh mesh){
             auto model = new EModel(mesh);
             entity->AddComponent(model);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Grid(int slices, float spacing) const{
+        [[nodiscard]] EEntityFactory& Grid(int slices, float spacing){
             auto grid = new EGrid(slices, spacing);
             entity->AddComponent(grid);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory CameraController3D() const{
+        [[nodiscard]] EEntityFactory& CameraController3D(){
             auto controller = new ECameraController3D();
             entity->AddComponent(controller);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Collider2D(ECollider2D::ECollider2DShape shape) const{
+        [[nodiscard]] EEntityFactory& Collider2D(ECollider2D::ECollider2DShape shape){
             auto controller = new ECollider2D(shape);
             entity->AddComponent(controller);
-            return EEntityFactory(entity);
+            return *this;
         }
 
-        [[nodiscard]] EEntityFactory Add(EComponent* component) const{
+        [[nodiscard]] EEntityFactory& Add(EComponent* component){
             entity->AddComponent(component);
-            return EEntityFactory(entity);
+            return *this;
         }
 
         [[nodiscard]] EEntity* Get() const{
