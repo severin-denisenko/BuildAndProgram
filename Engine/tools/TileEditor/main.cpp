@@ -13,8 +13,11 @@
 #include <string>
 
 #include <Graphics/ETileMap.hpp>
+#include <SLib/SLog.hpp>
 
 int main(){
+    S_LOG_LEVEL_INFO;
+
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(900, 600, "raygui - controls test suite");
 
@@ -37,7 +40,8 @@ int main(){
     GuiFileDialogState loadFileFileDialogState = InitGuiFileDialog(GetWorkingDirectory());
     GuiFileDialogState saveFileFileDialogState = InitGuiFileDialog(GetWorkingDirectory());
 
-    Engine::ETileMap map((Engine::ETileSet(tileSetTexture)));
+    Engine::ETileSet set(tileSetTexture);
+    Engine::ETileMap map(set);
 
     while (!WindowShouldClose()){
         auto leftPanelWidth = (float)GetRenderWidth() / 5 * 2;
@@ -48,6 +52,13 @@ int main(){
             if (IsFileExtension(loadFileFileDialogState.fileNameText, ".tiles"))
             {
                 std::string filename(TextFormat("%s/%s", loadFileFileDialogState.dirPathText, loadFileFileDialogState.fileNameText));
+
+                set = Engine::ETileSet(tileSetTexture);
+                set.Splice(sectionsX, sectionsY);
+                set.SetOrigin({0, 0});
+
+                map = Engine::ETileMap(set);
+
                 map.Load(filename);
             }
 
@@ -73,7 +84,11 @@ int main(){
                 UnloadTexture(tileSetTexture);
                 tileSetTexture = LoadTexture(filename.c_str());
 
-                map = Engine::ETileMap(Engine::ETileSet(tileSetTexture));
+                set = Engine::ETileSet(tileSetTexture);
+                set.Splice(sectionsX, sectionsY);
+                set.SetOrigin({0, 0});
+
+                map = Engine::ETileMap(set);
             }
 
             loadImageFileDialogState.SelectFilePressed = false;
@@ -104,6 +119,8 @@ int main(){
             DrawTexturePro(tileSetTexture, (Rectangle){0, 0, tileSetTexture.width, tileSetTexture.height},
                            (Rectangle){0, elementHeight * 2, leftPanelWidth, leftPanelWidth * tileSetTexture.width / tileSetTexture.height},
                            (Vector2){0, 0},0, WHITE);
+
+            map.Render(leftPanelWidth, 0, 3, 3);
         }
 
         if (loadImageButtonPressed) loadImageFileDialogState.windowActive = true;
