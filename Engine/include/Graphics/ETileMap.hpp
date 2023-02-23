@@ -24,20 +24,36 @@ namespace Engine {
         }
 
         void Set(size_t x, size_t y, size_t tile_index){
-            if (x >= tiles.size())
-                tiles.resize(x + 1);
-            if (y >= tiles[x].size())
-                tiles[x].resize(y + 1);
+            if (y >= tiles.size())
+                tiles.resize(y + 1);
+            if (x >= tiles[y].size())
+                tiles[y].resize(x + 1);
 
-            tiles[x][y] = tile_index;
+            tiles[y][x] = tile_index;
         }
 
         void Render(float x, float y, float scale_x, float scale_y){
             for (size_t i = 0; i < tiles.size(); ++i) {
                 for (size_t j = 0; j < tiles[i].size(); ++j) {
-                    tileSet.Render(x + (float)i * (float)tileSet.width * scale_x,
-                                   y + (float)j * (float)tileSet.height * scale_y,
+                    tileSet.Render(x + (float)j * (float)tileSet.width * scale_x,
+                                   y + (float)i * (float)tileSet.height * scale_y,
                                    scale_x, scale_y, tiles[i][j]);
+                }
+            }
+        }
+
+        void Load(const std::string& filename){
+            std::ifstream input(filename);
+
+            size_t width, height;
+
+            input >> width >> height;
+
+            Resize(width, height);
+
+            for (size_t i = 0; i < height; ++i) {
+                for (size_t j = 0; j < width; ++j) {
+                    input >> tiles[i][j];
                 }
             }
         }

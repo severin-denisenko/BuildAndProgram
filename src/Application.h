@@ -141,26 +141,39 @@ public:
 
         Texture doorsTexture = LoadTexture("src/Assets/doors.png");
         Engine::ETileSet doorsTileSet(doorsTexture);
-        doorsTileSet.Splice(2, 2);
+        doorsTileSet.Splice(2, 3);
         doorsTileSet.SetOrigin({0, 0});
         Engine::ETileMap doorsTileMap(doorsTileSet);
-        doorsTileMap.Set(3, 0, 0);
-        doorsTileMap.Set(4, 0, 2);
+        doorsTileMap.Set(3, 0, 1);
+        doorsTileMap.Set(4, 0, 4);
 
         Texture propsTexture = LoadTexture("src/Assets/props.png");
         Engine::ETileSet propsTileSet(propsTexture);
         propsTileSet.Splice(9, 1);
         propsTileSet.SetOrigin({0, 0});
         Engine::ETileMap propsTileMap(propsTileSet);
-        propsTileMap.Set(1, 1, 1);
+        propsTileMap.Load("src/Assets/props.tiles");
 
         Texture lightTexture = LoadTexture("src/Assets/light.png");
         Engine::ETileSet lightTileSet(lightTexture);
         lightTileSet.Splice(6, 1);
         lightTileSet.SetOrigin({0, 0});
         Engine::ETileMap lightTileMap(lightTileSet);
-        lightTileMap.Set(1, 4, 2);
-        lightTileMap.Set(5, 4, 4);
+        lightTileMap.Load("src/Assets/lights.tiles");
+
+        Texture keysTexture = LoadTexture("src/Assets/keys.png");
+        Engine::ETileSet keysTileSet(keysTexture);
+        keysTileSet.Splice(3, 2);
+        keysTileSet.SetOrigin({0, 0});
+        Engine::ETileMap keysTileMap(keysTileSet);
+        keysTileMap.Load("src/Assets/keys.tiles");
+
+        Texture chestsTexture = LoadTexture("src/Assets/chests.png");
+        Engine::ETileSet chestsTileSet(chestsTexture);
+        chestsTileSet.Splice(6, 1);
+        chestsTileSet.SetOrigin({0, 0});
+        Engine::ETileMap chestsTileMap(chestsTileSet);
+        chestsTileMap.Load("src/Assets/chests.tiles");
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)
@@ -172,7 +185,9 @@ public:
                                           .Rectangle(backgroundSprite)
                                           .Tiling(doorsTileMap)
                                           .Tiling(propsTileMap)
-                                          .Tiling(lightTileMap).Get());
+                                          .Tiling(lightTileMap)
+                                          .Tiling(chestsTileMap)
+                                          .Tiling(keysTileMap).Get());
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("PlayerA", scene.root, scene)
