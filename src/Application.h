@@ -152,15 +152,15 @@ public:
         propsTileSet.Splice(9, 1);
         propsTileSet.SetOrigin({0, 0});
         Engine::ETileMap propsTileMap(propsTileSet);
-        propsTileMap.Set(1, 1, 0);
+        propsTileMap.Set(1, 1, 1);
 
         Texture lightTexture = LoadTexture("src/Assets/light.png");
         Engine::ETileSet lightTileSet(lightTexture);
         lightTileSet.Splice(6, 1);
         lightTileSet.SetOrigin({0, 0});
         Engine::ETileMap lightTileMap(lightTileSet);
-        lightTileMap.Set(1, 4, 1);
-        lightTileMap.Set(5, 4, 3);
+        lightTileMap.Set(1, 4, 2);
+        lightTileMap.Set(5, 4, 4);
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)

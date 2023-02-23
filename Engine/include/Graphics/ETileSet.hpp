@@ -20,15 +20,16 @@ namespace Engine {
         void Splice(size_t i, size_t j){
             tiles.clear();
 
-            width = (float)texture.width/(float)i;
-            height = (float)texture.height/(float)j;
+            width = texture.width/i;
+            height = texture.height/j;
 
             for (size_t k = 0; k < i; ++k) {
                 for (size_t l = 0; l < j; ++l) {
                     tiles.emplace_back(texture);
-                    tiles.back().source = {width * (float)k, height * (float)l, width, height};
-                    tiles.back().origin = {width / 2, height / 2};
-                    tiles.back().destination = {0, 0, width, height};
+                    tiles.back().source = {(float)width * (float)k, (float)height * (float)l,
+                                           (float)width, (float)height};
+                    tiles.back().origin = {(float)width / 2, (float)height / 2};
+                    tiles.back().destination = {0, 0, (float)width, (float)height};
                 }
             }
         }
@@ -48,8 +49,8 @@ namespace Engine {
         }
 
         std::vector<ESprite> tiles;
-        float height;
-        float width;
+        size_t height;
+        size_t width;
     private:
         const Texture& texture;
     };
