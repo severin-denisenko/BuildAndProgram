@@ -135,45 +135,12 @@ public:
 
         //////
 
-        Texture backgroundTexture = LoadTexture("src/Assets/background.png");
-        Engine::ESprite backgroundSprite(backgroundTexture);
-        backgroundSprite.origin = {0, 0};
-
-        Texture doorsTexture = LoadTexture("src/Assets/doors.png");
-        Engine::ETileSet doorsTileSet(doorsTexture);
-        doorsTileSet.Splice(2, 3);
-        doorsTileSet.SetOrigin({0, 0});
-        Engine::ETileMap doorsTileMap(doorsTileSet);
-        doorsTileMap.Set(3, 0, 1);
-        doorsTileMap.Set(4, 0, 4);
-
-        Texture propsTexture = LoadTexture("src/Assets/props.png");
-        Engine::ETileSet propsTileSet(propsTexture);
-        propsTileSet.Splice(9, 1);
-        propsTileSet.SetOrigin({0, 0});
-        Engine::ETileMap propsTileMap(propsTileSet);
-        propsTileMap.Load("src/Assets/props.tiles");
-
-        Texture lightTexture = LoadTexture("src/Assets/light.png");
-        Engine::ETileSet lightTileSet(lightTexture);
-        lightTileSet.Splice(6, 1);
-        lightTileSet.SetOrigin({0, 0});
-        Engine::ETileMap lightTileMap(lightTileSet);
-        lightTileMap.Load("src/Assets/lights.tiles");
-
-        Texture keysTexture = LoadTexture("src/Assets/keys.png");
-        Engine::ETileSet keysTileSet(keysTexture);
-        keysTileSet.Splice(3, 2);
-        keysTileSet.SetOrigin({0, 0});
-        Engine::ETileMap keysTileMap(keysTileSet);
-        keysTileMap.Load("src/Assets/keys.tiles");
-
-        Texture chestsTexture = LoadTexture("src/Assets/chests.png");
-        Engine::ETileSet chestsTileSet(chestsTexture);
-        chestsTileSet.Splice(6, 1);
-        chestsTileSet.SetOrigin({0, 0});
-        Engine::ETileMap chestsTileMap(chestsTileSet);
-        chestsTileMap.Load("src/Assets/chests.tiles");
+        Texture tileSetTexture = LoadTexture("src/Assets/tileset.png");
+        Engine::ETileSet tileSet(tileSetTexture);
+        tileSet.Splice(10, 10);
+        tileSet.SetOrigin({0, 0});
+        Engine::ETileMap tileMap(tileSet);
+        tileMap.Load("src/Assets/back_layer.tiles");
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)
@@ -182,12 +149,7 @@ public:
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Tiles", scene.root, scene)
                                           .Transform(0, 0, 0, 0, 1, 1)
-                                          .Rectangle(backgroundSprite)
-                                          .Tiling(doorsTileMap)
-                                          .Tiling(propsTileMap)
-                                          .Tiling(lightTileMap)
-                                          .Tiling(chestsTileMap)
-                                          .Tiling(keysTileMap).Get());
+                                          .Tiling(tileMap).Get());
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("PlayerA", scene.root, scene)
