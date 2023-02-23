@@ -11,6 +11,8 @@ namespace Engine{
         const int screenWidth = GetScreenWidth();
         const int screenHeight = GetScreenHeight();
 
+        SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
+
         if (fullScreen){
             InitWindow(screenWidth, screenHeight, name);
             ToggleFullscreen();
@@ -18,7 +20,6 @@ namespace Engine{
             InitWindow(600, 600, name);
         }
 
-        SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
         SetTargetFPS(60);
     }
 

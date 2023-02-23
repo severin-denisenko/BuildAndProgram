@@ -15,3 +15,8 @@ file(GLOB SRC src/* src/*/*)
 file(GLOB INCLUDE include/* include/*/*)
 add_library(BAPEngine ${SRC} ${INCLUDE})
 target_link_libraries(BAPEngine raylib)
+
+file(GLOB TILE_EDITOR_SRC tools/TileEditor/*)
+add_executable(TileEditor ${TILE_EDITOR_SRC})
+target_include_directories(TileEditor PRIVATE tools/deps/raygui/src)
+target_link_libraries(TileEditor raylib)
