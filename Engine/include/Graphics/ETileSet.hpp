@@ -13,7 +13,7 @@ namespace Engine {
 
     class ETileSet {
     public:
-        explicit ETileSet(const Texture& texture) : texture(texture) {
+        explicit ETileSet(const Texture texture) : texture(texture) {
             Splice(1, 1);
         }
 
@@ -52,7 +52,7 @@ namespace Engine {
         size_t height;
         size_t width;
     private:
-        const Texture& texture;
+        Texture texture;
     };
 
 } // Engine

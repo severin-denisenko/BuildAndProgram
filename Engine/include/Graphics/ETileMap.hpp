@@ -13,7 +13,7 @@ namespace Engine {
 
     class ETileMap {
     public:
-        explicit ETileMap(ETileSet& tileSet) : tileSet(tileSet) {}
+        explicit ETileMap(ETileSet tileSet) : tileSet(tileSet) {}
 
         void Resize(size_t width, size_t height){
             tiles.resize(height);
@@ -56,9 +56,26 @@ namespace Engine {
                     input >> tiles[i][j];
                 }
             }
+
+            input.close();
         }
 
-        ETileSet& tileSet;
+        void Save(const std::string& filename){
+            std::ofstream output(filename);
+
+            output << tiles.size() << " " << tiles[0].size() << std::endl;
+
+            for (size_t i = 0; i < tiles.size(); ++i) {
+                for (size_t j = 0; j < tiles[i].size(); ++j) {
+                    output << tiles[i][j] << " ";
+                }
+                output << std::endl;
+            }
+
+            output.close();
+        }
+
+        ETileSet tileSet;
         std::vector<std::vector<size_t>> tiles;
     };
 

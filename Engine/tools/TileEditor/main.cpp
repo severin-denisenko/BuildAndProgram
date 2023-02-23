@@ -12,6 +12,8 @@
 
 #include <string>
 
+#include <Graphics/ETileMap.hpp>
+
 int main(){
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(900, 600, "raygui - controls test suite");
@@ -35,9 +37,33 @@ int main(){
     GuiFileDialogState loadFileFileDialogState = InitGuiFileDialog(GetWorkingDirectory());
     GuiFileDialogState saveFileFileDialogState = InitGuiFileDialog(GetWorkingDirectory());
 
+    Engine::ETileMap map((Engine::ETileSet(tileSetTexture)));
+
     while (!WindowShouldClose()){
         auto leftPanelWidth = (float)GetRenderWidth() / 5 * 2;
         auto leftPanelHeight = (float)GetRenderHeight();
+
+        if (loadFileFileDialogState.SelectFilePressed)
+        {
+            if (IsFileExtension(loadFileFileDialogState.fileNameText, ".tiles"))
+            {
+                std::string filename(TextFormat("%s/%s", loadFileFileDialogState.dirPathText, loadFileFileDialogState.fileNameText));
+                map.Load(filename);
+            }
+
+            loadFileFileDialogState.SelectFilePressed = false;
+        }
+
+        if (saveFileFileDialogState.SelectFilePressed)
+        {
+            if (IsFileExtension(saveFileFileDialogState.fileNameText, ".tiles"))
+            {
+                std::string filename(TextFormat("%s/%s", saveFileFileDialogState.dirPathText, saveFileFileDialogState.fileNameText));
+                map.Save(filename);
+            }
+
+            saveFileFileDialogState.SelectFilePressed = false;
+        }
 
         if (loadImageFileDialogState.SelectFilePressed)
         {
@@ -46,6 +72,8 @@ int main(){
                 std::string filename(TextFormat("%s/%s", loadImageFileDialogState.dirPathText, loadImageFileDialogState.fileNameText));
                 UnloadTexture(tileSetTexture);
                 tileSetTexture = LoadTexture(filename.c_str());
+
+                map = Engine::ETileMap(Engine::ETileSet(tileSetTexture));
             }
 
             loadImageFileDialogState.SelectFilePressed = false;
@@ -72,6 +100,12 @@ int main(){
         if(GuiValueBox((Rectangle){ leftPanelWidth / 2, elementHeight, leftPanelWidth / 2 - 1, elementHeight}, NULL,
                     &sectionsY, minSections, maxSections, sectionsYEditMode)) sectionsYEditMode = !sectionsYEditMode;
 
+        if (tileSetTexture.id != 0){
+            DrawTexturePro(tileSetTexture, (Rectangle){0, 0, tileSetTexture.width, tileSetTexture.height},
+                           (Rectangle){0, elementHeight * 2, leftPanelWidth, leftPanelWidth * tileSetTexture.width / tileSetTexture.height},
+                           (Vector2){0, 0},0, WHITE);
+        }
+
         if (loadImageButtonPressed) loadImageFileDialogState.windowActive = true;
         GuiUnlock();
         GuiFileDialog(&loadImageFileDialogState);
@@ -83,12 +117,6 @@ int main(){
         if (saveFileButtonPressed) saveFileFileDialogState.windowActive = true;
         GuiUnlock();
         GuiFileDialog(&saveFileFileDialogState);
-
-        if (tileSetTexture.id != 0){
-            DrawTexturePro(tileSetTexture, (Rectangle){0, 0, tileSetTexture.width, tileSetTexture.height},
-                           (Rectangle){0, elementHeight * 2, leftPanelWidth, leftPanelWidth * tileSetTexture.width / tileSetTexture.height},
-                           (Vector2){0, 0},0, WHITE);
-        }
 
         EndDrawing();
     }
