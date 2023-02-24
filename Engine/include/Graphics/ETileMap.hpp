@@ -15,7 +15,10 @@ namespace Engine {
     public:
         explicit ETileMap(ETileSet tileSet) : tileSet(tileSet) {}
 
-        void Resize(size_t width, size_t height){
+        void Resize(size_t w, size_t h){
+            width = w;
+            height = h;
+
             tiles.resize(height);
 
             for (auto &row: tiles) {
@@ -24,11 +27,6 @@ namespace Engine {
         }
 
         void Set(size_t x, size_t y, size_t tile_index){
-            if (y >= tiles.size())
-                tiles.resize(y + 1);
-            if (x >= tiles[y].size())
-                tiles[y].resize(x + 1);
-
             tiles[y][x] = tile_index;
         }
 
@@ -44,8 +42,6 @@ namespace Engine {
 
         void Load(const std::string& filename){
             std::ifstream input(filename);
-
-            size_t width, height;
 
             input >> width >> height;
 
@@ -63,10 +59,10 @@ namespace Engine {
         void Save(const std::string& filename){
             std::ofstream output(filename);
 
-            output << tiles.size() << " " << tiles[0].size() << std::endl;
+            output << height << " " << width << std::endl;
 
-            for (size_t i = 0; i < tiles.size(); ++i) {
-                for (size_t j = 0; j < tiles[i].size(); ++j) {
+            for (size_t i = 0; i < height; ++i) {
+                for (size_t j = 0; j < width; ++j) {
                     output << tiles[i][j] << " ";
                 }
                 output << std::endl;
@@ -74,6 +70,9 @@ namespace Engine {
 
             output.close();
         }
+
+        size_t width = 0;
+        size_t height = 0;
 
         ETileSet tileSet;
         std::vector<std::vector<size_t>> tiles;

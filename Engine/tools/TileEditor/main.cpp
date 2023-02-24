@@ -29,10 +29,23 @@ int main(){
 
     float elementHeight = 30;
 
+    std::string loadedImageFilename;
+    std::string loadedFileFilename;
+
     int sectionsX = 10;
     int sectionsY = 10;
     int maxSections = 100;
     int minSections = 1;
+
+    int tileMapHeight = 8;
+    int tileMapWith = 8;
+    int maxTileMapHeight = 100;
+    int minTileMapHeight = 1;
+
+    bool tileMapHeightEditMode = false;
+    bool tileMapWithEditMode = false;
+
+    int currentTileSelected = 0;
 
     Texture tileSetTexture = { 0 };
 
@@ -43,7 +56,42 @@ int main(){
     Engine::ETileSet set(tileSetTexture);
     Engine::ETileMap map(set);
 
+    Rectangle textureRectangle;
+    Rectangle tileSetRectangle;
+
     while (!WindowShouldClose()){
+        Vector2 mousePosition = GetMousePosition();
+
+        for (int i = 0; i < sectionsX; ++i) {
+            for (int j = 0; j < sectionsY; ++j) {
+                if (CheckCollisionPointRec(mousePosition, {textureRectangle.x + textureRectangle.width / sectionsX * i,
+                                                           textureRectangle.y + textureRectangle.height / sectionsY * j,
+                                                           textureRectangle.width / sectionsX, textureRectangle.height / sectionsY}))
+                {
+                    if (GetGestureDetected() == GESTURE_TAP){
+                        currentTileSelected = i * sectionsY + j;
+
+                        S_INFO("Selected tile: " + std::to_string(currentTileSelected));
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < map.width; ++i) {
+            for (int j = 0; j < map.height; ++j) {
+                if (CheckCollisionPointRec(mousePosition, {tileSetRectangle.x + tileSetRectangle.width / map.width * i,
+                                                           tileSetRectangle.y + tileSetRectangle.height / map.height * j,
+                                                           tileSetRectangle.width / map.width, tileSetRectangle.height / map.height}))
+                {
+                    if (GetGestureDetected() == GESTURE_TAP){
+                        map.Set(i, j, currentTileSelected);
+
+                        S_INFO("Changed tile tile: " + std::to_string(currentTileSelected));
+                    }
+                }
+            }
+        }
+
         auto leftPanelWidth = (float)GetRenderWidth() / 5 * 2;
         auto leftPanelHeight = (float)GetRenderHeight();
 
@@ -51,15 +99,17 @@ int main(){
         {
             if (IsFileExtension(loadFileFileDialogState.fileNameText, ".tiles"))
             {
-                std::string filename(TextFormat("%s/%s", loadFileFileDialogState.dirPathText, loadFileFileDialogState.fileNameText));
+                loadedFileFilename = TextFormat("%s/%s", loadFileFileDialogState.dirPathText, loadFileFileDialogState.fileNameText);
 
                 set = Engine::ETileSet(tileSetTexture);
                 set.Splice(sectionsX, sectionsY);
                 set.SetOrigin({0, 0});
 
                 map = Engine::ETileMap(set);
+                map.Load(loadedFileFilename);
 
-                map.Load(filename);
+                tileMapHeight = map.height;
+                tileMapWith = map.width;
             }
 
             loadFileFileDialogState.SelectFilePressed = false;
@@ -80,15 +130,17 @@ int main(){
         {
             if (IsFileExtension(loadImageFileDialogState.fileNameText, ".png"))
             {
-                std::string filename(TextFormat("%s/%s", loadImageFileDialogState.dirPathText, loadImageFileDialogState.fileNameText));
+                loadedImageFilename = TextFormat("%s/%s", loadImageFileDialogState.dirPathText, loadImageFileDialogState.fileNameText);
                 UnloadTexture(tileSetTexture);
-                tileSetTexture = LoadTexture(filename.c_str());
+                tileSetTexture = LoadTexture(loadedImageFilename.c_str());
 
                 set = Engine::ETileSet(tileSetTexture);
                 set.Splice(sectionsX, sectionsY);
                 set.SetOrigin({0, 0});
 
                 map = Engine::ETileMap(set);
+
+                textureRectangle = {0, elementHeight * 3, leftPanelWidth, leftPanelWidth * tileSetTexture.width / tileSetTexture.height};
             }
 
             loadImageFileDialogState.SelectFilePressed = false;
@@ -109,16 +161,26 @@ int main(){
         saveFileButtonPressed = GuiButton((Rectangle){ leftPanelWidth / 3 * 2, 0, leftPanelWidth / 3 - 1, elementHeight },
                                           "Save file");
 
-        if(GuiValueBox((Rectangle){ 1, elementHeight, leftPanelWidth / 2 - 1, elementHeight}, NULL,
+        if(GuiValueBox((Rectangle){ 1, elementHeight, leftPanelWidth / 2 - 1, elementHeight}, nullptr,
                        &sectionsX, minSections, maxSections, sectionsXEditMode)) sectionsXEditMode = !sectionsXEditMode;
 
-        if(GuiValueBox((Rectangle){ leftPanelWidth / 2, elementHeight, leftPanelWidth / 2 - 1, elementHeight}, NULL,
+        if(GuiValueBox((Rectangle){ leftPanelWidth / 2, elementHeight, leftPanelWidth / 2 - 1, elementHeight}, nullptr,
                     &sectionsY, minSections, maxSections, sectionsYEditMode)) sectionsYEditMode = !sectionsYEditMode;
 
+        if(GuiValueBox((Rectangle){ 1, elementHeight * 2, leftPanelWidth / 2 - 1, elementHeight}, nullptr,
+                       &tileMapHeight, minTileMapHeight, maxTileMapHeight, tileMapHeightEditMode)) tileMapHeightEditMode = !tileMapHeightEditMode;
+
+        if(GuiValueBox((Rectangle){ leftPanelWidth / 2, elementHeight * 2, leftPanelWidth / 2 - 1, elementHeight}, nullptr,
+                       &tileMapWith, minTileMapHeight, maxTileMapHeight, tileMapWithEditMode)) tileMapWithEditMode = !tileMapWithEditMode;
+
         if (tileSetTexture.id != 0){
+            map.Resize(tileMapHeight, tileMapWith);
+
             DrawTexturePro(tileSetTexture, (Rectangle){0, 0, tileSetTexture.width, tileSetTexture.height},
-                           (Rectangle){0, elementHeight * 2, leftPanelWidth, leftPanelWidth * tileSetTexture.width / tileSetTexture.height},
-                           (Vector2){0, 0},0, WHITE);
+                           textureRectangle,(Vector2){0, 0},0, WHITE);
+
+            tileSetRectangle = {leftPanelWidth, 0, map.width * 3 * tileSetTexture.width / sectionsX,
+                                map.height * 3 * tileSetTexture.height / sectionsY};
 
             map.Render(leftPanelWidth, 0, 3, 3);
         }
