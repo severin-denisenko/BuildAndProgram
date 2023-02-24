@@ -86,7 +86,7 @@ int main(){
                     if (GetGestureDetected() == GESTURE_TAP){
                         map.Set(i, j, currentTileSelected);
 
-                        S_INFO("Changed tile tile: " + std::to_string(currentTileSelected));
+                        S_INFO("Changed tile: " + std::to_string(currentTileSelected));
                     }
                 }
             }
