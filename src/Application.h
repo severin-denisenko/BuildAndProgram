@@ -8,12 +8,30 @@
 #include <EWindow.hpp>
 #include <EScene.hpp>
 #include <Graphics/ESprite.hpp>
-#include <EEngine.hpp>
+#include <EGame.hpp>
 #include <EEntityFactory.hpp>
 #include <Systems/ETextureHolder.hpp>
 #include <EAnimation.h>
 
 #include <array>
+
+class LevelEnder: public Engine::EComponent{
+public:
+    LevelEnder() = default;
+
+    void Create(Engine::EEntity* entity) override{
+        button = entity->GetComponent<Engine::EButton>();
+    }
+
+    void Update(Engine::EEntity* entity) override{
+        if (button->action == Engine::EButton::HOLD){
+            entity->GetScene().IsActive = false;
+        }
+    }
+
+private:
+    Engine::EButton* button = nullptr;
+};
 
 class PlayerController : public Engine::EComponent{
 public:
@@ -152,7 +170,8 @@ public:
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Button", scene.root, scene)
                                   .Transform(0, 0, 0, 0, 6, 6)
-                                  .Button(buttonSet).Get());
+                                  .Button(buttonSet)
+                                  .Add(new LevelEnder()).Get());
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)
@@ -180,7 +199,31 @@ public:
                                           .Add(new PlayerBControls())
                                           .Get());
 
-        Engine::EEngine engine(scene, window);
+
+        /// Other scene
+
+        Engine::EScene scene2;
+
+        scene2.renderer.ChangeResolution(128, 128);
+
+        scene2.entityManager.AddTo(scene2.root,
+                                  Engine::EEntityFactory("Button", scene2.root, scene2)
+                                          .Transform(0, 0, 0, 0, 6, 6)
+                                          .Button(buttonSet).Get());
+
+        scene2.entityManager.AddTo(scene2.root,
+                                  Engine::EEntityFactory("Background", scene2.root, scene2)
+                                          .Background(BLACK).Get());
+
+        scene2.entityManager.AddTo(scene2.root,
+                                  Engine::EEntityFactory("Tiles", scene2.root, scene2)
+                                          .Transform(0, 0, 0, 0, 1, 1)
+                                          .Tiling(tileMap).Get());
+
+
+        Engine::EGame engine(window);
+        engine.AddScene(&scene);
+        engine.AddScene(&scene2);
         engine.Run();
     }
 };

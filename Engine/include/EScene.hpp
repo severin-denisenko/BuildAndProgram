@@ -32,6 +32,8 @@ namespace Engine {
                            45.0f, 0 };
 
         Camera2D camera2D = {{0, 0}, {0, 0}, 0, 1};
+
+        bool IsActive = true;
     };
 
 } // engine
