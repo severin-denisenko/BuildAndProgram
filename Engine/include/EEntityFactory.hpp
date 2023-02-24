@@ -37,109 +37,92 @@ namespace Engine {
         };
 
         [[nodiscard]] EEntityFactory& Transform(){
-            auto transform = new ETransform();
-            entity->AddComponent(transform);
+            entity->AddComponent(std::make_unique<ETransform>());
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Transform(float x, float y){
-            auto transform = new ETransform(x, y);
-            entity->AddComponent(transform);
+            entity->AddComponent(std::make_unique<ETransform>(x, y));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Transform(float x, float y, float rx, float ry){
-            auto transform = new ETransform(x, y, rx, ry);
-            entity->AddComponent(transform);
+            entity->AddComponent(std::make_unique<ETransform>(x, y, rx, ry));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Transform(float x, float y, float z){
-            auto transform = new ETransform(x, y, z);
-            entity->AddComponent(transform);
+            entity->AddComponent(std::make_unique<ETransform>(x, y, z));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Transform(float x, float y, float rx, float ry, float sx, float sy){
-            auto transform = new ETransform(x, y, rx, ry, sx, sy);
-            entity->AddComponent(transform);
+            entity->AddComponent(std::make_unique<ETransform>(x, y, rx, ry, sx, sy));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Text(const char* msg, int size, Color color){
-            auto text = new EText(msg, size, color);
-            entity->AddComponent(text);
+            entity->AddComponent(std::make_unique<EText>(msg, size, color));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Background(Color color){
-            auto background = new EBackground(color);
-            entity->AddComponent(background);
+            entity->AddComponent(std::make_unique<EBackground>(color));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Rectangle(ESprite sprite){
-            auto rectangle = new ERectangle(sprite);
-            entity->AddComponent(rectangle);
+            entity->AddComponent(std::make_unique<ERectangle>(sprite));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& FPSLabel(){
-            auto label = new Engine::FPSLabel();
-            entity->AddComponent(label);
+            entity->AddComponent(std::make_unique<Engine::FPSLabel>());
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& RigidBody(){
-            auto rigidBody = new ERigidBody();
-            entity->AddComponent(rigidBody);
+            entity->AddComponent(std::make_unique<ERigidBody>());
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& SlideShow(ETileSet& tileSet){
-            auto slideShow = new ESlideShow(tileSet);
-            entity->AddComponent(slideShow);
+            entity->AddComponent(std::make_unique<ESlideShow>(tileSet));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Tiling(ETileMap& tileMap){
-            auto tiling = new ETiling(tileMap);
-            entity->AddComponent(tiling);
+            entity->AddComponent(std::make_unique<ETiling>(tileMap));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Model(EMesh mesh){
-            auto model = new EModel(mesh);
-            entity->AddComponent(model);
+            entity->AddComponent(std::make_unique<EModel>(mesh));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Grid(int slices, float spacing){
-            auto grid = new EGrid(slices, spacing);
-            entity->AddComponent(grid);
+            entity->AddComponent(std::make_unique<EGrid>(slices, spacing));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& CameraController3D(){
-            auto controller = new ECameraController3D();
-            entity->AddComponent(controller);
+            entity->AddComponent(std::make_unique<ECameraController3D>());
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Collider2D(ECollider2D::ECollider2DShape shape){
-            auto controller = new ECollider2D(shape);
-            entity->AddComponent(controller);
+            entity->AddComponent(std::make_unique<ECollider2D>(shape));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Button(ETileSet& tileSet){
-            auto button = new EButton(tileSet);
-            entity->AddComponent(button);
+            entity->AddComponent(std::make_unique<EButton>(tileSet));
             return *this;
         }
 
         [[nodiscard]] EEntityFactory& Add(EComponent* component){
-            entity->AddComponent(component);
+            entity->AddComponent(std::unique_ptr<EComponent>(component));
             return *this;
         }
 

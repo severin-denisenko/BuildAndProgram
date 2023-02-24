@@ -19,8 +19,8 @@ namespace Engine {
         EEntity(const std::string& name, EEntity* parent, EScene& scene);
         ~EEntity();
 
-        void AddComponent(EComponent* component);;
-        void AddEntity(EEntity* entity);
+        void AddComponent(std::unique_ptr<EComponent> component);;
+        void AddEntity(std::unique_ptr<EEntity> entity);
         void RemoveEntity(EEntity* entity);
 
         EEntity* GetChildByIndex(size_t index);
@@ -39,8 +39,8 @@ namespace Engine {
 
         template<typename T>
         T* GetComponent(){
-            for(auto component: components){
-                T* val = dynamic_cast<T*>(component);
+            for(auto& component: components){
+                T* val = dynamic_cast<T*>(component.get());
 
                 if(val)
                     return val;
@@ -51,8 +51,8 @@ namespace Engine {
         }
 
         std::string name = "Default";
-        std::vector<EEntity*> children;
-        std::vector<EComponent*> components;
+        std::vector<std::unique_ptr<EEntity>> children;
+        std::vector<std::unique_ptr<EComponent>> components;
         bool created;
     private:
         EScene& scene;

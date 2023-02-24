@@ -26,13 +26,11 @@ void Engine::EEntityManager::Delete(EEntity *entity) {
         entity->RemoveEntity(entities.back());
         Delete(entities.back());
     }
-
-    delete entity;
 }
 
 void Engine::EEntityManager::AddTo(EEntity *parent, EEntity *entity) {
     entities.push_back(entity);
-    parent->AddEntity(entity);
+    parent->AddEntity(std::unique_ptr<EEntity>(entity));
 
     creator.Add(entity);
     updater.Add(entity);
@@ -55,7 +53,6 @@ void Engine::EEntityManager::Add(EEntity *entity) {
 
 Engine::EEntityManager::~EEntityManager() {
     while (!entities.empty()){
-        delete entities.back();
         entities.pop_back();
     }
 }

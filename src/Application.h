@@ -24,7 +24,7 @@ public:
     }
 
     void Update(Engine::EEntity* entity) override{
-        if (button->action == Engine::EButton::HOLD){
+        if (button->action == Engine::EButton::RELEASED){
             entity->GetScene().IsActive = false;
         }
     }
@@ -209,7 +209,8 @@ public:
         scene2.entityManager.AddTo(scene2.root,
                                   Engine::EEntityFactory("Button", scene2.root, scene2)
                                           .Transform(0, 0, 0, 0, 6, 6)
-                                          .Button(buttonSet).Get());
+                                          .Button(buttonSet)
+                                          .Add(new LevelEnder()).Get());
 
         scene2.entityManager.AddTo(scene2.root,
                                   Engine::EEntityFactory("Background", scene2.root, scene2)

@@ -8,7 +8,7 @@
 namespace Engine {
     EScene::EScene() : renderer(GetScreenWidth(), GetScreenHeight()) {
         root = new EEntity("Root", nullptr, *this);
-        root->AddComponent(new ETransform(0, 0));
+        root->AddComponent(std::make_unique<ETransform>());
     }
 
     EScene::~EScene() {

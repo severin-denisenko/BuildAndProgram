@@ -7,7 +7,7 @@
 
 namespace Engine{
     void EEntity::Create() {
-        for (auto component: components) {
+        for (auto& component: components) {
             component->Create(this);
         }
         created = true;
@@ -17,7 +17,7 @@ namespace Engine{
         if(!created)
             return;
 
-        for (auto component: components) {
+        for (auto& component: components) {
             component->Render3D(this);
         }
     }
@@ -26,7 +26,7 @@ namespace Engine{
         if(!created)
             return;
 
-        for (auto component: components) {
+        for (auto& component: components) {
             component->Render2D(this);
         }
     }
@@ -35,7 +35,7 @@ namespace Engine{
         if(!created)
             return;
 
-        for (auto component: components) {
+        for (auto& component: components) {
             component->RenderUI(this);
         }
     }
@@ -44,37 +44,43 @@ namespace Engine{
         if(!created)
             return;
 
-        for (auto component: components) {
+        for (auto& component: components) {
             component->Update(this);
         }
     }
 
-    void EEntity::AddEntity(EEntity *entity) {
-        children.emplace_back(entity);
+    void EEntity::AddEntity(std::unique_ptr<EEntity> entity) {
+        children.push_back(std::move(entity));
     }
 
     void EEntity::RemoveEntity(EEntity* entity) {
-        auto i = std::find(children.begin(), children.end(), entity);
-        if (i == children.end())
+        auto found = std::find_if(
+                children.begin(),
+                children.end(),
+                [&] (std::unique_ptr<EEntity>& p) -> bool { return p.get() == entity; }
+                );
+
+        if (found == children.end())
             S_ERROR("Entity " + entity->name + " can't be deleted from Parent!");
-        children.erase(i);
+
+        children.erase(found);
     }
 
-    void EEntity::AddComponent(EComponent *component) {
-        components.emplace_back(component);
+    void EEntity::AddComponent(std::unique_ptr<EComponent> component) {
+        components.push_back(std::move(component));
     }
 
     EEntity *EEntity::GetChildByIndex(size_t index) {
         if(index < children.size())
-            return children[index];
+            return children[index].get();
         S_ERROR("Entity by this index does not exist: " + std::to_string(index));
         return nullptr;
     }
 
     EEntity *EEntity::GetChildByName(const std::string& find) {
-        for (auto entity: children) {
+        for (auto& entity: children) {
             if (entity->name == find)
-                return entity;
+                return entity.get();
         }
         S_ERROR("Entity with this name does not exist: " + find);
         return nullptr;
@@ -90,10 +96,6 @@ namespace Engine{
     }
 
     EEntity::~EEntity() {
-        for (auto component: components) {
-            delete component;
-        }
-
         S_INFO("Entity " + name + " deleted.");
     }
 
