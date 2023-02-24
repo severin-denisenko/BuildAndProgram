@@ -17,14 +17,8 @@ namespace Engine{
     public:
         EEntityManager(ERenderer& renderer, EUpdater& updater, ECreator& creator, EPhysics& physics, EScene& scene)
         : renderer(renderer), updater(updater), creator(creator), physics(physics), scene(scene) {}
-        
-        void Add(EEntity* entity);
 
         void AddTo(EEntity* parent, EEntity* entity);
-
-        void Delete(EEntity* entity);
-
-        ~EEntityManager();
 
         ERenderer& renderer;
         EUpdater& updater;

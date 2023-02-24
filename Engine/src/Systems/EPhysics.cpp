@@ -16,7 +16,7 @@ namespace Engine {
     void EPhysics::Remove(EEntity *entity) {
         auto i = std::find(entities.begin(), entities.end(), entity);
         if (i == entities.end()){
-            S_ERROR("Entity " + entity->name + " can't be deleted from 2D Renderer!");
+            S_ERROR("Entity " + entity->name + " can't be deleted from Physics!");
             return;
         }
         entities.erase(i);
