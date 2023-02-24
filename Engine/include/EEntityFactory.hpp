@@ -15,6 +15,7 @@
 
 #include "Components/UI/EText.hpp"
 #include "Components/UI/FPSLabel.hpp"
+#include "Components/UI/EButton.hpp"
 
 #include "Components/2D/EBackground.hpp"
 #include "Components/2D/ERectangle.hpp"
@@ -128,6 +129,12 @@ namespace Engine {
         [[nodiscard]] EEntityFactory& Collider2D(ECollider2D::ECollider2DShape shape){
             auto controller = new ECollider2D(shape);
             entity->AddComponent(controller);
+            return *this;
+        }
+
+        [[nodiscard]] EEntityFactory& Button(ETileSet& tileSet){
+            auto button = new EButton(tileSet);
+            entity->AddComponent(button);
             return *this;
         }
 

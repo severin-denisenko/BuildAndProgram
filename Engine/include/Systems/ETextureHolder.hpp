@@ -18,9 +18,18 @@ namespace Engine {
 
         void Load(Id id, const std::string& filename);
         Texture& Get(Id id);
+
+        ~ETextureHolder();
     private:
         std::map<Id, Texture> resources;
     };
+
+    template<typename Id>
+    ETextureHolder<Id>::~ETextureHolder() {
+        for (auto& i: resources) {
+            UnloadTexture(i.second);
+        }
+    }
 
     template<typename Id>
     void ETextureHolder<Id>::Load(Id id, const std::string& filename) {

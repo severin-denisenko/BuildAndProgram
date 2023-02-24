@@ -141,6 +141,18 @@ public:
         tileSet.SetOrigin({0, 0});
         Engine::ETileMap tileMap(tileSet);
         tileMap.Load("src/Assets/back_layer.tiles");
+        Engine::ETileMap tileMapProps(tileSet);
+        tileMapProps.Load("src/Assets/front_layer.tiles");
+
+        Texture buttonTexture = LoadTexture("src/Assets/button1.png");
+        Engine::ETileSet buttonSet(buttonTexture);
+        buttonSet.Splice(1, 3);
+        buttonSet.SetOrigin({0, 0});
+
+        scene.entityManager.AddTo(scene.root,
+                                  Engine::EEntityFactory("Button", scene.root, scene)
+                                  .Transform(0, 0, 0, 0, 6, 6)
+                                  .Button(buttonSet).Get());
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)
@@ -149,7 +161,8 @@ public:
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Tiles", scene.root, scene)
                                           .Transform(0, 0, 0, 0, 1, 1)
-                                          .Tiling(tileMap).Get());
+                                          .Tiling(tileMap)
+                                          .Tiling(tileMapProps).Get());
 
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("PlayerA", scene.root, scene)
