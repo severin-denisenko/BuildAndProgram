@@ -17,6 +17,7 @@ namespace Engine {
     class EScene {
     public:
         EScene();
+        ~EScene();
 
         EEntity* root = nullptr;
         ERenderer renderer;

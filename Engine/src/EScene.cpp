@@ -10,4 +10,8 @@ namespace Engine {
         root = new EEntity("Root", nullptr, *this);
         root->AddComponent(new ETransform(0, 0));
     }
+
+    EScene::~EScene() {
+        delete root;
+    }
 } // engine
