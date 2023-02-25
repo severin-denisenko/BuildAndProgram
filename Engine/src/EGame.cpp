@@ -15,6 +15,8 @@ namespace Engine {
     }
 
     void EGame::RunScene(EScene* scene) {
+        scene->IsActive = true;
+        
         while (scene->IsActive){
             if (!window.Open()){
                 break;

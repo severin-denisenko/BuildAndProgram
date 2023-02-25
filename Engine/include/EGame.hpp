@@ -17,10 +17,11 @@ namespace Engine {
         explicit EGame(EWindow& window) : window(window) {}
 
         void AddScene(EScene* scene);
-        void RunScene(EScene* scene);
         void Run();
 
     private:
+        void RunScene(EScene* scene);
+
         std::list<EScene*> scenes;
         EWindow& window;
     };

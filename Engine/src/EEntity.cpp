@@ -104,9 +104,6 @@ namespace Engine{
     }
 
     EEntity *EEntity::GetParent() const {
-        if (parent == nullptr){
-            S_ERROR("Returning null parent in Entity " + name + ".");
-        }
         return parent;
     }
 }

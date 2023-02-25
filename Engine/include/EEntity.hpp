@@ -38,7 +38,7 @@ namespace Engine {
         void RenderUI();
 
         template<typename T>
-        T* GetComponent(){
+        T* GetComponent() const{
             for(auto& component: components){
                 T* val = dynamic_cast<T*>(component.get());
 

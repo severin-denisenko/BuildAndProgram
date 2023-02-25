@@ -48,48 +48,58 @@ namespace Engine{
     }
 
 
-    Vector3 ETransform::GetGlobalPosition() {
-        if (entity == nullptr)
-            return {0, 0 ,0};
+    Vector3 ETransform::GetGlobalPosition() const{
+        Vector3 res = {0, 0 ,0};
 
-        EEntity* parent = entity->GetParent();
+        for (const EEntity* node = entity; ; node = node->GetParent()){
+            if (node == nullptr)
+                break;
 
-        if (parent == nullptr){
-            return {0, 0 ,0};
+            auto* transform = node->GetComponent<ETransform>();
+
+            if (transform == nullptr)
+                break;
+
+            res = res * transform->scale + transform->position;
         }
 
-        auto* transform = parent->GetComponent<ETransform>();
-
-        return position * transform->GetGlobalScale() + transform->GetGlobalPosition();
+        return res;
     }
 
-    Vector3 ETransform::GetGlobalRotation() {
-        if (entity == nullptr)
-            return {0, 0 ,0};
+    Vector3 ETransform::GetGlobalRotation() const{
+        Vector3 res = {0, 0 ,0};
 
-        EEntity* parent = entity->GetParent();
+        for (const EEntity* node = entity; ; node = node->GetParent()){
+            if (node == nullptr)
+                break;
 
-        if (parent == nullptr){
-            return {0, 0 ,0};
+            auto* transform = node->GetComponent<ETransform>();
+
+            if (transform == nullptr)
+                break;
+
+            res = res + transform->rotation;
         }
 
-        auto* transform = entity->GetComponent<ETransform>();
-
-        return rotation + transform->GetGlobalRotation();
+        return res;
     }
 
-    Vector3 ETransform::GetGlobalScale() {
-        if (entity == nullptr)
-            return {1, 1 ,1};
+    Vector3 ETransform::GetGlobalScale() const{
 
-        EEntity* parent = entity->GetParent();
+        Vector3 res = {1, 1 ,1};
 
-        if (parent == nullptr){
-            return {1, 1 ,1};
+        for (const EEntity* node = entity; ; node = node->GetParent()){
+            if (node == nullptr)
+                break;
+
+            auto* transform = node->GetComponent<ETransform>();
+
+            if (transform == nullptr)
+                break;
+
+            res = res * transform->scale;
         }
 
-        auto* transform = parent->GetComponent<ETransform>();
-
-        return scale * transform->GetGlobalScale();
+        return res;
     }
 }

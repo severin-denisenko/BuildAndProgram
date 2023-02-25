@@ -29,9 +29,9 @@ namespace Engine {
             this->entity = e;
         }
 
-        Vector3 GetGlobalPosition();
-        Vector3 GetGlobalRotation();
-        Vector3 GetGlobalScale();
+        Vector3 GetGlobalPosition() const;
+        Vector3 GetGlobalRotation() const;
+        Vector3 GetGlobalScale() const;
 
         ETransform(float x, float y) : position({x, y, 0}) {}
         ETransform(float x, float y, float rx, float ry) : position({x, y, 0}), rotation({rx, ry, 0}) {}
