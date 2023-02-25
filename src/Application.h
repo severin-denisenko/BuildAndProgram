@@ -13,11 +13,9 @@
 #include <Systems/ETextureHolder.hpp>
 #include <EAnimation.h>
 
-#include <array>
-
-class LevelEnder: public Engine::EComponent{
+class LevelLoader: public Engine::EComponent{
 public:
-    LevelEnder() = default;
+    LevelLoader() = default;
 
     void Create(Engine::EEntity* entity) override{
         button = entity->GetComponent<Engine::EButton>();
@@ -25,7 +23,7 @@ public:
 
     void Update(Engine::EEntity* entity) override{
         if (button->action == Engine::EButton::RELEASED){
-            entity->GetScene().IsActive = false;
+            entity->GetScene().game->LoadScene("Main");
         }
     }
 
@@ -117,7 +115,7 @@ public:
 
         S_LOG_LEVEL_INFO;
 
-        Engine::EScene scene;
+        Engine::EScene scene("Main");
 
         scene.renderer.ChangeResolution(128, 128);
 
@@ -168,12 +166,6 @@ public:
         buttonSet.SetOrigin({0, 0});
 
         scene.entityManager.AddTo(scene.root,
-                                  Engine::EEntityFactory("Button", scene.root, scene)
-                                  .Transform(0, 0, 0, 0, 6, 6)
-                                  .Button(buttonSet)
-                                  .Add(new LevelEnder()).Get());
-
-        scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)
                                   .Background(BLACK).Get());
 
@@ -202,29 +194,23 @@ public:
 
         /// Other scene
 
-        Engine::EScene scene2;
+        Engine::EScene menu("Menu");
 
-        scene2.renderer.ChangeResolution(128, 128);
+        menu.renderer.ChangeResolution(128, 128);
 
-        scene2.entityManager.AddTo(scene2.root,
-                                  Engine::EEntityFactory("Button", scene2.root, scene2)
+        menu.entityManager.AddTo(menu.root,
+                                  Engine::EEntityFactory("Button", menu.root, menu)
                                           .Transform(0, 0, 0, 0, 6, 6)
                                           .Button(buttonSet)
-                                          .Add(new LevelEnder()).Get());
+                                          .Add(new LevelLoader()).Get());
 
-        scene2.entityManager.AddTo(scene2.root,
-                                  Engine::EEntityFactory("Background", scene2.root, scene2)
+        menu.entityManager.AddTo(menu.root,
+                                  Engine::EEntityFactory("Background", menu.root, menu)
                                           .Background(BLACK).Get());
 
-        scene2.entityManager.AddTo(scene2.root,
-                                  Engine::EEntityFactory("Tiles", scene2.root, scene2)
-                                          .Transform(0, 0, 0, 0, 1, 1)
-                                          .Tiling(tileMap).Get());
-
-
         Engine::EGame engine(window);
+        engine.AddScene(&menu);
         engine.AddScene(&scene);
-        engine.AddScene(&scene2);
         engine.Run();
     }
 };

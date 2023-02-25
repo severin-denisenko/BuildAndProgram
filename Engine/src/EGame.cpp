@@ -8,28 +8,40 @@
 
 namespace Engine {
     void EGame::Run() {
-        while (!scenes.empty()){
-            RunScene(scenes.front());
-            scenes.pop_front();
-        }
-    }
+        EScene* current = scenes.front();
 
-    void EGame::RunScene(EScene* scene) {
-        scene->IsActive = true;
-        
-        while (scene->IsActive){
+        while (true){
             if (!window.Open()){
                 break;
             }
 
-            scene->creator.Create();
-            scene->updater.Update();
-            scene->renderer.Render(scene->camera2D, scene->camera3D);
-            scene->physics.SolvePhysics();
+            if (!current->IsActive){
+                scenes.pop_front();
+                current = scenes.front();
+            }
+
+            current->creator.Create();
+            current->updater.Update();
+            current->renderer.Render(current->camera2D, current->camera3D);
+            current->physics.SolvePhysics();
         }
     }
 
     void EGame::AddScene(EScene* scene) {
+        scene->game = this;
         scenes.push_back(scene);
+    }
+
+    void EGame::LoadScene(const std::string &name) {
+        for (auto s: scenes) {
+            if (s->name == name){
+                scenes.front()->IsActive = false;
+
+                scenes.insert(++scenes.begin(), s);
+                return;
+            }
+        }
+
+        S_ERROR("Can't load scene with name: " + name);
     }
 } // Engine

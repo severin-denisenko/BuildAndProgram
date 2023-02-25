@@ -18,10 +18,9 @@ namespace Engine {
 
         void AddScene(EScene* scene);
         void Run();
+        void LoadScene(const std::string& name);
 
     private:
-        void RunScene(EScene* scene);
-
         std::list<EScene*> scenes;
         EWindow& window;
     };

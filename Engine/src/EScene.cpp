@@ -3,10 +3,12 @@
 //
 
 #include "EScene.hpp"
+
+#include <utility>
 #include "EEntityFactory.hpp"
 
 namespace Engine {
-    EScene::EScene() : renderer(GetScreenWidth(), GetScreenHeight()) {
+    EScene::EScene(std::string name) : renderer(GetScreenWidth(), GetScreenHeight()), name(std::move(name)) {
         root = new EEntity("Root", nullptr, *this);
         root->AddComponent(std::make_unique<ETransform>());
     }

@@ -11,12 +11,14 @@
 #include "Systems/EUpdater.hpp"
 #include "Systems/EPhysics.hpp"
 #include "EEntity.hpp"
+#include "EGame.hpp"
 
 namespace Engine {
+    class EGame;
 
     class EScene {
     public:
-        EScene();
+        explicit EScene(std::string name);
         ~EScene();
 
         EEntity* root = nullptr;
@@ -33,7 +35,10 @@ namespace Engine {
 
         Camera2D camera2D = {{0, 0}, {0, 0}, 0, 1};
 
+        std::string name;
         bool IsActive = true;
+
+        EGame* game = nullptr;
     };
 
 } // engine

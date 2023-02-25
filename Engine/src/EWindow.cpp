@@ -20,6 +20,8 @@ namespace Engine{
             InitWindow(600, 600, name);
         }
 
+        SetExitKey(KEY_NULL);
+
         SetTargetFPS(60);
     }
 
