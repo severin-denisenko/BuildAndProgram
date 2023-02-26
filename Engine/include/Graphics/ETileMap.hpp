@@ -26,8 +26,12 @@ namespace Engine {
             }
         }
 
-        void Set(size_t x, size_t y, size_t tile_index){
-            tiles[y][x] = tile_index;
+        size_t& operator()(size_t x, size_t y){
+            return tiles[y][x];
+        }
+
+        const size_t& operator()(size_t x, size_t y) const{
+            return tiles[y][x];
         }
 
         void Render(float x, float y, float scale_x, float scale_y){

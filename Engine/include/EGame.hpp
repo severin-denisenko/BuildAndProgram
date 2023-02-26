@@ -20,7 +20,9 @@ namespace Engine {
         void Run();
         void LoadScene(const std::string& name);
 
+        void EndGame();
     private:
+        bool shouldEndGame = false;
         std::list<EScene*> scenes;
         EWindow& window;
     };

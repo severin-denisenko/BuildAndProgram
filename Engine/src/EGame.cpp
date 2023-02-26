@@ -4,8 +4,6 @@
 
 #include "EGame.hpp"
 
-#include <raylib.h>
-
 namespace Engine {
     void EGame::Run() {
         EScene* current = scenes.front();
@@ -18,6 +16,10 @@ namespace Engine {
             if (!current->IsActive){
                 scenes.pop_front();
                 current = scenes.front();
+            }
+
+            if (shouldEndGame){
+                break;
             }
 
             current->creator.Create();
@@ -43,5 +45,9 @@ namespace Engine {
         }
 
         S_ERROR("Can't load scene with name: " + name);
+    }
+
+    void EGame::EndGame() {
+        shouldEndGame = true;
     }
 } // Engine

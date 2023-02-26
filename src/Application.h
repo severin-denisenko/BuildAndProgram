@@ -31,6 +31,24 @@ private:
     Engine::EButton* button = nullptr;
 };
 
+class GameExit: public Engine::EComponent{
+public:
+    GameExit() = default;
+
+    void Create(Engine::EEntity* entity) override{
+        button = entity->GetComponent<Engine::EButton>();
+    }
+
+    void Update(Engine::EEntity* entity) override{
+        if (button->action == Engine::EButton::RELEASED){
+            entity->GetScene().game->EndGame();
+        }
+    }
+
+private:
+    Engine::EButton* button = nullptr;
+};
+
 class PlayerController : public Engine::EComponent{
 public:
     void Create(Engine::EEntity* entity) override{
@@ -160,11 +178,6 @@ public:
         Engine::ETileMap tileMapProps(tileSet);
         tileMapProps.Load("src/Assets/front_layer.tiles");
 
-        Texture buttonTexture = LoadTexture("src/Assets/button1.png");
-        Engine::ETileSet buttonSet(buttonTexture);
-        buttonSet.Splice(1, 3);
-        buttonSet.SetOrigin({0, 0});
-
         scene.entityManager.AddTo(scene.root,
                                   Engine::EEntityFactory("Background", scene.root, scene)
                                   .Background(BLACK).Get());
@@ -196,17 +209,30 @@ public:
 
         Engine::EScene menu("Menu");
 
+        Texture buttonTexture = LoadTexture("src/Assets/button1.png");
+        Engine::ETileSet buttonSet(buttonTexture);
+        buttonSet.Splice(1, 3);
+        buttonSet.SetOrigin({0, 0});
+
+        Engine::ETileMap tileMapMenu(tileSet);
+        tileMapMenu.Load("src/Assets/menu.tiles");
+
         menu.renderer.ChangeResolution(128, 128);
 
         menu.entityManager.AddTo(menu.root,
                                   Engine::EEntityFactory("Button", menu.root, menu)
-                                          .Transform(0, 0, 0, 0, 6, 6)
+                                          .Transform(300, 300, 0, 0, 10, 10)
                                           .Button(buttonSet)
                                           .Add(new LevelLoader()).Get());
 
         menu.entityManager.AddTo(menu.root,
                                   Engine::EEntityFactory("Background", menu.root, menu)
                                           .Background(BLACK).Get());
+
+        menu.entityManager.AddTo(menu.root,
+                                 Engine::EEntityFactory("Background", menu.root, menu)
+                                 .Transform()
+                                 .Tiling(tileMapMenu).Get());
 
         Engine::EGame engine(window);
         engine.AddScene(&menu);

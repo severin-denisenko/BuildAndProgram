@@ -27,6 +27,13 @@ namespace Engine {
             entity->Render2D();
         }
         EndMode2D();
+
+        BeginMode3D(camera3D);
+        for (auto entity: entities3D) {
+            entity->Render3D();
+        }
+        EndMode3D();
+
         EndTextureMode();
 
         Rectangle source = {0.0f, 0.0f, (float)gameView2D.texture.width, (float)-gameView2D.texture.height };
@@ -43,12 +50,6 @@ namespace Engine {
         }
 
         DrawTexturePro(gameView2D.texture, source,dist,{0, 0}, 0.0f, WHITE);
-
-        BeginMode3D(camera3D);
-        for (auto entity: entities3D) {
-            entity->Render3D();
-        }
-        EndMode3D();
 
         for (auto entity: entitiesUI) {
             entity->RenderUI();

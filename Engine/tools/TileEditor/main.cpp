@@ -84,7 +84,7 @@ int main(){
                                                            tileSetRectangle.width / map.width, tileSetRectangle.height / map.height}))
                 {
                     if (GetGestureDetected() == GESTURE_TAP){
-                        map.Set(i, j, currentTileSelected);
+                        map(i, j) = currentTileSelected;
 
                         S_INFO("Changed tile: " + std::to_string(currentTileSelected));
                     }

@@ -23,9 +23,9 @@ namespace Engine {
                            transform->GetGlobalScale().x, transform->GetGlobalScale().y);
         }
 
+        ETileMap& tileMap;
     private:
         ETransform* transform = nullptr;
-        ETileMap& tileMap;
     };
 
 } // Engine
