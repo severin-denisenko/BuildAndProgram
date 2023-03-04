@@ -1,5 +1,7 @@
 # Build And Program Engine
 
+Rigth now in pouse.
+
 ## What is it?
 
 My education project on making games with pure c++ and Raylib.
