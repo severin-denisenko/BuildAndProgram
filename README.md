@@ -1,6 +1,6 @@
 # Build And Program Engine
 
-Rigth now in pouse.
+Rigth now in pause.
 
 ## What is it?
 
